@@ -1,0 +1,41 @@
+table:
+  name: users
+  schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - created_at
+        - id
+        - name
+        - photo
+        - updated_at
+        - username
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - id
+        - name
+        - photo
+        - updated_at
+        - username
+      filter: {}
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - username
+        - name
+        - photo
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
+delete_permissions:
+  - role: user
+    permission:
+      filter:
+        id:
+          _eq: X-Hasura-User-Id

@@ -1,0 +1,36 @@
+fragment UserFields on Users {
+  id
+  name
+  username
+  photo
+}
+
+query GetUsersByUsername($username: String) {
+  users(limit: 1, where: { username: { _ilike: $username } }) {
+    ...UserFields
+  }
+}
+
+query GetUserById($id: uuid!) {
+  user: usersByPk(id: $id) {
+    ...UserFields
+  }
+}
+
+query GetAllUsers {
+  users {
+    ...UserFields
+  }
+}
+mutation UpdateUser($id: uuid!, $updates: UsersSetInput) {
+  user: updateUsersByPk(pk_columns: { id: $id }, _set: $updates) {
+    ...UserFields
+  }
+}
+mutation InsertUser($username: String, $name: String, $photo: String) {
+  user: insertUsersOne(
+    object: { username: $username, name: $name, photo: $photo }
+  ) {
+    ...UserFields
+  }
+}

@@ -8,6 +8,7 @@ const AUTH0_TENANT = getEnvVar("AUTH0_TENANT");
 const oauthConfig: OAuthConfig = {
   auth_uri: `https://${AUTH0_TENANT}.us.auth0.com/authorize`,
   token_uri: `https://${AUTH0_TENANT}.us.auth0.com/oauth/token`,
+  logout_uri: `https://${AUTH0_TENANT}.us.auth0.com/v2/logout`,
   scope: "openid profile email",
   client_id: getEnvVar("AUTH_CLIENT_ID"),
   client_secret: getEnvVar("AUTH_CLIENT_SECRET"),
@@ -42,6 +43,14 @@ export async function getLoginUrl(redirect_uri: string) {
     params,
   };
 }
+
+export const getLogoutUrl = (redirect_uri: string) => {
+  let params = {
+    client_id: oauthConfig.client_id,
+    returnTo: redirect_uri,
+  };
+  return oauthConfig.logout_uri + "?" + new URLSearchParams(params as any);
+};
 
 export interface OAuthAccessTokenParams {
   redirect_uri: string;

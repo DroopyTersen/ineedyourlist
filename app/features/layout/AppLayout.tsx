@@ -1,7 +1,6 @@
 import { Link, useLocation } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { LoginButton } from "~/routes/__auth/login";
-import { useEnvVar } from "~/toolkit/remix/useEnvVar";
 import { useCurrentUser } from "../auth/useCurrentUser";
 import { AccountDropodown } from "./AccountDropodown";
 
@@ -12,7 +11,6 @@ interface AppLayoutProps {
 export function AppLayout({ children }: AppLayoutProps) {
   const currentUser = useCurrentUser();
   let { pathname, search } = useLocation();
-  let environment = useEnvVar("PUBLIC_ENV");
   let overlayRef = useRef<HTMLLabelElement>(null);
   let checkboxRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -29,7 +27,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         ref={checkboxRef}
       />
       <div className="flex flex-col drawer-content">
-        <div className="w-full navbar bg-base-300">
+        <div className="w-full navbar bg-base-200">
           <div className="flex-none lg:hidden">
             <label
               htmlFor="my-drawer-3"
@@ -63,12 +61,20 @@ export function AppLayout({ children }: AppLayoutProps) {
             </Link>
           </div>
           <div className="flex-none">
-            <ul className="menu menu-horizontal">
+            <ul className="gap-1 menu menu-horizontal">
               {currentUser && (
                 <>
                   {links.map((link) => (
                     <li key={link.to}>
-                      <Link className="hidden rounded lg:block" to={link.to}>
+                      <Link
+                        className={
+                          "hidden rounded lg:block " +
+                          (checkIsActive(link.to, pathname)
+                            ? "bg-secondary-content/50"
+                            : "")
+                        }
+                        to={link.to}
+                      >
                         {link.label}
                       </Link>
                     </li>
@@ -107,7 +113,15 @@ export function AppLayout({ children }: AppLayoutProps) {
             {currentUser &&
               links.map((link) => (
                 <li key={link.to}>
-                  <Link className="rounded" to={link.to}>
+                  <Link
+                    className={
+                      " rounded " +
+                      (checkIsActive(link.to, pathname)
+                        ? "bg-secondary-content/50"
+                        : "")
+                    }
+                    to={link.to}
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -143,7 +157,7 @@ export const MainContentPadded = ({
   className = "",
 }: MainContentProps) => {
   return (
-    <main className={`p-3 sm:p-6 prose-sm prose max-w-none ${className}`}>
+    <main className={`p-3 pt-6 sm:p-6 prose-sm prose max-w-none ${className}`}>
       {children}
     </main>
   );
@@ -154,8 +168,12 @@ export const MainContentFullBleed = ({
   className = "",
 }: MainContentProps) => {
   return (
-    <main className={`py-3 sm:py-6 prose-sm prose max-w-none ${className}`}>
+    <main className={`py-3 sm:py-6 prose max-w-none ${className}`}>
       {children}
     </main>
   );
+};
+
+const checkIsActive = (to: string, pathname = "") => {
+  return pathname.startsWith(to);
 };

@@ -27,8 +27,8 @@ export default function MyListRoute() {
       </div>
       <ul>
         {data?.items?.map((item) => (
-          <li key={item.id}>
-            <Link to={item.id} className="text-accent">
+          <li key={item.id} className="py-1">
+            <Link to={item.id} className="text-lg lg:text-xl text-accent">
               {item.title}
             </Link>
           </li>

@@ -1,14 +1,18 @@
 import { ActionArgs } from "@remix-run/node";
+import { AiOutlineGift } from "react-icons/ai";
+import { insertGiftIdea } from "~/features/gift-ideas/gift-ideas.data.server";
+import { GiftIdeaForm } from "~/features/gift-ideas/GiftIdeaForm";
 import { MainContentPadded } from "~/features/layout/AppLayout";
-import { GiftIdeaForm } from "~/features/my-list/GiftIdeaForm";
-import { insertGiftIdea } from "~/features/my-list/my-list.data.server";
 import { AppErrorBoundary } from "~/toolkit/components/errors/AppErrorBoundary";
 import { tryPerformMutation } from "~/toolkit/remix/tryPerformMutation";
 
 export default function AddGiftIdeaRoute() {
   return (
     <MainContentPadded>
-      <h1 className="text-secondary/90">Add a Gift Idea</h1>
+      <h1 className="flex items-center gap-2 text-secondary/90">
+        <AiOutlineGift size={32} />
+        Add a Gift Idea
+      </h1>
       <GiftIdeaForm backUrl="/my-list" />
     </MainContentPadded>
   );
@@ -17,7 +21,7 @@ export const action = async ({ request }: ActionArgs) => {
   return tryPerformMutation(
     request,
     "/my-list",
-    ({ gqlClient, userId, formData }) =>
+    ({ gqlClient, formData, userId }) =>
       insertGiftIdea(gqlClient, userId, formData)
   );
 };

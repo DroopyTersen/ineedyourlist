@@ -41,12 +41,12 @@ export function AvatarFull({ photo = "", title = "", subtitle = "" }) {
         )}
       </div>
       <div className="ml-3">
-        <p className="m-0 text-sm font-medium text-gray-700 group-hover:text-gray-900">
+        <div className="m-0 text-sm font-medium text-gray-700 group-hover:text-gray-900">
           {title}
-        </p>
-        <p className="m-0 text-xs font-medium text-gray-500 group-hover:text-gray-700">
+        </div>
+        <div className="m-0 text-xs font-medium text-gray-500 group-hover:text-gray-700">
           {subtitle}
-        </p>
+        </div>
       </div>
     </div>
   );

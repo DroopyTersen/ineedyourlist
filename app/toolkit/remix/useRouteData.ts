@@ -1,6 +1,8 @@
 import { useMatches } from "@remix-run/react";
 
-type RouteSelector = <T>(route: ReturnType<typeof useMatches>[0]) => T;
+type RouteSelector = <T>(
+  route: ReturnType<typeof useMatches>[0] | undefined
+) => T;
 
 export const useRouteData = (selector: RouteSelector) => {
   return selectRouteData(useMatches(), selector);

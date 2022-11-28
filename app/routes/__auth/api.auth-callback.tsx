@@ -1,12 +1,7 @@
 import { LoaderFunction } from "@remix-run/node";
-import {
-  createAdminGqlClient,
-  createUserGqlClient,
-  signHasuraToken,
-} from "~/common/hasura.server";
+import { createAdminGqlClient, signHasuraToken } from "~/common/hasura.server";
 import { fetchAccessToken, fetchProfile } from "~/features/auth/auth0.server";
 import { authSession } from "~/features/auth/authSession.server";
-import { ensureWishlist } from "~/features/my-list/my-list.data.server";
 // import { createUserSession } from "~/features/auth/auth.server.dotadda";
 
 import {
@@ -58,6 +53,5 @@ export const loader: LoaderFunction = async ({ request }) => {
     throw Error("Unable find existing user or create a new user");
   }
   let hasuraToken = signHasuraToken(user);
-  await ensureWishlist(createUserGqlClient(hasuraToken), user.id);
   return authSession.create({ userId: user.id, hasuraToken }, returnTo);
 };

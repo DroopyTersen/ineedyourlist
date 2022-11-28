@@ -1,18 +1,20 @@
 import { ActionArgs, json, LoaderArgs } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
+import { AiOutlineGift } from "react-icons/ai";
 import { requireAuthenticatedLoader } from "~/features/auth/auth.remix.server";
-import { MainContentPadded } from "~/features/layout/AppLayout";
 import {
-  getMyGiftIdeas,
+  getUserWithGiftIdeas,
   removeGiftIdea,
-} from "~/features/my-list/my-list.data.server";
+} from "~/features/gift-ideas/gift-ideas.data.server";
+import { MainContentPadded } from "~/features/layout/AppLayout";
+
 import { AppErrorBoundary } from "~/toolkit/components/errors/AppErrorBoundary";
 import { tryPerformMutation } from "~/toolkit/remix/tryPerformMutation";
 
 export const loader = async ({ request, params }: LoaderArgs) => {
   let { gqlClient, userId } = await requireAuthenticatedLoader(request);
-  let wishListItems = await getMyGiftIdeas(gqlClient, userId);
-  return json({ items: wishListItems });
+  let data = await getUserWithGiftIdeas(gqlClient, userId);
+  return json({ myGiftIdeas: data?.giftIdeas || [] });
 };
 
 export default function MyListRoute() {
@@ -20,13 +22,15 @@ export default function MyListRoute() {
   return (
     <MainContentPadded>
       <div className="flex items-center justify-between">
-        <h1 className="text-secondary/90">My List</h1>
-        <Link to="add" className="btn">
+        <h1 className="m-0 text-secondary/90">My List</h1>
+
+        <Link to="add" className="gap-2 btn">
+          <AiOutlineGift size={20} />
           Add a Gift Idea
         </Link>
       </div>
       <ul>
-        {data?.items?.map((item) => (
+        {data?.myGiftIdeas?.map((item) => (
           <li key={item.id} className="py-1">
             <Link to={item.id} className="text-lg lg:text-xl text-accent">
               {item.title}

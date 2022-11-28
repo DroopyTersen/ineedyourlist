@@ -4,6 +4,53 @@ mutation ClaimGiftIdea($giftIdeaId: uuid!) {
     isPurchased
   }
 }
+
+fragment GiftIdeaFields on GiftIdeas {
+  id
+  title
+  description
+  url
+  user {
+    id
+    name
+    photo
+  }
+  createdBy {
+    id
+    name
+    photo
+  }
+  claims {
+    isPurchased
+    user {
+      id
+      name
+      photo
+    }
+  }
+}
+
+fragment GiftIdeaFormFields on GiftIdeas {
+  id
+  title
+  description
+  url
+  userId
+  removed
+}
+
+query GetUserGiftIdeas($userId: uuid!) {
+  user: usersByPk(id: $userId) {
+    id
+    name
+    username
+    photo
+    giftIdeas(where: { removed: { _neq: true } }) {
+      ...GiftIdeaFields
+    }
+  }
+}
+
 mutation MarkGiftIdeaAsPurchased($giftIdeaId: uuid!, $userId: uuid!) {
   updateClaims(
     where: { giftIdeaId: { _eq: $giftIdeaId }, userId: { _eq: $userId } }
@@ -18,5 +65,23 @@ mutation UnClaimGiftIdea($giftIdeaId: uuid!, $userId: uuid!) {
     where: { giftIdeaId: { _eq: $giftIdeaId }, userId: { _eq: $userId } }
   ) {
     affected_rows
+  }
+}
+
+mutation InsertGiftIdea($input: GiftIdeasInsertInput!) {
+  giftIdea: insertGiftIdeasOne(object: $input) {
+    ...GiftIdeaFormFields
+  }
+}
+
+mutation UpdateGiftIdea($id: uuid!, $input: GiftIdeasSetInput!) {
+  giftIdea: updateGiftIdeasByPk(pk_columns: { id: $id }, _set: $input) {
+    ...GiftIdeaFormFields
+  }
+}
+
+query GetGiftIdeaFormValues($id: uuid!) {
+  giftIdea: giftIdeasByPk(id: $id) {
+    ...GiftIdeaFormFields
   }
 }

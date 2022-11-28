@@ -27,7 +27,7 @@ select_permissions:
         - user_id
       filter:
         giftIdea:
-          createdBy:
+          user:
             followers:
               follower_id:
                 _eq: X-Hasura-User-Id

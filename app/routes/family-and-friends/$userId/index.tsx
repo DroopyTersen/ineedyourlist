@@ -1,12 +1,15 @@
 import { ActionArgs, json, LoaderArgs, redirect } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
+import { AiOutlineGift } from "react-icons/ai";
+import { FaUserSecret } from "react-icons/fa";
+import { MdPersonOff } from "react-icons/md";
 import {
   requireAuthenticatedAction,
   requireAuthenticatedLoader,
 } from "~/features/auth/auth.remix.server";
-import { getFollowedUser } from "~/features/family-and-friends/family-and-friends.data.server";
 import {
   claimGiftIdea,
+  getUserWithGiftIdeas,
   markGiftIdeaAsPurchased,
   unclaimGiftIdea,
 } from "~/features/gift-ideas/gift-ideas.data.server";
@@ -18,20 +21,20 @@ import { tryParseActionError } from "~/toolkit/remix/tryParseActionError.server"
 
 export const loader = async ({ request, params }: LoaderArgs) => {
   let { gqlClient } = await requireAuthenticatedLoader(request);
-  let user = await getFollowedUser(gqlClient, params.userId);
+  let user = await getUserWithGiftIdeas(gqlClient, params.userId);
   return json({ user });
 };
 
 export default function UserIdRoute() {
   let data = useLoaderData<typeof loader>();
   let user = data?.user;
-  let giftIdeas = user?.wishlists.flatMap((wl) => wl.giftIdeas);
+  let giftIdeas = user?.giftIdeas || [];
   return (
     <MainContentPadded>
       <div className="flex items-start justify-between">
         <h1 className="text-secondary/90">{user?.name || user?.username}</h1>
         <ConfirmationButton
-          className="text-red-800 btn btn-ghost"
+          className="text-red-800 rounded-full btn btn-ghost btn-square"
           action="/family-and-friends?index"
           formData={{ userId: user?.id, intent: "unfollow" }}
           confirmation={{
@@ -39,8 +42,19 @@ export default function UserIdRoute() {
             body: `You won't see their list anymore. Other people will still see any gifts you have claimed for ${user?.name}.`,
           }}
         >
-          Remove
+          <MdPersonOff size={26} />
         </ConfirmationButton>
+      </div>
+      <div className="flex flex-col items-center mb-8 lg:gap-2 lg:flex-row-reverse lg:justify-start">
+        <Link to="add-gift-idea" className="w-full gap-2 btn lg:w-auto">
+          <AiOutlineGift size={20} /> Add a Gift Idea
+        </Link>
+        <div className="flex items-center gap-3">
+          <span className="pl-2">
+            <FaUserSecret size={18} />
+          </span>
+          <p>Any gift ideas you add will be hidden from {user?.name}.</p>
+        </div>
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {giftIdeas?.map((giftIdea) => (

@@ -1,11 +1,11 @@
 import { Form, Link } from "@remix-run/react";
+import { GiftIdeaFormFieldsFragment } from "~/.gql/graphql.types";
 import { InputField, TextAreaField } from "~/toolkit/components/forms";
 import { ConfirmationButton } from "~/toolkit/components/modal/ConfirmationButton";
-import { GiftIdeaDto } from "./my-list.types";
 
 interface GiftIdeaFormProps {
   backUrl: string;
-  giftIdea?: Partial<GiftIdeaDto> | null;
+  giftIdea?: Partial<GiftIdeaFormFieldsFragment> | null;
 }
 
 export function GiftIdeaForm({ backUrl, giftIdea }: GiftIdeaFormProps) {
@@ -32,13 +32,13 @@ export function GiftIdeaForm({ backUrl, giftIdea }: GiftIdeaFormProps) {
         defaultValue={giftIdea?.description || ""}
       />
       <div className="flex items-center justify-between gap-2">
-        {giftIdea?.id && (
+        {giftIdea?.id ? (
           <ConfirmationButton
             action="/my-list?index"
             className="btn btn-error"
-            formData={{ giftIdeaId: giftIdea?.id }}
+            formData={{ giftIdeaId: giftIdea?.id, returnTo: backUrl }}
             confirmation={{
-              title: `Remove from your list?`,
+              title: `Remove from Gift Idea?`,
               body: (
                 <div>
                   <p>
@@ -51,12 +51,14 @@ export function GiftIdeaForm({ backUrl, giftIdea }: GiftIdeaFormProps) {
           >
             Remove
           </ConfirmationButton>
+        ) : (
+          <div></div>
         )}
         <div className="space-x-2">
-          <Link to={backUrl} className="btn btn-ghost">
+          <Link to={backUrl} className="w-32 btn btn-ghost">
             Cancel
           </Link>
-          <button type="submit" className="btn">
+          <button type="submit" className="w-32 btn">
             Save
           </button>
         </div>

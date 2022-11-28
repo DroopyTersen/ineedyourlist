@@ -30,32 +30,3 @@ mutation UnFollowUser($followerId: uuid!, $followingId: uuid!) {
     createdAt
   }
 }
-fragment GiftIdeaFields on GiftIdeas {
-  id
-  title
-  description
-  url
-  claims {
-    isPurchased
-    user {
-      id
-      name
-      photo
-    }
-  }
-}
-query GetFollowedUser($userId: uuid!) {
-  user: usersByPk(id: $userId) {
-    id
-    name
-    username
-    photo
-    wishlists {
-      id
-      title
-      giftIdeas(where: { removed: { _neq: true } }) {
-        ...GiftIdeaFields
-      }
-    }
-  }
-}

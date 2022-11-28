@@ -7,7 +7,8 @@ export const ErrorContainer = ({
   return (
     <div
       className={
-        "flex flex-col rounded items-center p-4 bg-red-200 text-sm " + className
+        "flex flex-col rounded items-center p-4 bg-red-200 text-sm not-prose " +
+        className
       }
     >
       <div className="text-red-800/60">

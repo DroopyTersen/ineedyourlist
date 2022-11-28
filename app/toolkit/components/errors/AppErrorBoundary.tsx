@@ -16,7 +16,12 @@ export const AppErrorBoundary = ({
 
   return (
     <ErrorContainer title={title} className="m-4 md:m-6">
-      <pre className="whitespace-pre-wrap">{message}</pre>
+      <pre
+        className="text-gray-800 whitespace-pre-wrap"
+        style={{ wordBreak: "break-word" }}
+      >
+        {message}
+      </pre>
     </ErrorContainer>
   );
 };

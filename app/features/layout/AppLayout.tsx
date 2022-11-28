@@ -157,7 +157,7 @@ export const MainContentPadded = ({
   className = "",
 }: MainContentProps) => {
   return (
-    <main className={`p-3 pt-6 sm:p-6 prose-sm prose max-w-none ${className}`}>
+    <main className={`p-3 pt-6 sm:p-6 prose max-w-none ${className}`}>
       {children}
     </main>
   );

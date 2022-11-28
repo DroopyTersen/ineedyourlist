@@ -2,7 +2,6 @@ import { z } from "zod";
 import {
   FollowUserDocument,
   GetFamilyAndFriendsDataDocument,
-  GetFollowedUserDocument,
   UnFollowUserDocument,
 } from "~/.gql/graphql.types";
 import { GqlClient } from "~/toolkit/http/createGqlClient";
@@ -50,12 +49,4 @@ export const unfollowUser = async (
     followerId: currenUserId,
     followingId: input.userId,
   });
-};
-export const getFollowedUser = async (
-  gqlClient: GqlClient,
-  userId: string = ""
-) => {
-  if (!userId) return null;
-  let data = await gqlClient.request(GetFollowedUserDocument, { userId });
-  return data?.user;
 };

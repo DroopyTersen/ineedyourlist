@@ -21,11 +21,14 @@ export function AccountDropodown({ user }: AccountDropodownProps) {
         <div className="my-2 text-sm text-center text-gray-500 dark:text-gray-300">
           {user.name || user.username}
         </div>
+        <Link to="/my-list" className="btn btn-ghost btn-sm btn-block">
+          My List
+        </Link>
 
         <Link to="/my-profile" className="btn btn-ghost btn-sm btn-block">
           My Profile
         </Link>
-        <hr className="my-2 border-gray-100/30" />
+        <hr className="my-2 border-gray-900/10" />
         <FormButton action="/logout" className="btn btn-ghost btn-sm btn-block">
           Log out
         </FormButton>

@@ -372,8 +372,11 @@ export type GiftIdeas = {
   updatedAt: Scalars['timestamptz'];
   url?: Maybe<Scalars['String']>;
   /** An object relationship */
-  wishlist: Wishlists;
-  wishlistId: Scalars['uuid'];
+  user: Users;
+  userId: Scalars['uuid'];
+  /** An object relationship */
+  wishlist?: Maybe<Wishlists>;
+  wishlistId?: Maybe<Scalars['uuid']>;
 };
 
 
@@ -448,6 +451,8 @@ export type GiftIdeasBoolExp = {
   title?: InputMaybe<StringComparisonExp>;
   updatedAt?: InputMaybe<TimestamptzComparisonExp>;
   url?: InputMaybe<StringComparisonExp>;
+  user?: InputMaybe<UsersBoolExp>;
+  userId?: InputMaybe<UuidComparisonExp>;
   wishlist?: InputMaybe<WishlistsBoolExp>;
   wishlistId?: InputMaybe<UuidComparisonExp>;
 };
@@ -470,6 +475,8 @@ export type GiftIdeasInsertInput = {
   title?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
   url?: InputMaybe<Scalars['String']>;
+  user?: InputMaybe<UsersObjRelInsertInput>;
+  userId?: InputMaybe<Scalars['uuid']>;
   wishlist?: InputMaybe<WishlistsObjRelInsertInput>;
   wishlistId?: InputMaybe<Scalars['uuid']>;
 };
@@ -484,6 +491,7 @@ export type GiftIdeasMaxFields = {
   title?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
   url?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['uuid']>;
   wishlistId?: Maybe<Scalars['uuid']>;
 };
 
@@ -497,6 +505,7 @@ export type GiftIdeasMinFields = {
   title?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
   url?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['uuid']>;
   wishlistId?: Maybe<Scalars['uuid']>;
 };
 
@@ -535,6 +544,8 @@ export type GiftIdeasOrderBy = {
   title?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
   url?: InputMaybe<OrderBy>;
+  user?: InputMaybe<UsersOrderBy>;
+  userId?: InputMaybe<OrderBy>;
   wishlist?: InputMaybe<WishlistsOrderBy>;
   wishlistId?: InputMaybe<OrderBy>;
 };
@@ -563,6 +574,8 @@ export enum GiftIdeasSelectColumn {
   /** column name */
   Url = 'url',
   /** column name */
+  UserId = 'userId',
+  /** column name */
   WishlistId = 'wishlistId'
 }
 
@@ -576,6 +589,7 @@ export type GiftIdeasSetInput = {
   title?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
   url?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['uuid']>;
   wishlistId?: InputMaybe<Scalars['uuid']>;
 };
 
@@ -597,6 +611,8 @@ export enum GiftIdeasUpdateColumn {
   UpdatedAt = 'updatedAt',
   /** column name */
   Url = 'url',
+  /** column name */
+  UserId = 'userId',
   /** column name */
   WishlistId = 'wishlistId'
 }
@@ -1358,6 +1374,7 @@ export type Gift_Ideas_Max_Order_By = {
   title?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
   url?: InputMaybe<OrderBy>;
+  userId?: InputMaybe<OrderBy>;
   wishlistId?: InputMaybe<OrderBy>;
 };
 
@@ -1370,6 +1387,7 @@ export type Gift_Ideas_Min_Order_By = {
   title?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
   url?: InputMaybe<OrderBy>;
+  userId?: InputMaybe<OrderBy>;
   wishlistId?: InputMaybe<OrderBy>;
 };
 
@@ -1403,6 +1421,7 @@ export type Gift_Ideas_StreamCursorValueInput = {
   title?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
   url?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['uuid']>;
   wishlistId?: InputMaybe<Scalars['uuid']>;
 };
 
@@ -2143,21 +2162,23 @@ export type UnFollowUserMutationVariables = Exact<{
 
 export type UnFollowUserMutation = { __typename?: 'mutation_root', deleteFollowsByPk?: { __typename?: 'Follows', createdAt: any } | null };
 
-export type GiftIdeaFieldsFragment = { __typename?: 'GiftIdeas', id: any, title: string, description?: string | null, url?: string | null, claims: Array<{ __typename?: 'Claims', isPurchased: boolean, user: { __typename?: 'Users', id: any, name?: string | null, photo?: string | null } }> };
-
-export type GetFollowedUserQueryVariables = Exact<{
-  userId: Scalars['uuid'];
-}>;
-
-
-export type GetFollowedUserQuery = { __typename?: 'query_root', user?: { __typename?: 'Users', id: any, name?: string | null, username: string, photo?: string | null, wishlists: Array<{ __typename?: 'Wishlists', id: any, title: string, giftIdeas: Array<{ __typename?: 'GiftIdeas', id: any, title: string, description?: string | null, url?: string | null, claims: Array<{ __typename?: 'Claims', isPurchased: boolean, user: { __typename?: 'Users', id: any, name?: string | null, photo?: string | null } }> }> }> } | null };
-
 export type ClaimGiftIdeaMutationVariables = Exact<{
   giftIdeaId: Scalars['uuid'];
 }>;
 
 
 export type ClaimGiftIdeaMutation = { __typename?: 'mutation_root', insertClaimsOne?: { __typename?: 'Claims', id: any, isPurchased: boolean } | null };
+
+export type GiftIdeaFieldsFragment = { __typename?: 'GiftIdeas', id: any, title: string, description?: string | null, url?: string | null, user: { __typename?: 'Users', id: any, name?: string | null, photo?: string | null }, createdBy: { __typename?: 'Users', id: any, name?: string | null, photo?: string | null }, claims: Array<{ __typename?: 'Claims', isPurchased: boolean, user: { __typename?: 'Users', id: any, name?: string | null, photo?: string | null } }> };
+
+export type GiftIdeaFormFieldsFragment = { __typename?: 'GiftIdeas', id: any, title: string, description?: string | null, url?: string | null, userId: any, removed: boolean };
+
+export type GetUserGiftIdeasQueryVariables = Exact<{
+  userId: Scalars['uuid'];
+}>;
+
+
+export type GetUserGiftIdeasQuery = { __typename?: 'query_root', user?: { __typename?: 'Users', id: any, name?: string | null, username: string, photo?: string | null, giftIdeas: Array<{ __typename?: 'GiftIdeas', id: any, title: string, description?: string | null, url?: string | null, user: { __typename?: 'Users', id: any, name?: string | null, photo?: string | null }, createdBy: { __typename?: 'Users', id: any, name?: string | null, photo?: string | null }, claims: Array<{ __typename?: 'Claims', isPurchased: boolean, user: { __typename?: 'Users', id: any, name?: string | null, photo?: string | null } }> }> } | null };
 
 export type MarkGiftIdeaAsPurchasedMutationVariables = Exact<{
   giftIdeaId: Scalars['uuid'];
@@ -2175,33 +2196,12 @@ export type UnClaimGiftIdeaMutationVariables = Exact<{
 
 export type UnClaimGiftIdeaMutation = { __typename?: 'mutation_root', deleteClaims?: { __typename?: 'ClaimsMutationResponse', affected_rows: number } | null };
 
-export type CreateGenericWishListMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type CreateGenericWishListMutation = { __typename?: 'mutation_root', insertWishlistsOne?: { __typename?: 'Wishlists', id: any, title: string } | null };
-
-export type GetWishlistByUserIdQueryVariables = Exact<{
-  userId: Scalars['uuid'];
-}>;
-
-
-export type GetWishlistByUserIdQuery = { __typename?: 'query_root', wishlists: Array<{ __typename?: 'Wishlists', id: any, title: string }> };
-
-export type GetMyListQueryVariables = Exact<{
-  userId: Scalars['uuid'];
-}>;
-
-
-export type GetMyListQuery = { __typename?: 'query_root', wishlists: Array<{ __typename?: 'Wishlists', id: any, giftIdeas: Array<{ __typename?: 'GiftIdeas', id: any, title: string }> }> };
-
 export type InsertGiftIdeaMutationVariables = Exact<{
   input: GiftIdeasInsertInput;
 }>;
 
 
-export type InsertGiftIdeaMutation = { __typename?: 'mutation_root', giftIdea?: { __typename?: 'GiftIdeas', id: any, title: string } | null };
-
-export type MyListGiftIdeaFieldsFragment = { __typename?: 'GiftIdeas', id: any, title: string, description?: string | null, url?: string | null, removed: boolean, wishlistId: any };
+export type InsertGiftIdeaMutation = { __typename?: 'mutation_root', giftIdea?: { __typename?: 'GiftIdeas', id: any, title: string, description?: string | null, url?: string | null, userId: any, removed: boolean } | null };
 
 export type UpdateGiftIdeaMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -2209,14 +2209,14 @@ export type UpdateGiftIdeaMutationVariables = Exact<{
 }>;
 
 
-export type UpdateGiftIdeaMutation = { __typename?: 'mutation_root', giftIdea?: { __typename?: 'GiftIdeas', id: any, title: string, description?: string | null, url?: string | null, removed: boolean, wishlistId: any } | null };
+export type UpdateGiftIdeaMutation = { __typename?: 'mutation_root', giftIdea?: { __typename?: 'GiftIdeas', id: any, title: string, description?: string | null, url?: string | null, userId: any, removed: boolean } | null };
 
-export type GetGiftIdeaByIdQueryVariables = Exact<{
+export type GetGiftIdeaFormValuesQueryVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type GetGiftIdeaByIdQuery = { __typename?: 'query_root', giftIdea?: { __typename?: 'GiftIdeas', id: any, title: string, description?: string | null, url?: string | null, removed: boolean, wishlistId: any } | null };
+export type GetGiftIdeaFormValuesQuery = { __typename?: 'query_root', giftIdea?: { __typename?: 'GiftIdeas', id: any, title: string, description?: string | null, url?: string | null, userId: any, removed: boolean } | null };
 
 export type UserFieldsFragment = { __typename?: 'Users', id: any, name?: string | null, username: string, photo?: string | null };
 
@@ -2256,22 +2256,19 @@ export type InsertUserMutationVariables = Exact<{
 
 export type InsertUserMutation = { __typename?: 'mutation_root', user?: { __typename?: 'Users', id: any, name?: string | null, username: string, photo?: string | null } | null };
 
-export const GiftIdeaFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GiftIdeaFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"GiftIdeas"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"claims"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isPurchased"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}}]}}]}}]}}]} as unknown as DocumentNode<GiftIdeaFieldsFragment, unknown>;
-export const MyListGiftIdeaFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"MyListGiftIdeaFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"GiftIdeas"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"removed"}},{"kind":"Field","name":{"kind":"Name","value":"wishlistId"}}]}}]} as unknown as DocumentNode<MyListGiftIdeaFieldsFragment, unknown>;
+export const GiftIdeaFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GiftIdeaFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"GiftIdeas"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}}]}},{"kind":"Field","name":{"kind":"Name","value":"claims"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isPurchased"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}}]}}]}}]}}]} as unknown as DocumentNode<GiftIdeaFieldsFragment, unknown>;
+export const GiftIdeaFormFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GiftIdeaFormFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"GiftIdeas"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"removed"}}]}}]} as unknown as DocumentNode<GiftIdeaFormFieldsFragment, unknown>;
 export const UserFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Users"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}}]}}]} as unknown as DocumentNode<UserFieldsFragment, unknown>;
 export const GetFamilyAndFriendsDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFamilyAndFriendsData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"allUsers"},"name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"EnumValue","value":"ASC"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"usersByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"follows"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"EnumValue","value":"ASC"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetFamilyAndFriendsDataQuery, GetFamilyAndFriendsDataQueryVariables>;
 export const FollowUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"FollowUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"followingId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insertFollows"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"followingId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"followingId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"followerId"}},{"kind":"Field","name":{"kind":"Name","value":"followingId"}}]}}]}}]}}]} as unknown as DocumentNode<FollowUserMutation, FollowUserMutationVariables>;
 export const UnFollowUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnFollowUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"followerId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"followingId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteFollowsByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"followerId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"followerId"}}},{"kind":"Argument","name":{"kind":"Name","value":"followingId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"followingId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<UnFollowUserMutation, UnFollowUserMutationVariables>;
-export const GetFollowedUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFollowedUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"usersByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}},{"kind":"Field","name":{"kind":"Name","value":"wishlists"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"giftIdeas"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"removed"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_neq"},"value":{"kind":"BooleanValue","value":true}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GiftIdeaFields"}}]}}]}}]}}]}},...GiftIdeaFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetFollowedUserQuery, GetFollowedUserQueryVariables>;
 export const ClaimGiftIdeaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ClaimGiftIdea"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insertClaimsOne"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"giftIdeaId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isPurchased"}}]}}]}}]} as unknown as DocumentNode<ClaimGiftIdeaMutation, ClaimGiftIdeaMutationVariables>;
+export const GetUserGiftIdeasDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserGiftIdeas"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"usersByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}},{"kind":"Field","name":{"kind":"Name","value":"giftIdeas"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"removed"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_neq"},"value":{"kind":"BooleanValue","value":true}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GiftIdeaFields"}}]}}]}}]}},...GiftIdeaFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetUserGiftIdeasQuery, GetUserGiftIdeasQueryVariables>;
 export const MarkGiftIdeaAsPurchasedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"MarkGiftIdeaAsPurchased"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateClaims"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"giftIdeaId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"userId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"isPurchased"},"value":{"kind":"BooleanValue","value":true}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<MarkGiftIdeaAsPurchasedMutation, MarkGiftIdeaAsPurchasedMutationVariables>;
 export const UnClaimGiftIdeaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnClaimGiftIdea"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteClaims"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"giftIdeaId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"userId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<UnClaimGiftIdeaMutation, UnClaimGiftIdeaMutationVariables>;
-export const CreateGenericWishListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGenericWishList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insertWishlistsOne"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"StringValue","value":"Wish list","block":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<CreateGenericWishListMutation, CreateGenericWishListMutationVariables>;
-export const GetWishlistByUserIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWishlistByUserId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"wishlists"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"createdById"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<GetWishlistByUserIdQuery, GetWishlistByUserIdQueryVariables>;
-export const GetMyListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMyList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"wishlists"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"createdById"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"giftIdeas"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"removed"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_neq"},"value":{"kind":"BooleanValue","value":true}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"createdAt"},"value":{"kind":"EnumValue","value":"ASC"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<GetMyListQuery, GetMyListQueryVariables>;
-export const InsertGiftIdeaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertGiftIdea"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GiftIdeasInsertInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"giftIdea"},"name":{"kind":"Name","value":"insertGiftIdeasOne"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<InsertGiftIdeaMutation, InsertGiftIdeaMutationVariables>;
-export const UpdateGiftIdeaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGiftIdea"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GiftIdeasSetInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"giftIdea"},"name":{"kind":"Name","value":"updateGiftIdeasByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"MyListGiftIdeaFields"}}]}}]}},...MyListGiftIdeaFieldsFragmentDoc.definitions]} as unknown as DocumentNode<UpdateGiftIdeaMutation, UpdateGiftIdeaMutationVariables>;
-export const GetGiftIdeaByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetGiftIdeaById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"giftIdea"},"name":{"kind":"Name","value":"giftIdeasByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"MyListGiftIdeaFields"}}]}}]}},...MyListGiftIdeaFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetGiftIdeaByIdQuery, GetGiftIdeaByIdQueryVariables>;
+export const InsertGiftIdeaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertGiftIdea"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GiftIdeasInsertInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"giftIdea"},"name":{"kind":"Name","value":"insertGiftIdeasOne"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GiftIdeaFormFields"}}]}}]}},...GiftIdeaFormFieldsFragmentDoc.definitions]} as unknown as DocumentNode<InsertGiftIdeaMutation, InsertGiftIdeaMutationVariables>;
+export const UpdateGiftIdeaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGiftIdea"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GiftIdeasSetInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"giftIdea"},"name":{"kind":"Name","value":"updateGiftIdeasByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GiftIdeaFormFields"}}]}}]}},...GiftIdeaFormFieldsFragmentDoc.definitions]} as unknown as DocumentNode<UpdateGiftIdeaMutation, UpdateGiftIdeaMutationVariables>;
+export const GetGiftIdeaFormValuesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetGiftIdeaFormValues"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"giftIdea"},"name":{"kind":"Name","value":"giftIdeasByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GiftIdeaFormFields"}}]}}]}},...GiftIdeaFormFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetGiftIdeaFormValuesQuery, GetGiftIdeaFormValuesQueryVariables>;
 export const GetUsersByUsernameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsersByUsername"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},...UserFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetUsersByUsernameQuery, GetUsersByUsernameQueryVariables>;
 export const GetUserByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"usersByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},...UserFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetUserByIdQuery, GetUserByIdQueryVariables>;
 export const GetAllUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},...UserFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetAllUsersQuery, GetAllUsersQueryVariables>;

@@ -11,10 +11,12 @@ export const tryPerformMutation = async (
   mutation: (actionContext: AuthenticatedAction) => Promise<any>
 ) => {
   let authenticatedAction = await requireAuthenticatedAction(request);
+  let returnTo =
+    (authenticatedAction.formData.get("returnTo") || redirectTo) + "";
   try {
     await mutation(authenticatedAction);
-    return redirect(redirectTo);
+    return redirect(returnTo);
   } catch (err: unknown) {
-    tryParseActionError(err, authenticatedAction.formData);
+    return tryParseActionError(err, authenticatedAction.formData);
   }
 };

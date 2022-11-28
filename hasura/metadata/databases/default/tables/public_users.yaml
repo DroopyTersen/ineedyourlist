@@ -26,7 +26,7 @@ array_relationships:
   - name: giftIdeas
     using:
       foreign_key_constraint_on:
-        column: created_by_id
+        column: user_id
         table:
           name: gift_ideas
           schema: public

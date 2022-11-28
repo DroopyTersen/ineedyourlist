@@ -7,14 +7,15 @@ import { ErrorContainer } from "./ErrorContainer";
 export const AppErrorBoundary = ({
   error: errorBoundaryError,
 }: {
-  error: any;
+  error?: any;
 }) => {
   let caughtThing = useCatch();
   let error = caughtThing || errorBoundaryError;
-  let message = tryParseMessage(error);
+  console.log("🚀 | error", error);
+  let { title = "Uh oh...", message } = tryParseError(error);
 
   return (
-    <ErrorContainer title="Whoopsies" className="m-4 md:m-6">
+    <ErrorContainer title={title} className="m-4 md:m-6">
       <pre className="whitespace-pre-wrap">{message}</pre>
     </ErrorContainer>
   );
@@ -23,24 +24,38 @@ export const AppErrorBoundary = ({
 type ThrownErrorType =
   | string
   | Error
-  | { status: number; data: any }
+  | { status: number; data: any; statusText: string }
   // DIY Error
   | { message: string }
   // Diy error array
   | { message: string }[];
 
-let tryParseMessage = (thrown: ThrownErrorType) => {
-  if (!thrown) return "Unknown error";
-  if (typeof thrown === "string") return thrown;
-  if ("message" in thrown) return thrown.message;
-  if ("data" in thrown) {
-    return thrown.data?.message || thrown.data;
+let tryParseError = (
+  thrown: ThrownErrorType
+): { title?: string; message: string } => {
+  if (!thrown) return { message: "Unknown error" };
+  if (typeof thrown === "string") return { message: thrown };
+  if ("message" in thrown) return { message: thrown.message };
+  if ("data" in thrown && thrown.data) {
+    return { message: thrown.data?.message || thrown.data };
+  }
+  if ("statusText" in thrown && "status" in thrown) {
+    if (thrown.status === 404) {
+      return {
+        title: "Not Found (404)",
+        message:
+          "Whatever you're looking for doesn't exist (or you don't have access).",
+      };
+    }
+    return { message: `${thrown.status} ${thrown.statusText}` };
   }
   if (Array.isArray(thrown))
-    return thrown
-      .map((e) => e?.message)
-      .filter(Boolean)
-      .join(", ");
+    return {
+      message: thrown
+        .map((e) => e?.message)
+        .filter(Boolean)
+        .join(", "),
+    };
 
-  return "Unknown error";
+  return { message: "Unknown error" };
 };

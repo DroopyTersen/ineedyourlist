@@ -22,7 +22,7 @@ export default function () {
     <MainContentPadded>
       <div className="p-8 text-center rounded-lg bg-gray-100/10">
         <div className="mb-6 text-xl text-secondary">
-          Click below to login with Github
+          Click below to login with your Google or Facebook Account
         </div>
         <LoginButton />
       </div>
@@ -48,7 +48,7 @@ export function LoginButton() {
     <div>
       <Form method="post" action="/login">
         <input type="hidden" name="returnTo" value={returnTo}></input>
-        <button className="btn btn-primary">Login</button>
+        <button className="btn">Log in</button>
       </Form>
     </div>
   );

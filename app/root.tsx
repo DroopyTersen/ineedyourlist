@@ -17,9 +17,11 @@ import { authSession } from "./features/auth/authSession.server";
 import { AppLayout } from "./features/layout/AppLayout";
 import { getUserById } from "./features/users/users.data.server";
 import { AppUser } from "./features/users/users.types";
+import { AppErrorBoundary } from "./toolkit/components/errors/AppErrorBoundary";
 import { getPublicEnvVars } from "./toolkit/remix/envVars.server";
 
 export const links: LinksFunction = () => [
+  { rel: "icon", type: "image/png", href: "/favicon.png" },
   { rel: "stylesheet", href: tailwindStyles },
   { rel: "stylesheet", href: globalStyles },
 ];
@@ -63,6 +65,26 @@ export default function App() {
     </html>
   );
 }
+const AppError = ({ error }: { error?: Error }) => {
+  return (
+    <html lang="en" data-theme="winter">
+      <head>
+        <Meta />
+        <Links />
+      </head>
+      <body className="h-full">
+        <AppLayout>
+          <AppErrorBoundary error={error} />
+        </AppLayout>
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
+      </body>
+    </html>
+  );
+};
+export const ErrorBoundary = AppError;
+export const CatchBoundary = AppError;
 
 export const unstable_shouldReload: ShouldReloadFunction = ({ submission }) =>
   !!submission;

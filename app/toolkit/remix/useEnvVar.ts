@@ -2,7 +2,7 @@ import z from "zod";
 import { useRouteData } from "./useRouteData";
 
 export const useEnvVars = (): PublicEnvVars => {
-  return useRouteData((r) => r.id === "root" && r?.data?.ENV) as PublicEnvVars;
+  return useRouteData((r) => r?.id === "root" && r?.data?.ENV) as PublicEnvVars;
 };
 
 export const useEnvVar = (key: keyof PublicEnvVars, fallback = ""): string => {

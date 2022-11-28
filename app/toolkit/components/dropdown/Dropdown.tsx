@@ -19,20 +19,34 @@ export function Dropdown({
     </div>
   );
 }
-
-function DropdownContent({ className = "", children, elem = "div" }) {
+interface DropdownContentProps {
+  className?: string;
+  elem?: string;
+  children: React.ReactNode;
+}
+function DropdownContent({
+  className = "",
+  children,
+  elem = "div",
+}: DropdownContentProps) {
   let Elem: any = elem;
   return (
     <Elem
       tabIndex={0}
-      className={`mt-1 shadow dropdown-content bg-base-300 rounded-box ${className}`}
+      className={`mt-1 shadow dropdown-content bg-base-200 rounded-box ${className}`}
     >
       {children}
     </Elem>
   );
 }
-
-function DropdownMenuContent({ className = "", children }) {
+interface DropdownMenuContentProps {
+  className?: string;
+  children: React.ReactNode;
+}
+function DropdownMenuContent({
+  className = "",
+  children,
+}: DropdownMenuContentProps) {
   return (
     <DropdownContent elem="ul" className={`menu p-2 ${className}`}>
       {children}

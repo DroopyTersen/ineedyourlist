@@ -40,17 +40,17 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   let profile = await fetchProfile(githubTokenResult.access_token);
   console.log("🚀 | profile", profile);
-  if (!profile?.email) {
+  if (!profile?.sub) {
     throw new Error("Unable to get logged in user email");
   }
   let user: AppUser | undefined | null = await getUserByUsername(
     adminClient,
-    profile?.email
+    profile?.sub
   );
   if (!user) {
     user = await insertUser(adminClient, {
       name: profile.name,
-      username: profile.email || profile.preferred_username,
+      username: profile.sub,
       photo: profile.picture,
     });
   }

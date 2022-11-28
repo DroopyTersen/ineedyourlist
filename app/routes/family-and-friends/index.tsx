@@ -26,24 +26,26 @@ export default function FamilyAndFrinedsRoute() {
     <MainContentPadded>
       <h1 className="mb-1 text-secondary/90">Family {"&"} Friends</h1>
       <p className="mt-0">Who do you have to buy gifts for?</p>
-      <Form className="flex items-end gap-2" method="post">
-        <SelectField name="userId" label="Add someone to your list">
-          <option value="">Choose someone...</option>
-          {data?.availableUsers?.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.name}
-            </option>
-          ))}
-        </SelectField>
-        <button
-          name="intent"
-          value="followUser"
-          type="submit"
-          className="relative btn bottom-[2px]"
-        >
-          Add
-        </button>
-      </Form>
+      {data?.availableUsers?.length > 0 && (
+        <Form className="flex items-end gap-2" method="post">
+          <SelectField name="userId" label="Add someone to your list">
+            <option value="">Choose someone...</option>
+            {data?.availableUsers?.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.name}
+              </option>
+            ))}
+          </SelectField>
+          <button
+            name="intent"
+            value="followUser"
+            type="submit"
+            className="relative btn bottom-[2px]"
+          >
+            Add
+          </button>
+        </Form>
+      )}
       <ul className="text-xl">
         {data?.followedUsers?.map((user) => (
           <li key={user.id}>

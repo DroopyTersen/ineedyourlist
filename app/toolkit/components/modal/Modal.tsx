@@ -82,7 +82,7 @@ export const Modal = ({
                     {title ? (
                       <Dialog.Title className="modal-title" asChild>
                         {typeof title === "string" ? (
-                          <h2 className="my-0 flex items-center mb-8 text-xl font-bold leading-7 text-gray-200 sm:text-3xl sm:truncate">
+                          <h2 className="flex items-center my-0 mb-8 text-xl font-bold leading-7 dark:text-gray-200 sm:text-3xl sm:truncate">
                             {title}
                           </h2>
                         ) : (

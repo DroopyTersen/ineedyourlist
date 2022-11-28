@@ -12,10 +12,13 @@ export function AccountDropodown({ user }: AccountDropodownProps) {
   return (
     <Dropdown align="right">
       <Dropdown.CircleTrigger>
-        <AvatarImage photo={user.photo} name={user.name || user.username} />
+        <AvatarImage
+          photo={user.photo || ""}
+          name={user.name || user.username}
+        />
       </Dropdown.CircleTrigger>
       <Dropdown.Content className="p-2 min-w-[200px] ">
-        <div className="my-2 text-sm text-center text-gray-300">
+        <div className="my-2 text-sm text-center text-gray-500 dark:text-gray-300">
           {user.name || user.username}
         </div>
 

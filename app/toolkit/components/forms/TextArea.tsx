@@ -8,7 +8,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       <textarea
         ref={ref}
         {...props}
-        className={`textarea w-full textarea-accent border-none text-white bg-base-200/80 ${className}`}
+        className={`textarea w-full textarea-accent border-gray-200 ${className}`}
       ></textarea>
     );
   }

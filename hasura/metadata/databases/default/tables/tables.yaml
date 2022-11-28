@@ -1,1 +1,5 @@
+- "!include public_claims.yaml"
+- "!include public_follows.yaml"
+- "!include public_gift_ideas.yaml"
 - "!include public_users.yaml"
+- "!include public_wishlists.yaml"

@@ -14,9 +14,9 @@ export function AppLayout({ children }: AppLayoutProps) {
   let environment = useEnvVar("PUBLIC_ENV");
   return (
     <>
-      <header className="w-full px-2 navbar bg-base-200">
+      <header className="w-full px-2 navbar">
         <div className="navbar-start">
-          <Dropdown align="left">
+          <Dropdown align="left" className="w-52">
             <Dropdown.CircleTrigger>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -35,25 +35,28 @@ export function AppLayout({ children }: AppLayoutProps) {
             </Dropdown.CircleTrigger>
             <Dropdown.MenuContent>
               <li>
-                <a href="/">Homepage</a>
+                <Link to="/my-list">My List</Link>
               </li>
               <li>
-                <a href="/portfolio">Portfolio</a>
+                <Link to="/family-and-friends">Family {"&"} Friends</Link>
               </li>
               <li>
-                <a>About</a>
+                <Link to="/my-list">Shopping List</Link>
               </li>
             </Dropdown.MenuContent>
           </Dropdown>
         </div>
         <div className="relative navbar-center">
           {environment && environment !== "PROD" && (
-            <span className="absolute top-0 text-[11px] text-center w-full text-white/50">
+            <span className="absolute top-0 text-[11px] text-center w-full dark:text-white/50">
               {environment}
             </span>
           )}
-          <Link to="/" className="text-xl text-white normal-case btn btn-ghost">
-            ineedyourlist
+          <Link
+            to="/"
+            className="text-xl normal-case dark:text-white text-primary-focus/80 btn btn-ghost"
+          >
+            I Need Your List
           </Link>
         </div>
         <div className="navbar-end">

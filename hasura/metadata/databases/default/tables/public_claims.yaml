@@ -1,0 +1,48 @@
+table:
+  name: claims
+  schema: public
+object_relationships:
+  - name: giftIdea
+    using:
+      foreign_key_constraint_on: gift_idea_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      set:
+        user_id: x-hasura-User-Id
+      columns:
+        - gift_idea_id
+        - is_purchased
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - is_purchased
+        - gift_idea_id
+        - id
+        - user_id
+      filter:
+        giftIdea:
+          createdBy:
+            followers:
+              follower_id:
+                _eq: X-Hasura-User-Id
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - is_purchased
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null
+delete_permissions:
+  - role: user
+    permission:
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id

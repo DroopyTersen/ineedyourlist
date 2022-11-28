@@ -26,7 +26,7 @@ export const links: LinksFunction = () => [
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "I Need Your List",
   viewport: "width=device-width,initial-scale=1",
 });
 
@@ -47,7 +47,7 @@ export const loader = async ({ request }: LoaderArgs) => {
 
 export default function App() {
   return (
-    <html lang="en" data-theme="droopy-theme">
+    <html lang="en" data-theme="winter">
       <head>
         <Meta />
         <Links />

@@ -86,7 +86,7 @@ export function ConfirmationModal({
           {status !== "error" && (
             <button
               type="button"
-              className={"btn btn-error text-white"}
+              className={"btn btn-error"}
               disabled={fetcher?.state !== "idle"}
               onClick={(e) => {
                 e.preventDefault();

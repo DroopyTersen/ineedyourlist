@@ -34,7 +34,7 @@ function DropdownContent({ className = "", children, elem = "div" }) {
 
 function DropdownMenuContent({ className = "", children }) {
   return (
-    <DropdownContent elem="ul" className={`menu p-2`}>
+    <DropdownContent elem="ul" className={`menu p-2 ${className}`}>
       {children}
     </DropdownContent>
   );

@@ -94,7 +94,7 @@ export default function MyProfileRoute() {
             />
           </div>
           <div>
-            <button className="btn btn-primary btn-block">Save</button>
+            <button className="btn btn-block">Save</button>
           </div>
         </fieldset>
       </Form>

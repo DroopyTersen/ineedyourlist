@@ -8,6 +8,14 @@ object_relationships:
   - name: wishlist
     using:
       foreign_key_constraint_on: wishlist_id
+array_relationships:
+  - name: claims
+    using:
+      foreign_key_constraint_on:
+        column: gift_idea_id
+        table:
+          name: claims
+          schema: public
 insert_permissions:
   - role: user
     permission:

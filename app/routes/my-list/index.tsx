@@ -1,6 +1,5 @@
 import { ActionArgs, json, LoaderArgs } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import { tryPerformMutation } from "~/common/remix.utils";
 import { requireAuthenticatedLoader } from "~/features/auth/auth.remix.server";
 import { MainContentPadded } from "~/features/layout/AppLayout";
 import {
@@ -8,6 +7,7 @@ import {
   removeGiftIdea,
 } from "~/features/my-list/my-list.data.server";
 import { AppErrorBoundary } from "~/toolkit/components/errors/AppErrorBoundary";
+import { tryPerformMutation } from "~/toolkit/remix/tryPerformMutation";
 
 export const loader = async ({ request, params }: LoaderArgs) => {
   let { gqlClient, userId } = await requireAuthenticatedLoader(request);

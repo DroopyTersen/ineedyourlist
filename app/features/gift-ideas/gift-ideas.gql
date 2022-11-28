@@ -1,0 +1,22 @@
+mutation ClaimGiftIdea($giftIdeaId: uuid!) {
+  insertClaimsOne(object: { giftIdeaId: $giftIdeaId }) {
+    id
+    isPurchased
+  }
+}
+mutation MarkGiftIdeaAsPurchased($giftIdeaId: uuid!, $userId: uuid!) {
+  updateClaims(
+    where: { giftIdeaId: { _eq: $giftIdeaId }, userId: { _eq: $userId } }
+    _set: { isPurchased: true }
+  ) {
+    affected_rows
+  }
+}
+
+mutation UnClaimGiftIdea($giftIdeaId: uuid!, $userId: uuid!) {
+  deleteClaims(
+    where: { giftIdeaId: { _eq: $giftIdeaId }, userId: { _eq: $userId } }
+  ) {
+    affected_rows
+  }
+}

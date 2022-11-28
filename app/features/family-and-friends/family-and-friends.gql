@@ -1,0 +1,61 @@
+query GetFamilyAndFriendsData($userId: uuid!) {
+  allUsers: users(orderBy: { name: ASC }) {
+    id
+    name
+    photo
+  }
+  user: usersByPk(id: $userId) {
+    follows(orderBy: { user: { name: ASC } }) {
+      user {
+        id
+        name
+        photo
+        username
+      }
+    }
+  }
+}
+
+mutation FollowUser($followingId: uuid!) {
+  insertFollows(objects: { followingId: $followingId }) {
+    returning {
+      followerId
+      followingId
+    }
+  }
+}
+
+mutation UnFollowUser($followerId: uuid!, $followingId: uuid!) {
+  deleteFollowsByPk(followerId: $followerId, followingId: $followingId) {
+    createdAt
+  }
+}
+fragment GiftIdeaFields on GiftIdeas {
+  id
+  title
+  description
+  url
+  claims {
+    isPurchased
+    user {
+      id
+      name
+      photo
+    }
+  }
+}
+query GetFollowedUser($userId: uuid!) {
+  user: usersByPk(id: $userId) {
+    id
+    name
+    username
+    photo
+    wishlists {
+      id
+      title
+      giftIdeas(where: { removed: { _neq: false } }) {
+        ...GiftIdeaFields
+      }
+    }
+  }
+}

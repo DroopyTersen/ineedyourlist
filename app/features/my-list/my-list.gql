@@ -29,7 +29,7 @@ mutation InsertGiftIdea($input: GiftIdeasInsertInput!) {
   }
 }
 
-fragment GiftIdeaFields on GiftIdeas {
+fragment MyListGiftIdeaFields on GiftIdeas {
   id
   title
   description
@@ -40,12 +40,12 @@ fragment GiftIdeaFields on GiftIdeas {
 
 mutation UpdateGiftIdea($id: uuid!, $input: GiftIdeasSetInput!) {
   giftIdea: updateGiftIdeasByPk(pk_columns: { id: $id }, _set: $input) {
-    ...GiftIdeaFields
+    ...MyListGiftIdeaFields
   }
 }
 
 query GetGiftIdeaById($id: uuid!) {
   giftIdea: giftIdeasByPk(id: $id) {
-    ...GiftIdeaFields
+    ...MyListGiftIdeaFields
   }
 }

@@ -1,9 +1,9 @@
 import { ActionArgs } from "@remix-run/node";
-import { tryPerformMutation } from "~/common/remix.utils";
 import { MainContentPadded } from "~/features/layout/AppLayout";
 import { GiftIdeaForm } from "~/features/my-list/GiftIdeaForm";
 import { insertGiftIdea } from "~/features/my-list/my-list.data.server";
 import { AppErrorBoundary } from "~/toolkit/components/errors/AppErrorBoundary";
+import { tryPerformMutation } from "~/toolkit/remix/tryPerformMutation";
 
 export default function AddGiftIdeaRoute() {
   return (

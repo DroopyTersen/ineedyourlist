@@ -16,7 +16,7 @@ export function AppLayout({ children }: AppLayoutProps) {
     <>
       <header className="w-full px-2 navbar">
         <div className="navbar-start">
-          <Dropdown align="left" className="w-52">
+          <Dropdown align="left">
             <Dropdown.CircleTrigger>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,7 @@ export function AppLayout({ children }: AppLayoutProps) {
                 />
               </svg>
             </Dropdown.CircleTrigger>
-            <Dropdown.MenuContent>
+            <Dropdown.MenuContent className="w-52">
               <li>
                 <Link to="/my-list">My List</Link>
               </li>
@@ -45,19 +45,19 @@ export function AppLayout({ children }: AppLayoutProps) {
               </li>
             </Dropdown.MenuContent>
           </Dropdown>
-        </div>
-        <div className="relative navbar-center">
-          {environment && environment !== "PROD" && (
-            <span className="absolute top-0 text-[11px] text-center w-full dark:text-white/50">
-              {environment}
-            </span>
-          )}
-          <Link
-            to="/"
-            className="text-xl normal-case dark:text-white text-primary-focus/80 btn btn-ghost"
-          >
-            I Need Your List
-          </Link>
+          <div className="relative">
+            {/* {environment && environment !== "PROD" && (
+              <span className="absolute top-0 text-[11px] text-center w-full dark:text-white/50">
+                {environment}
+              </span>
+            )} */}
+            <Link
+              to="/"
+              className="text-left normal-case md:text-xl dark:text-white text-primary-focus/80 btn btn-ghost"
+            >
+              I Need Your List
+            </Link>
+          </div>
         </div>
         <div className="navbar-end">
           <div>

@@ -65,6 +65,7 @@ export const removeGiftIdea = async (
   formData: FormData
 ) => {
   let input = GiftIdeaRemoveSchema.parse(Object.fromEntries(formData));
+  // TODO: prevent removal if someone has already purchased/claimed it
   let data = await gqlClient.request(UpdateGiftIdeaDocument, {
     id: input?.giftIdeaId,
     input: {

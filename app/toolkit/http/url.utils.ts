@@ -58,6 +58,10 @@ export const getAuthRedirectUri = (
   if (!returnTo) return "";
 
   let urlParts = new URL(returnTo);
+  console.log("🚀 | urlParts", urlParts);
+  if (!urlParts.origin.includes("localhost")) {
+    urlParts.protocol = "https";
+  }
   let redirectUri = urlParts.origin + callbackPath;
   if (appendReturnTo) {
     redirectUri += `?returnTo=${encodeURIComponent(returnTo)}`;

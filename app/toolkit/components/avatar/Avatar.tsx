@@ -20,6 +20,7 @@ export function AvatarImage({ className = "", photo = "", name }: Props) {
       className={`relative inline-block h-10 w-10 rounded-full ring-2 ring-gray-300`}
       src={photo}
       alt={name}
+      referrerPolicy="no-referrer"
     />
   );
 }

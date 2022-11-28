@@ -38,7 +38,7 @@ export const authSession = {
     });
   },
   /** Deletes the session cookie and redirects the user. */
-  logout: async (request: Request, redirectTo = "/") => {
+  logout: async (request: Request, redirectTo = "/login") => {
     const session = await authSession._getSession(request);
     return redirect(redirectTo, {
       headers: {

@@ -29,7 +29,11 @@ export function AccountDropodown({ user }: AccountDropodownProps) {
           My Profile
         </Link>
         <hr className="my-2 border-gray-900/10" />
-        <FormButton action="/logout" className="btn btn-ghost btn-sm btn-block">
+        <FormButton
+          action="/logout"
+          method="post"
+          className="btn btn-ghost btn-sm btn-block"
+        >
           Log out
         </FormButton>
       </Dropdown.Content>

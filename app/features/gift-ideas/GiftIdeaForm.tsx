@@ -19,15 +19,17 @@ export function GiftIdeaForm({ backUrl, giftIdea }: GiftIdeaFormProps) {
         autoFocus
         defaultValue={giftIdea?.title || ""}
       />
-      <InputField
+      <TextAreaField
         label="Link"
         name="url"
+        rows={3}
         hint="Is there a url to help someone get the right thing?"
         defaultValue={giftIdea?.url || ""}
       />
       <TextAreaField
         label="Description"
         name="description"
+        rows={5}
         hint="Tell us more about it. Size? Color? Etc..."
         defaultValue={giftIdea?.description || ""}
       />

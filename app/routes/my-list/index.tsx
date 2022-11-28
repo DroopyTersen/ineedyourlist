@@ -1,4 +1,4 @@
-import { ActionArgs, json, LoaderArgs } from "@remix-run/node";
+import { ActionArgs, json, LoaderArgs, redirect } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { AiOutlineGift } from "react-icons/ai";
 import { requireAuthenticatedLoader } from "~/features/auth/auth.remix.server";
@@ -14,6 +14,9 @@ import { tryPerformMutation } from "~/toolkit/remix/tryPerformMutation";
 export const loader = async ({ request, params }: LoaderArgs) => {
   let { gqlClient, userId } = await requireAuthenticatedLoader(request);
   let data = await getUserWithGiftIdeas(gqlClient, userId);
+  if ((data?.giftIdeas?.length || 0) === 0) {
+    return redirect("/my-list/add");
+  }
   return json({ myGiftIdeas: data?.giftIdeas || [] });
 };
 

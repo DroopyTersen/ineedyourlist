@@ -91,6 +91,7 @@ export default function MyProfileRoute() {
               alt="Profile photo"
               className="m-0 mt-10 rounded-full w-14 h-14"
               src={photo || "https://via.placeholder.com/160?text=No Photo"}
+              referrerPolicy="no-referrer"
             />
           </div>
           <div>

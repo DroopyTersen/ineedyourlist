@@ -1,9 +1,10 @@
 FROM hasura/graphql-engine:latest
 
 ENV HASURA_GRAPHQL_ENABLE_CONSOLE=true
+ENV HASURA_GRAPHQL_DATABASE_URL=$DATABASE_URL
 ENV HASURA_GRAPHQL_DEV_MODE=true
 ENV HASURA_GRAPHQL_UNAUTHORIZED_ROLE=anonymous
-
+ENV HASURA_GRAPHQL_EXPERIMENTAL_FEATURES: naming_convention
 # $DATABASE_URL points at a Postgres database
 CMD graphql-engine \
     --database-url $DATABASE_URL \

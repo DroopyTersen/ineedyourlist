@@ -53,7 +53,7 @@ query GetFollowedUser($userId: uuid!) {
     wishlists {
       id
       title
-      giftIdeas(where: { removed: { _neq: false } }) {
+      giftIdeas(where: { removed: { _neq: true } }) {
         ...GiftIdeaFields
       }
     }

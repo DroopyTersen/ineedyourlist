@@ -13,3 +13,26 @@ html .prose {
 .form-control {
   width: 100%;
 }
+
+
+details {
+  user-select: none;
+
+  & summary svg {
+    transition: transform 0.2s ease-in-out;
+    // transform: rotate(90deg);
+  }
+}
+
+details[open] {
+  & summary svg {
+    transform: rotate(-180deg);
+
+  }
+
+
+}
+
+summary {
+  cursor: pointer;
+}

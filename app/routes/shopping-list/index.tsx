@@ -1,6 +1,7 @@
 import { ActionArgs, json, LoaderArgs, redirect } from "@remix-run/node";
 import { Link, useFetcher, useLoaderData } from "@remix-run/react";
 import { BsTrash } from "react-icons/bs";
+import { MdFamilyRestroom } from "react-icons/md";
 import {
   requireAuthenticatedAction,
   requireAuthenticatedLoader,
@@ -48,6 +49,23 @@ export default function ShoppingListRoute() {
         <h1 className="m-0 text-secondary/90">Shopping List</h1>
       </div>
       <div className="max-w-2xl space-y-4">
+        {data?.usersToShopFor?.length === 0 && (
+          <div className="shadow-xl card card-compact sm:card-normal bg-base-100">
+            <div className="card-body">
+              <div className="space-y-4 text-center">
+                <p className="m-0">
+                  You haven't added Family {"&"} Friends to buy gifts for yet!
+                </p>
+                <div>
+                  <Link to="/family-and-friends" className="gap-2 btn">
+                    <MdFamilyRestroom size={20} />
+                    Add Family {"&"} Friends
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         {data?.usersToShopFor?.map((user) => (
           <div
             key={user.id}

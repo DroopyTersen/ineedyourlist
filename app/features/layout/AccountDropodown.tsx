@@ -25,9 +25,9 @@ export function AccountDropodown({ user }: AccountDropodownProps) {
           My List
         </Link>
 
-        <Link to="/my-profile" className="btn btn-ghost btn-sm btn-block">
+        {/* <Link to="/my-profile" className="btn btn-ghost btn-sm btn-block">
           My Profile
-        </Link>
+        </Link> */}
         <hr className="my-2 border-gray-900/10" />
         <FormButton
           action="/logout"

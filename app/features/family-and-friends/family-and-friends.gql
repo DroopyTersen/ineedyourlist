@@ -13,6 +13,12 @@ query GetFamilyAndFriendsData($userId: uuid!) {
         username
       }
     }
+    claims {
+      id
+      giftIdea {
+        userId
+      }
+    }
   }
 }
 

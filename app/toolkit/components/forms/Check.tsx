@@ -6,11 +6,12 @@ export const Check = forwardRef<HTMLInputElement, CheckProps>(
     return (
       <label
         className={
-          "label cursor-pointer justify-start gap-2 hover:bg-primary/5 rounded " + className
+          "label cursor-pointer justify-start gap-2 hover:bg-primary/5 rounded " +
+          className
         }
       >
         <input
-          className="border-2 checkbox checkbox-primary"
+          className="border-2 checkbox checkbox-accent"
           type="checkbox"
           id={name}
           name={name}

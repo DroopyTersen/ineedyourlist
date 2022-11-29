@@ -23,7 +23,10 @@ export const GiftIdeaCard = ({
   let isSecret = giftIdea?.user?.id !== giftIdea?.createdBy?.id;
 
   return (
-    <div key={giftIdea.id} className="w-full max-w-full card glass">
+    <div
+      key={giftIdea.id}
+      className="w-full max-w-full shadow-xl card bg-base-100 not-prose"
+    >
       {currentUser?.id === giftIdea?.createdBy?.id && (
         <Link
           to={giftIdea.id}
@@ -33,17 +36,13 @@ export const GiftIdeaCard = ({
         </Link>
       )}
       <div className="card-body">
-        <div className="flex flex-col mb-4">
+        <div className="flex flex-col mb-4 top-content">
           <h2 className="m-0 card-title text-accent">
-            {isSecret ? (
+            {/* {isSecret ? (
               <FaUserSecret />
             ) : (
-              <>
-                {claimStatus === "Up for grabs" && <SlBulb />}
-                {claimStatus === "Claimed" && <SlLock />}
-                {claimStatus === "Purchased" && <SlCheck />}
-              </>
-            )}
+              )} */}
+            <ClaimStatusIcon claimStatus={claimStatus} />
             <span className={claimStatus === "Purchased" ? "line-through" : ""}>
               {giftIdea.title}
             </span>
@@ -55,124 +54,50 @@ export const GiftIdeaCard = ({
             </div>
           </div>
         </div>
-        {isSecret && (
-          <p className="text-sm">
-            <b>Shhhh!</b> Don't say anything to {giftIdea?.user?.name} about
-            this one. They don't know about it and won't see it because it was
-            added by {giftIdea?.createdBy?.name}.
-          </p>
-        )}
-        <div className="flex flex-row items-center justify-center gap-4 card-actions flex-nowrap">
-          {!claim && (
-            <>
-              <div className="flex-grow space-y-2">
-                <div className="leading-tight">
-                  <div>
-                    <b>{claimStatus}</b>
-                  </div>
-                  <div className="m-0">No one has claimed this gift yet.</div>
-                </div>
-                <Form method="post">
-                  <input type="hidden" name="giftIdeaId" value={giftIdea.id} />
-                  <input type="hidden" name="intent" value="claim" />
-                  <button className="btn btn-success btn-block">
-                    I'll get it!
-                  </button>
-                </Form>
-              </div>
-            </>
-          )}
-          {claim && claim?.user?.id === currentUser?.id && !claim.isPurchased && (
-            <>
-              <div className="flex-grow">
-                <AvatarFull
-                  photo={claim?.user?.photo || ""}
-                  title={
-                    (
-                      <div className="flex items-center gap-1">
-                        {claimStatus}
-                        <SlLock />
-                      </div>
-                    ) as any
-                  }
-                  subtitle={claim?.user?.name + " (you!)"}
-                />
-                <div className="m-0">
-                  Go buy it, then come back here an mark it as purchased.
-                </div>
-                <Form method="post" className="flex flex-col gap-2 mt-2">
-                  <input type="hidden" name="giftIdeaId" value={giftIdea.id} />
-                  <button
-                    name="intent"
-                    value="markPurchased"
-                    className="btn btn-success"
-                  >
-                    I bought it!
-                  </button>
-                  <button
-                    name="intent"
-                    value="unclaim"
-                    className="btn btn-error"
-                  >
-                    Not gonna get it
-                  </button>
-                </Form>
-              </div>
-            </>
-          )}
-
-          {claim && claim?.user?.id !== currentUser?.id && !claim.isPurchased && (
-            <>
-              <div className="flex-grow">
-                <AvatarFull
-                  photo={claim?.user?.photo || ""}
-                  title={
-                    (
-                      <div className="flex items-center gap-1">
-                        {claimStatus}
-                        <SlLock />
-                      </div>
-                    ) as any
-                  }
-                  subtitle={claim?.user?.name + ""}
-                />
-                <p className="mt-2">
-                  Someone else has already called dibs! Once they buy it,
-                  they'll come back here and mark it as purchased.
+        <div className="grid grid-cols-1 gap-8 lg:gap-8 lg:grid-cols-2">
+          <div className="space-y-4 lg:space-y-8 left-content">
+            {claim ? (
+              <AvatarFull
+                photo={claim?.user?.photo || ""}
+                title={
+                  (
+                    <div className="flex items-center gap-1">
+                      {claimStatus}
+                      <ClaimStatusIcon claimStatus={claimStatus} />
+                    </div>
+                  ) as any
+                }
+                subtitle={
+                  claim?.user?.name +
+                  (claim.user?.id === currentUser?.id ? " (you!)" : "")
+                }
+              />
+            ) : (
+              <AvatarFull
+                icon={<></>}
+                title={claimStatus}
+                subtitle={"No one has claimed this gift idea yet."}
+              />
+            )}
+            {isSecret && (
+              <div className="flex items-center gap-2 p-4 rounded bg-secondary-content/30">
+                <FaUserSecret size={30} />
+                <p className="m-0 text-sm">
+                  <b className="text-base">Shhhh!</b> Don't say anything to{" "}
+                  {giftIdea?.user?.name} about this one. They don't know about
+                  it and won't see it because it was added by{" "}
+                  {giftIdea?.createdBy?.name}.
                 </p>
               </div>
-              <div></div>
-            </>
-          )}
-          {claim && claim?.user?.id !== currentUser?.id && claim.isPurchased && (
-            <>
-              <div className="flex-grow">
-                <AvatarFull
-                  photo={claim?.user?.photo || ""}
-                  subtitle={claim?.user?.name || ""}
-                  title={claimStatus}
-                />
-                <p className="mt-4">Someone already bought this.</p>
-              </div>
-              <div></div>
-            </>
-          )}
-          {claim && claim?.user?.id === currentUser?.id && claim.isPurchased && (
-            <>
-              <div className="flex-grow">
-                <AvatarFull
-                  photo={claim?.user?.photo || ""}
-                  title={
-                    (
-                      <div className="flex items-center gap-1">
-                        {claimStatus}
-                        <SlLock />
-                      </div>
-                    ) as any
-                  }
-                  subtitle={claim?.user?.name + " (you!)"}
-                />
-                <Form method="post" className="flex flex-col gap-2 mt-2">
+            )}
+          </div>
+          <div className="right-content">
+            {claim && claim?.user?.id === currentUser?.id ? (
+              claim.isPurchased ? (
+                <Form method="post" className="flex flex-col gap-2">
+                  <p className="text-sm text-center">
+                    Congrats! You purchased this already.
+                  </p>
                   <input type="hidden" name="giftIdeaId" value={giftIdea.id} />
                   <button
                     name="intent"
@@ -182,11 +107,71 @@ export const GiftIdeaCard = ({
                     Nevermind, I don't have it
                   </button>
                 </Form>
-              </div>
-            </>
-          )}
+              ) : (
+                <div>
+                  <Form method="post" className="flex flex-col gap-2">
+                    <input
+                      type="hidden"
+                      name="giftIdeaId"
+                      value={giftIdea.id}
+                    />
+                    <button
+                      name="intent"
+                      value="markPurchased"
+                      className="btn btn-success"
+                    >
+                      I bought it!
+                    </button>
+                    <button
+                      name="intent"
+                      value="unclaim"
+                      className="btn btn-error"
+                    >
+                      Not gonna get it
+                    </button>
+                  </Form>
+                  <div className="m-0 mt-4 text-sm">
+                    Go buy it, then come back here an mark it as purchased.
+                  </div>
+                </div>
+              )
+            ) : claim ? (
+              claim.isPurchased ? (
+                <p>Someone already bought this.</p>
+              ) : (
+                <p className="m-0 text-sm">
+                  Someone else has already called dibs! Once they buy it,
+                  they'll come back here and mark it as purchased.
+                </p>
+              )
+            ) : (
+              <Form method="post">
+                <input type="hidden" name="giftIdeaId" value={giftIdea.id} />
+                <input type="hidden" name="intent" value="claim" />
+                <button className="btn btn-success btn-block">
+                  I'll get it!
+                </button>
+              </Form>
+            )}
+          </div>
         </div>
       </div>
     </div>
+  );
+};
+
+export const ClaimStatusIcon = ({
+  claimStatus,
+  ...rest
+}: {
+  claimStatus: ClaimStatus;
+  [key: string]: any;
+}) => {
+  return (
+    <>
+      {claimStatus === "Up for grabs" && <SlBulb {...rest} />}
+      {claimStatus === "Claimed" && <SlLock {...rest} />}
+      {claimStatus === "Purchased" && <SlCheck {...rest} />}
+    </>
   );
 };

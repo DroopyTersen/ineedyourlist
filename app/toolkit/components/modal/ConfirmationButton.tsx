@@ -54,10 +54,13 @@ export function ConfirmationModal({
   let status = errors ? "error" : fetcher?.state;
 
   useEffect(() => {
-    if (fetcher?.state === "idle" && fetcher?.data?.status === "success") {
+    if (
+      fetcher?.state === "idle" &&
+      (fetcher?.data?.status === "success" || fetcher?.type === "done")
+    ) {
       setIsOpen(false);
     }
-  }, [fetcher.state, fetcher?.data]);
+  }, [fetcher.state, fetcher?.data, fetcher?.type]);
 
   return (
     <Modal

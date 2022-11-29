@@ -1,0 +1,21 @@
+query GetUserShoppingList($userId: uuid!) {
+  user: usersByPk(id: $userId) {
+    id
+    name
+    claims(orderBy: { giftIdea: { createdAt: ASC } }) {
+      isPurchased
+      giftIdea {
+        id
+        title
+        userId
+      }
+    }
+  }
+  followedUsers: follows {
+    user {
+      id
+      name
+      photo
+    }
+  }
+}

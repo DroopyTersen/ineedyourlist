@@ -10,6 +10,7 @@ import {
   unfollowUser,
 } from "~/features/family-and-friends/family-and-friends.data.server";
 import { MainContentPadded } from "~/features/layout/AppLayout";
+import { AvatarFull } from "~/toolkit/components/avatar/Avatar";
 import { AppErrorBoundary } from "~/toolkit/components/errors/AppErrorBoundary";
 import { SelectField } from "~/toolkit/components/forms";
 import { tryParseActionError } from "~/toolkit/remix/tryParseActionError.server";
@@ -25,7 +26,6 @@ export default function FamilyAndFrinedsRoute() {
   return (
     <MainContentPadded>
       <h1 className="mb-1 text-secondary/90">Family {"&"} Friends</h1>
-      <p className="mt-0">Who do you have to buy gifts for?</p>
       {data?.availableUsers?.length > 0 && (
         <Form className="flex items-end gap-2" method="post">
           <SelectField name="userId" label="Add someone to your list">
@@ -46,15 +46,28 @@ export default function FamilyAndFrinedsRoute() {
           </button>
         </Form>
       )}
-      <ul className="text-xl">
-        {data?.followedUsers?.map((user) => (
-          <li key={user.id}>
-            <Link className="text-accent" to={`${user.id}`}>
-              {user.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
+
+      <div className="mt-6 shadow-xl card bg-base-100 not-prose">
+        <div className="card-body">
+          <h2 className="m-0 card-title">Who are you buying gifts for?</h2>
+          <ul className="text-xl list-none">
+            {data?.followedUsers?.map((user) => (
+              <li key={user.id}>
+                <Link className="block py-4 text-accent" to={`${user.id}`}>
+                  <AvatarFull
+                    title={
+                      (
+                        <span className="text-xl text-accent">{user.name}</span>
+                      ) as any
+                    }
+                    photo={user?.photo || ""}
+                  />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </MainContentPadded>
   );
 }

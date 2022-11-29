@@ -1,4 +1,5 @@
 import { Form, Link } from "@remix-run/react";
+import { BsTrash } from "react-icons/bs";
 import { GiftIdeaFormFieldsFragment } from "~/.gql/graphql.types";
 import { InputField, TextAreaField } from "~/toolkit/components/forms";
 import { ConfirmationButton } from "~/toolkit/components/modal/ConfirmationButton";
@@ -10,7 +11,7 @@ interface GiftIdeaFormProps {
 
 export function GiftIdeaForm({ backUrl, giftIdea }: GiftIdeaFormProps) {
   return (
-    <Form className="max-w-2xl p-4 space-y-6 bg-gray-100 rounded" method="post">
+    <Form className="max-w-2xl space-y-6" method="post">
       <InputField
         label="Title"
         name="title"
@@ -33,7 +34,7 @@ export function GiftIdeaForm({ backUrl, giftIdea }: GiftIdeaFormProps) {
         hint="Tell us more about it. Size? Color? Etc..."
         defaultValue={giftIdea?.description || ""}
       />
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         {giftIdea?.id ? (
           <ConfirmationButton
             action="/my-list?index"
@@ -51,16 +52,16 @@ export function GiftIdeaForm({ backUrl, giftIdea }: GiftIdeaFormProps) {
               ),
             }}
           >
-            Remove
+            <BsTrash size={20} />
           </ConfirmationButton>
         ) : (
           <div></div>
         )}
         <div className="space-x-2">
-          <Link to={backUrl} className="w-32 btn btn-ghost">
+          <Link to={backUrl} className="w-28 btn btn-ghost">
             Cancel
           </Link>
-          <button type="submit" className="w-32 btn">
+          <button type="submit" className="w-28 btn">
             Save
           </button>
         </div>

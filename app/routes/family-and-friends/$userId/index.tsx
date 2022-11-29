@@ -32,7 +32,9 @@ export default function UserIdRoute() {
   return (
     <MainContentPadded>
       <div className="flex items-start justify-between">
-        <h1 className="text-secondary/90">{user?.name || user?.username}</h1>
+        <h1 className="m-0 mb-6 text-secondary/90 lg:mb-4">
+          {user?.name || user?.username}
+        </h1>
         <ConfirmationButton
           className="text-red-800 rounded-full btn btn-ghost btn-square"
           action="/family-and-friends?index"
@@ -45,7 +47,7 @@ export default function UserIdRoute() {
           <MdPersonOff size={26} />
         </ConfirmationButton>
       </div>
-      <div className="flex flex-col items-center mb-8 lg:gap-2 lg:flex-row-reverse lg:justify-start">
+      <div className="flex flex-col items-center mb-4 lg:gap-2 lg:flex-row lg:justify-start">
         <Link to="add-gift-idea" className="w-full gap-2 btn lg:w-auto">
           <AiOutlineGift size={20} /> Add a Gift Idea
         </Link>
@@ -56,7 +58,7 @@ export default function UserIdRoute() {
           <p>Any gift ideas you add will be hidden from {user?.name}.</p>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4">
         {giftIdeas?.map((giftIdea) => (
           <GiftIdeaCard key={giftIdea.id} giftIdea={giftIdea as any} />
         ))}

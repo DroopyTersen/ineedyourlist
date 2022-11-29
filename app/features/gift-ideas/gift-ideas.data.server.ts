@@ -5,6 +5,7 @@ import {
   GetUserGiftIdeasDocument,
   InsertGiftIdeaDocument,
   MarkGiftIdeaAsPurchasedDocument,
+  MarkGiftIdeaAsUnPurchasedDocument,
   UnClaimGiftIdeaDocument,
   UpdateGiftIdeaDocument,
 } from "~/.gql/graphql.types";
@@ -32,6 +33,17 @@ export const markGiftIdeaAsPurchased = async (
 ) => {
   let input = ClaimGiftIdeaSchema.parse(Object.fromEntries(formData));
   await gqlClient.request(MarkGiftIdeaAsPurchasedDocument, {
+    giftIdeaId: input.giftIdeaId,
+    userId: currentUserId,
+  });
+};
+export const markGiftIdeaAsUnPurchased = async (
+  gqlClient: GqlClient,
+  currentUserId: string,
+  formData: FormData
+) => {
+  let input = ClaimGiftIdeaSchema.parse(Object.fromEntries(formData));
+  await gqlClient.request(MarkGiftIdeaAsUnPurchasedDocument, {
     giftIdeaId: input.giftIdeaId,
     userId: currentUserId,
   });

@@ -13,7 +13,28 @@ export const getFamilyAndFriendsUsers = async (
   let data = await gqlClient.request(GetFamilyAndFriendsDataDocument, {
     userId,
   });
-  let followedUsers = data?.user?.follows?.map((f) => f.user);
+  let followedUsers =
+    data?.user?.follows?.map((f) => {
+      return {
+        ...f.user,
+        claimCount:
+          data?.user?.claims?.filter((c) => c?.giftIdea?.userId === f?.user?.id)
+            ?.length || 0,
+      };
+    }) || [];
+
+  // Sort followedUsers by the number of claims they have then by their name
+  followedUsers = followedUsers.sort((a, b) => {
+    let aCount = a.claimCount;
+    let bCount = b.claimCount;
+    if (aCount < bCount) {
+      return 1;
+    } else if (aCount > bCount) {
+      return -1;
+    } else {
+      return (a.name || "").localeCompare(b.name || "");
+    }
+  });
   let followedIds = followedUsers?.map((f) => f.id);
   let availableUsers = data?.allUsers?.filter(
     (u) => !followedIds?.includes(u.id) && u.id !== userId
@@ -24,6 +45,14 @@ export const getFamilyAndFriendsUsers = async (
     availableUsers,
   };
 };
+
+export type FollowedUser = Awaited<
+  ReturnType<typeof getFamilyAndFriendsUsers>
+>["followedUsers"][number];
+
+export type AvailableUser = Awaited<
+  ReturnType<typeof getFamilyAndFriendsUsers>
+>["availableUsers"][number];
 
 const FollowUserSchema = z.object({
   userId: z.string(),

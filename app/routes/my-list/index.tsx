@@ -24,7 +24,7 @@ export default function MyListRoute() {
   let data = useLoaderData<typeof loader>();
   return (
     <MainContentPadded>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-6">
         <h1 className="m-0 text-secondary/90">My List</h1>
 
         <Link to="add" className="gap-2 btn">
@@ -32,15 +32,19 @@ export default function MyListRoute() {
           Add a Gift Idea
         </Link>
       </div>
-      <ul>
-        {data?.myGiftIdeas?.map((item) => (
-          <li key={item.id} className="py-1">
-            <Link to={item.id} className="text-lg lg:text-xl text-accent">
-              {item.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <div className="shadow-xl card bg-base-100">
+        <div className="card-body">
+          <ul>
+            {data?.myGiftIdeas?.map((item) => (
+              <li key={item.id} className="py-1">
+                <Link to={item.id} className="text-lg lg:text-xl text-accent">
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </MainContentPadded>
   );
 }

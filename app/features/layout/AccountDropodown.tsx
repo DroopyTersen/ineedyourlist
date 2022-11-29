@@ -17,7 +17,7 @@ export function AccountDropodown({ user }: AccountDropodownProps) {
           name={user.name || user.username}
         />
       </Dropdown.CircleTrigger>
-      <Dropdown.Content className="p-2 min-w-[200px] ">
+      <Dropdown.Content className="p-2 min-w-[200px] text-neutral">
         <div className="my-2 text-sm text-center text-gray-500 dark:text-gray-300">
           {user.name || user.username}
         </div>

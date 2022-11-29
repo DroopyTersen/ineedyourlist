@@ -32,15 +32,18 @@ export function AppLayout({ children }: AppLayoutProps) {
     }
   }, [pathname, search]);
   return (
-    <div className="drawer">
+    <div className="drawer bg-base-200">
       <input
         id="my-drawer-3"
         type="checkbox"
         className="drawer-toggle"
         ref={checkboxRef}
       />
-      <div className="flex flex-col h-full drawer-content bg-base-200">
-        <div className="w-full navbar bg-base-300">
+      <div className="drawer-content">
+        <div
+          className="fixed top-0 z-10 w-full border-b navbar bg-base-200"
+          style={{ paddingTop: "calc(env(safe-area-inset-top) + 8px)" }}
+        >
           <div className="flex-none lg:hidden">
             <label
               htmlFor="my-drawer-3"
@@ -68,9 +71,7 @@ export function AppLayout({ children }: AppLayoutProps) {
                 src="/logo_512_transparent.png"
                 className="hidden lg:inline relative w-12 h-10 -my-1 lg:h-12 lg:w-14 lg:bottom-[2px]"
               />
-              <span className="font-bold lg:text-xl text-secondary">
-                I Need Your List!
-              </span>
+              <span className="font-bold lg:text-xl">I Need Your List!</span>
             </Link>
           </div>
           <div className="flex-none">
@@ -81,9 +82,9 @@ export function AppLayout({ children }: AppLayoutProps) {
                     <li key={link.to}>
                       <Link
                         className={
-                          "hidden rounded lg:block " +
+                          "hidden rounded lg:block  " +
                           (checkIsActive(link.to, pathname)
-                            ? "bg-secondary-content/50"
+                            ? "bg-secondary-content/20"
                             : "")
                         }
                         to={link.to}
@@ -103,6 +104,7 @@ export function AppLayout({ children }: AppLayoutProps) {
             </ul>
           </div>
         </div>
+        <div className="spacer h-[calc(env(safe-area-inset-top)+68px)]"></div>
         {children}
       </div>
       <div className="drawer-side">
@@ -112,7 +114,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           ref={overlayRef}
         ></label>
 
-        <div className="p-4 bg-gray-100 menu w-80">
+        <div className="p-4 bg-gray-100 menu w-80 pt-[calc(env(safe-area-inset-top)+16px)]">
           <Link to="/" className="flex items-center gap-2 mb-4">
             <img
               src="/logo_512_transparent.png"
@@ -204,7 +206,7 @@ export const MainContentPadded = ({
   className = "",
 }: MainContentProps) => {
   return (
-    <main className={`p-3 pt-6 sm:p-6 prose max-w-none  ${className}`}>
+    <main className={`p-3 pt-6 pb-12 sm:p-6 prose max-w-none  ${className}`}>
       {children}
     </main>
   );

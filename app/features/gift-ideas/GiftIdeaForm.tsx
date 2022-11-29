@@ -3,6 +3,7 @@ import { BsTrash } from "react-icons/bs";
 import { GiftIdeaFormFieldsFragment } from "~/.gql/graphql.types";
 import { InputField, TextAreaField } from "~/toolkit/components/forms";
 import { ConfirmationButton } from "~/toolkit/components/modal/ConfirmationButton";
+import { useCurrentUser } from "../auth/useCurrentUser";
 
 interface GiftIdeaFormProps {
   backUrl: string;
@@ -10,8 +11,29 @@ interface GiftIdeaFormProps {
 }
 
 export function GiftIdeaForm({ backUrl, giftIdea }: GiftIdeaFormProps) {
+  let currentUser = useCurrentUser();
   return (
-    <Form className="max-w-2xl space-y-6" method="post">
+    <Form className="relative flex flex-col max-w-2xl gap-4" method="post">
+      {giftIdea?.id && giftIdea?.createdById === currentUser?.id && (
+        <ConfirmationButton
+          action="/my-list?index"
+          className="absolute rounded-full -top-8 -right-8 text-red-700/50 hover:text-red-800 hover:bg-red-200 btn btn-ghost btn-square"
+          formData={{ giftIdeaId: giftIdea?.id, returnTo: backUrl }}
+          confirmation={{
+            title: `Remove from Gift Idea?`,
+            body: (
+              <div>
+                <p>
+                  If someone has already claimed this gift,{" "}
+                  <b>{giftIdea?.title}</b>, they will still see it.
+                </p>
+              </div>
+            ),
+          }}
+        >
+          <BsTrash size={20} />
+        </ConfirmationButton>
+      )}
       <InputField
         label="Title"
         name="title"
@@ -34,37 +56,14 @@ export function GiftIdeaForm({ backUrl, giftIdea }: GiftIdeaFormProps) {
         hint="Tell us more about it. Size? Color? Etc..."
         defaultValue={giftIdea?.description || ""}
       />
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        {giftIdea?.id ? (
-          <ConfirmationButton
-            action="/my-list?index"
-            className="btn btn-error"
-            formData={{ giftIdeaId: giftIdea?.id, returnTo: backUrl }}
-            confirmation={{
-              title: `Remove from Gift Idea?`,
-              body: (
-                <div>
-                  <p>
-                    If someone has already claimed this gift,{" "}
-                    <b>{giftIdea?.title}</b>, they will still see it.
-                  </p>
-                </div>
-              ),
-            }}
-          >
-            <BsTrash size={20} />
-          </ConfirmationButton>
-        ) : (
-          <div></div>
-        )}
-        <div className="space-x-2">
-          <Link to={backUrl} className="w-28 btn btn-ghost">
-            Cancel
-          </Link>
-          <button type="submit" className="w-28 btn">
-            Save
-          </button>
-        </div>
+
+      <div className="flex flex-wrap items-center justify-end gap-2">
+        <Link to={backUrl} className="w-28 btn btn-ghost">
+          Cancel
+        </Link>
+        <button type="submit" className="w-28 btn">
+          Save
+        </button>
       </div>
     </Form>
   );

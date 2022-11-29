@@ -26,7 +26,9 @@ export default function EditGiftIdeaRoute() {
   let loaderData = useLoaderData<typeof loader>();
   return (
     <MainContentPadded>
-      <h1 className="mb-6 text-secondary/90">{loaderData?.giftIdea?.title}</h1>
+      <h1 className="mb-6 text-2xl text-secondary/90">
+        {loaderData?.giftIdea?.title}
+      </h1>
       <div className="shadow-xl card bg-base-100">
         <div className="card-body">
           <GiftIdeaForm backUrl="/my-list" giftIdea={loaderData?.giftIdea} />

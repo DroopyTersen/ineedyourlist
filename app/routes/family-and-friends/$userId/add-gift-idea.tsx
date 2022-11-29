@@ -24,11 +24,11 @@ export default function AddGiftIdeaRoute() {
   let user = data?.user;
   return (
     <MainContentPadded>
-      <h1 className="flex items-center gap-2 text-secondary/90">
+      <h1 className="flex items-center gap-2 text-2xl text-secondary/90">
         <AiOutlineGift size={32} />
         Gift idea for {user?.name}
       </h1>
-      <p>
+      <p className="text-sm">
         This gift idea will be hidden from {user?.name}, but visible to family
         and friends.
       </p>
@@ -45,7 +45,11 @@ export default function AddGiftIdeaRoute() {
           ))}
         </ErrorContainer>
       )}
-      <GiftIdeaForm backUrl={"/family-and-friends/" + user?.id} />
+      <div className="shadow-xl card bg-base-100">
+        <div className="card-body">
+          <GiftIdeaForm backUrl={"/family-and-friends/" + user?.id} />
+        </div>
+      </div>
     </MainContentPadded>
   );
 }

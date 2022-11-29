@@ -29,16 +29,21 @@ export default function EditGiftIdeaRoute() {
 
   return (
     <MainContentPadded>
-      <h1 className="text-secondary/90">{loaderData?.giftIdea?.title}</h1>
-      <p>
+      <h1 className="mb-6 text-2xl text-secondary/90">
+        {loaderData?.giftIdea?.title}
+      </h1>
+      <p className="text-sm">
         This gift idea will be hidden from {user?.name}, but visible to family
         and friends.
       </p>
-
-      <GiftIdeaForm
-        backUrl={"/family-and-friends/" + user?.id}
-        giftIdea={loaderData?.giftIdea}
-      />
+      <div className="shadow-xl card bg-base-100">
+        <div className="card-body">
+          <GiftIdeaForm
+            backUrl={"/family-and-friends/" + user?.id}
+            giftIdea={loaderData?.giftIdea}
+          />
+        </div>
+      </div>
     </MainContentPadded>
   );
 }

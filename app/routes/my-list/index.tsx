@@ -1,4 +1,4 @@
-import { ActionArgs, json, LoaderArgs, redirect } from "@remix-run/node";
+import { ActionArgs, json, LoaderArgs } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { AiOutlineGift } from "react-icons/ai";
 import { requireAuthenticatedLoader } from "~/features/auth/auth.remix.server";
@@ -14,9 +14,6 @@ import { tryPerformMutation } from "~/toolkit/remix/tryPerformMutation";
 export const loader = async ({ request, params }: LoaderArgs) => {
   let { gqlClient, userId } = await requireAuthenticatedLoader(request);
   let data = await getUserWithGiftIdeas(gqlClient, userId);
-  if ((data?.giftIdeas?.length || 0) === 0) {
-    return redirect("/my-list/add");
-  }
   return json({ myGiftIdeas: data?.giftIdeas || [] });
 };
 
@@ -34,7 +31,7 @@ export default function MyListRoute() {
       </div>
       <div className="shadow-xl card bg-base-100">
         <div className="card-body">
-          <ul>
+          <ul className="m-0">
             {data?.myGiftIdeas?.map((item) => (
               <li key={item.id} className="py-1">
                 <Link to={item.id} className="text-lg lg:text-xl text-accent">
@@ -43,6 +40,17 @@ export default function MyListRoute() {
               </li>
             ))}
           </ul>
+          {data?.myGiftIdeas?.length === 0 && (
+            <div className="space-y-4 text-center">
+              <p className="m-0">You don't have any gift ideas yet. Add one!</p>
+              <div>
+                <Link to="add" className="gap-2 btn">
+                  <AiOutlineGift size={20} />
+                  Add your first gift idea
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </MainContentPadded>

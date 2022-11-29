@@ -11,15 +11,17 @@ export const FormField = ({
   const errorMsg = parseErrorMessage(error);
   return (
     <div className={`form-control ${className}`}>
-      <label className="label" htmlFor={name}>
-        {label && (
-          <span className="label-text">
-            {label}
-            {required && <span className="ml-[2px] text-red-300">*</span>}
-          </span>
-        )}
-        {altLabel && <span className="label-text-alt">{altLabel}</span>}
-      </label>
+      {(label || altLabel) && (
+        <label className="label" htmlFor={name}>
+          {label && (
+            <span className="label-text">
+              {label}
+              {required && <span className="ml-[2px] text-red-300">*</span>}
+            </span>
+          )}
+          {altLabel && <span className="label-text-alt">{altLabel}</span>}
+        </label>
+      )}
       {children}
       {hint && (
         <label className="label">

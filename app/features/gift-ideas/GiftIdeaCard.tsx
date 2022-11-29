@@ -81,7 +81,9 @@ export const GiftIdeaCard = ({
             )}
             {isSecret && (
               <div className="flex items-center gap-2 p-4 rounded bg-secondary-content/30">
-                <FaUserSecret size={30} />
+                <div className="flex-grow">
+                  <FaUserSecret size={24} />
+                </div>
                 <p className="m-0 text-sm">
                   <b className="text-base">Shhhh!</b> Don't say anything to{" "}
                   {giftIdea?.user?.name} about this one. They don't know about

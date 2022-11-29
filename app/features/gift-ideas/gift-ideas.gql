@@ -37,6 +37,7 @@ fragment GiftIdeaFormFields on GiftIdeas {
   url
   userId
   removed
+  createdById
 }
 
 query GetUserGiftIdeas($userId: uuid!) {

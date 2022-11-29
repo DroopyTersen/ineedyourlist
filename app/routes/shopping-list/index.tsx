@@ -47,7 +47,7 @@ export default function ShoppingListRoute() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="m-0 text-secondary/90">Shopping List</h1>
       </div>
-      <div className="space-y-2">
+      <div className="max-w-2xl space-y-4">
         {data?.usersToShopFor?.map((user) => (
           <div key={user.id} className="shadow-xl card bg-base-100">
             <div className="card-body">
@@ -75,7 +75,7 @@ export default function ShoppingListRoute() {
                 {user.shoppingList.map((giftIdea) => (
                   <div
                     key={giftIdea.id}
-                    className="flex justify-between md:grid items-center md:justify-start md:grid-cols-[500px_auto]"
+                    className="flex items-center justify-between"
                   >
                     <Check
                       name={`giftIdea-${giftIdea.id}`}

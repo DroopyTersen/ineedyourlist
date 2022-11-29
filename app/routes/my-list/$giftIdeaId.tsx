@@ -29,7 +29,7 @@ export default function EditGiftIdeaRoute() {
       <h1 className="mb-6 text-2xl text-secondary/90">
         {loaderData?.giftIdea?.title}
       </h1>
-      <div className="shadow-xl card bg-base-100">
+      <div className="shadow-xl card card-compact sm:card-normal bg-base-100">
         <div className="card-body">
           <GiftIdeaForm backUrl="/my-list" giftIdea={loaderData?.giftIdea} />
         </div>

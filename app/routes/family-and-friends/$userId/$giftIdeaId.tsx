@@ -36,7 +36,7 @@ export default function EditGiftIdeaRoute() {
         This gift idea will be hidden from {user?.name}, but visible to family
         and friends.
       </p>
-      <div className="shadow-xl card bg-base-100">
+      <div className="shadow-xl card card-compact sm:card-normal bg-base-100">
         <div className="card-body">
           <GiftIdeaForm
             backUrl={"/family-and-friends/" + user?.id}

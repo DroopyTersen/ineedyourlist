@@ -49,7 +49,10 @@ export default function ShoppingListRoute() {
       </div>
       <div className="max-w-2xl space-y-4">
         {data?.usersToShopFor?.map((user) => (
-          <div key={user.id} className="shadow-xl card bg-base-100">
+          <div
+            key={user.id}
+            className="shadow-xl card card-compact sm:card-normal bg-base-100"
+          >
             <div className="card-body">
               <Link to={`/family-and-friends/${user?.id}`}>
                 <h2 className="m-0 text-2xl card-title text-accent">

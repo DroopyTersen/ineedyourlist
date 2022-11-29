@@ -49,7 +49,7 @@ export default function UserIdRoute() {
       </div>
 
       <div className="grid grid-cols-1 gap-4">
-        <div className="shadow-xl card bg-base-100">
+        <div className="shadow-xl card card-compact sm:card-normal bg-base-100">
           <div className="card-body">
             <div className="text-lg card-title">
               Have a gift idea for {user?.name}?

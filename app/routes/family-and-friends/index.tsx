@@ -27,7 +27,7 @@ export default function FamilyAndFrinedsRoute() {
     <MainContentPadded>
       <h1 className="mb-1 text-secondary/90">Family {"&"} Friends</h1>
 
-      <div className="mt-6 shadow-xl card bg-base-100 not-prose">
+      <div className="mt-6 shadow-xl card card-compact sm:card-normal bg-base-100 not-prose">
         <div className="card-body">
           <h2 className="m-0 card-title">Who are you buying gifts for?</h2>
           {data?.availableUsers?.length > 0 && (

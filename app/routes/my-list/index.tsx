@@ -29,7 +29,7 @@ export default function MyListRoute() {
           Add a Gift Idea
         </Link>
       </div>
-      <div className="shadow-xl card bg-base-100">
+      <div className="shadow-xl card card-compact sm:card-normal bg-base-100">
         <div className="card-body">
           <ul className="m-0">
             {data?.myGiftIdeas?.map((item) => (

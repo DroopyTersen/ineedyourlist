@@ -1,7 +1,7 @@
 import { Form, Link } from "@remix-run/react";
 import { BsTrash } from "react-icons/bs";
 import { GiftIdeaFormFieldsFragment } from "~/.gql/graphql.types";
-import { InputField, TextAreaField } from "~/toolkit/components/forms";
+import { TextAreaField } from "~/toolkit/components/forms";
 import { ConfirmationButton } from "~/toolkit/components/modal/ConfirmationButton";
 import { useCurrentUser } from "../auth/useCurrentUser";
 
@@ -17,7 +17,7 @@ export function GiftIdeaForm({ backUrl, giftIdea }: GiftIdeaFormProps) {
       {giftIdea?.id && giftIdea?.createdById === currentUser?.id && (
         <ConfirmationButton
           action="/my-list?index"
-          className="absolute rounded-full -top-8 -right-8 text-red-700/50 hover:text-red-800 hover:bg-red-200 btn btn-ghost btn-square"
+          className="absolute rounded-full -top-4 -right-4 text-red-700/50 hover:text-red-800 hover:bg-red-200 btn btn-ghost btn-square"
           formData={{ giftIdeaId: giftIdea?.id, returnTo: backUrl }}
           confirmation={{
             title: `Remove from Gift Idea?`,
@@ -34,10 +34,11 @@ export function GiftIdeaForm({ backUrl, giftIdea }: GiftIdeaFormProps) {
           <BsTrash size={20} />
         </ConfirmationButton>
       )}
-      <InputField
+      <TextAreaField
         label="Title"
         name="title"
         hint="What is it?"
+        rows={2}
         required
         autoFocus
         defaultValue={giftIdea?.title || ""}

@@ -30,7 +30,7 @@ export default function UserIdRoute() {
   let user = data?.user;
   let giftIdeas = user?.giftIdeas || [];
   return (
-    <MainContentPadded>
+    <MainContentPadded className="max-w-6xl">
       <div className="flex items-start justify-between">
         <h1 className="m-0 mb-6 text-secondary/90 lg:mb-4">
           {user?.name || user?.username}
@@ -51,7 +51,10 @@ export default function UserIdRoute() {
       <div className="grid grid-cols-1 gap-4">
         <div className="shadow-xl card bg-base-100">
           <div className="card-body">
-            <div className="flex flex-col items-center mb-4 md:gap-4 md:flex-row md:justify-start">
+            <div className="text-lg card-title">
+              Have a gift idea for {user?.name}?
+            </div>
+            <div className="flex flex-col items-center md:gap-4 md:flex-row md:justify-start">
               <Link to="add-gift-idea" className="w-full gap-2 btn md:w-auto">
                 <AiOutlineGift size={20} /> Add a Gift Idea
               </Link>

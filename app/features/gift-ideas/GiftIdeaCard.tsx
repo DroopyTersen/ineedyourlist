@@ -93,7 +93,7 @@ export const GiftIdeaCard = ({
               </div>
             )}
           </div>
-          <div className="right-content">
+          <div className="flex flex-col justify-end right-content">
             {claim && claim?.user?.id === currentUser?.id ? (
               claim.isPurchased ? (
                 <Form method="post" className="flex flex-col gap-2">

@@ -42,7 +42,9 @@ export default function MyListRoute() {
           </ul>
           {data?.myGiftIdeas?.length === 0 && (
             <div className="space-y-4 text-center">
-              <p className="m-0">You don't have any gift ideas yet. Add one!</p>
+              <p className="m-0">
+                You don't have any gift ideas for yourself yet. Add one!
+              </p>
               <div>
                 <Link to="add" className="gap-2 btn">
                   <AiOutlineGift size={20} />

@@ -25,7 +25,10 @@ export const GiftIdeaCard = ({
     claimStatus = "Purchased";
   }
   let isSecret = giftIdea?.user?.id !== giftIdea?.createdBy?.id;
-
+  let TitleWrapper: any = giftIdea?.url ? "a" : "div";
+  let titleProps = giftIdea?.url
+    ? { href: giftIdea?.url, target: "_blank" }
+    : {};
   return (
     <div
       key={giftIdea.id}
@@ -41,30 +44,20 @@ export const GiftIdeaCard = ({
       )}
       <div className="card-body">
         <div className="flex flex-col mb-4 top-content">
-          <div className="flex items-center justify-between">
-            <h2 className="m-0 card-title text-accent">
-              {/* {isSecret ? (
-              <FaUserSecret />
-            ) : (
-              )} */}
+          <TitleWrapper
+            className="flex items-center justify-between text-accent"
+            {...titleProps}
+          >
+            <h2 className="m-0 card-title">
               <ClaimStatusIcon claimStatus={claimStatus} />
               <span
                 className={claimStatus === "Purchased" ? "line-through" : ""}
               >
                 {giftIdea.title}
               </span>
-              {giftIdea?.url && (
-                <a
-                  href={giftIdea?.url || "/thing"}
-                  target="_blank"
-                  className="p-2 hover:text-accent-focus"
-                  title="Open in new tab"
-                >
-                  <BiLinkExternal />
-                </a>
-              )}
+              {giftIdea?.url && <BiLinkExternal />}
             </h2>
-          </div>
+          </TitleWrapper>
           <div className="">
             <div className="text-sm">
               Suggested by:{" "}

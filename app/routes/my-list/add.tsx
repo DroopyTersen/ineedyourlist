@@ -9,11 +9,11 @@ import { tryPerformMutation } from "~/toolkit/remix/tryPerformMutation";
 export default function AddGiftIdeaRoute() {
   return (
     <MainContentPadded>
-      <h1 className="flex items-center gap-2 mb-6 text-secondary/90">
+      <h1 className="flex items-center gap-2 mb-6 text-2xl text-secondary/90">
         <AiOutlineGift size={32} />
-        Add a Gift Idea
+        Gift idea for yourself
       </h1>
-      <div className="shadow-xl card card-compact sm:card-normal bg-base-100">
+      <div className="max-w-5xl shadow-xl card card-compact sm:card-normal bg-base-100">
         <div className="card-body">
           <GiftIdeaForm backUrl="/my-list" />
         </div>

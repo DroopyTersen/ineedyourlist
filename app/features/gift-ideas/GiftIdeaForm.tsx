@@ -1,4 +1,6 @@
 import { Form, Link } from "@remix-run/react";
+import { useState } from "react";
+import { BiLinkExternal } from "react-icons/bi";
 import { BsTrash } from "react-icons/bs";
 import { GiftIdeaFormFieldsFragment } from "~/.gql/graphql.types";
 import { TextAreaField } from "~/toolkit/components/forms";
@@ -12,8 +14,9 @@ interface GiftIdeaFormProps {
 
 export function GiftIdeaForm({ backUrl, giftIdea }: GiftIdeaFormProps) {
   let currentUser = useCurrentUser();
+  let [url, setUrl] = useState(giftIdea?.url || "");
   return (
-    <Form className="relative flex flex-col max-w-2xl gap-4" method="post">
+    <Form className="relative flex flex-col gap-4" method="post">
       {giftIdea?.id && giftIdea?.createdById === currentUser?.id && (
         <ConfirmationButton
           action="/my-list?index"
@@ -43,13 +46,30 @@ export function GiftIdeaForm({ backUrl, giftIdea }: GiftIdeaFormProps) {
         autoFocus
         defaultValue={giftIdea?.title || ""}
       />
-      <TextAreaField
-        label="Link"
-        name="url"
-        rows={3}
-        hint="Is there a url to help someone get the right thing?"
-        defaultValue={giftIdea?.url || ""}
-      />
+      <div>
+        <TextAreaField
+          label="Link"
+          altLabel={
+            url ? (
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-sm uppercase link link-accent"
+              >
+                Test Link
+                <BiLinkExternal />
+              </a>
+            ) : undefined
+          }
+          name="url"
+          rows={3}
+          hint="Is there a url to help someone get the right thing?"
+          defaultValue={giftIdea?.url || ""}
+          onChange={(e) => setUrl(e.currentTarget.value)}
+        />
+        {url && <div className="mt-2"></div>}
+      </div>
       <TextAreaField
         label="Description"
         name="description"
@@ -62,7 +82,7 @@ export function GiftIdeaForm({ backUrl, giftIdea }: GiftIdeaFormProps) {
         <Link to={backUrl} className="w-28 btn btn-ghost">
           Cancel
         </Link>
-        <button type="submit" className="w-28 btn">
+        <button type="submit" className="w-28 btn btn-success">
           Save
         </button>
       </div>

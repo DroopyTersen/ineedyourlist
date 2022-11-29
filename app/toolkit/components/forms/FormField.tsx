@@ -47,7 +47,7 @@ export interface FormFieldProps {
   /** The field label */
   label?: string;
   /** Display in top right */
-  altLabel?: string;
+  altLabel?: string | React.ReactNode;
   /** Helper text */
   hint?: string;
   /** The React Hook Form error */

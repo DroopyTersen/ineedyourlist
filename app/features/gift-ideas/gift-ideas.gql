@@ -44,6 +44,7 @@ query GetUserGiftIdeas($userId: uuid!) {
   user: usersByPk(id: $userId) {
     id
     name
+    createdAt
     username
     photo
     giftIdeas(where: { removed: { _neq: true } }, orderBy: { createdAt: ASC }) {

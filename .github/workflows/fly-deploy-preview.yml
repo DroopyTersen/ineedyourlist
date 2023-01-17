@@ -29,4 +29,6 @@ jobs:
         id: deploy
         uses: superfly/fly-pr-review-apps@1.0.0
         with:
+          name: ineedyourlist-pr-${{ github.event.number }}
           postgres: ineedyourlist-hasura-db
+          secrets: AUTH_CLIENT_ID=${{ secrets.AUTH_CLIENT_ID }} AUTH_CLIENT_SECRET=${{ secrets.AUTH_CLIENT_SECRET }} HASURA_GRAPHQL_ADMIN_SECRET=${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }} HASURA_JWT_SECRET=${{ secrets.HASURA_JWT_SECRET }}

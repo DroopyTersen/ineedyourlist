@@ -1,0 +1,45 @@
+name: Deploy Preview
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+    branches:
+      - main
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+jobs:
+  deploy-preview:
+    name: Deploy Preview
+    runs-on: ubuntu-latest
+
+    # Only run one deployment at a time per PR.
+    concurrency:
+      group: pr-${{ github.event.number }}
+
+    # Create a GitHub deployment environment per staging app so it shows up
+    # in the pull request UI.
+    environment:
+      name: pr-${{ github.event.number }}
+      url: ${{ steps.deploy.outputs.url }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Deploy
+        id: deploy
+        run: |
+          echo "Starting deployment for PR ${{ github.event.number }}"
+          if ( ${{ github.event.action == 'closed' }} ); then
+            flyctl destroy --app ineedyourlist-pr-${{ github.event.number }};
+            exit 0;
+          fi
+          if ! flyctl status --app ineedyourlist-pr-${{ github.event.number }}; then
+            flyctl launch --remote-only --no-deploy --copy-config --name ineedyourlist-pr-${{ github.event.number }} --dockerfile Dockerfile --region ord
+            flyctl secrets set --app ineedyourlist-pr-${{ github.event.number }} HASURA_GRAPHQL_ADMIN_SECRET="${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}" HASURA_JWT_SECRET="${{ secrets.HASURA_JWT_SECRET }}" AUTH_CLIENT_ID="${{ secrets.AUTH_CLIENT_ID }}" AUTH_CLIENT_SECRET="${{ secrets.AUTH_CLIENT_SECRET }}"
+          fi
+
+          flyctl deploy --remote-only --app ineedyourlist-pr-${{ github.event.number }} --config fly.toml --dockerfile Dockerfile;
+          flyctl status --app ineedyourlist-pr-${{ github.event.number }} --json >status.json
+          hostname=$(jq -r .Hostname status.json)
+          appid=$(jq -r .ID status.json)
+          echo "url=https://$hostname" >> $GITHUB_OUTPUT

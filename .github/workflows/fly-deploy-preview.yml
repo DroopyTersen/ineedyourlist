@@ -43,3 +43,4 @@ jobs:
           hostname=$(jq -r .Hostname status.json)
           appid=$(jq -r .ID status.json)
           echo "hostname=$hostname url=https://$hostname id=$appId" >> $GITHUB_OUTPUT
+          echo "::set-output name=url::https://$hostname"

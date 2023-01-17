@@ -26,6 +26,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: |
+          echo "Starting deployment for PR ${{ github.event.number }}"
           if ( ${{ github.event.action == 'closed' }} ); then
             flyctl destroy --app ineedyourlist-pr-${{ github.event.number }};
             exit 0;

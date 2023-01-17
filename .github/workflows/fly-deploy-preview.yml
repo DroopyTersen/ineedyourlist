@@ -25,12 +25,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - name: Deploy
+      - name: Create Fly Deploy Preview
         id: deploy
         run: |
           echo "Starting deployment for PR ${{ github.event.number }}"
           if ( ${{ github.event.action == 'closed' }} ); then
-            flyctl destroy --app ineedyourlist-pr-${{ github.event.number }};
+            flyctl destroy -y ineedyourlist-pr-${{ github.event.number }};
             exit 0;
           fi
           if ! flyctl status --app ineedyourlist-pr-${{ github.event.number }}; then

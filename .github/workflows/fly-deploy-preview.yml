@@ -40,6 +40,4 @@ jobs:
           flyctl status --app ineedyourlist-pr-${{ github.event.number }} --json >status.json
           hostname=$(jq -r .Hostname status.json)
           appid=$(jq -r .ID status.json)
-          echo "::set-output name=hostname::$hostname"
-          echo "::set-output name=url::https://$hostname"
-          echo "::set-output name=id::$appid"
+          echo "hostname=$hostname URL=https://$hostname id=$appId" >> $GITHUB_OUTPUT

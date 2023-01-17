@@ -31,7 +31,7 @@ jobs:
             exit 0;
           fi
           if ! flyctl status --app ineedyourlist-pr-${{ github.event.number }}; then
-            flyctl launch --no-deploy --app ineedyourlist-pr-${{ github.event.number }} --config fly.toml --dockerfile Dockerfile;
+            flyctl launch --no-deploy --name ineedyourlist-pr-${{ github.event.number }} --config fly.toml --dockerfile Dockerfile --region ord;
             flyctl secrets set HASURA_GRAPHQL_ADMIN_SECRET="${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}" HASURA_JWT_SECRET="${{ secrets.HASURA_JWT_SECRET }}" AUTH_CLIENT_ID="${{ secrets.AUTH_CLIENT_ID }}" AUTH_CLIENT_SECRET="${{ secrets.AUTH_CLIENT_SECRET }}";
             flyctl postgres attach ineedyourlist-hasura-db --app ineedyourlist-pr-${{ github.event.number }};
           else

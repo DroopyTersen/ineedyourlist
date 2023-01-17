@@ -38,7 +38,7 @@ jobs:
             flyctl deploy --remote-only --app ineedyourlist-pr-${{ github.event.number }} --config fly.toml --dockerfile Dockerfile;
           fi
 
-          fly status --app ineedyourlist-pr-${{ github.event.number }} --json >status.json
+          flyctl status --app ineedyourlist-pr-${{ github.event.number }} --json >status.json
           hostname=$(jq -r .Hostname status.json)
           appid=$(jq -r .ID status.json)
           echo "::set-output name=hostname::$hostname"

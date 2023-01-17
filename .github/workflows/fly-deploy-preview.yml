@@ -27,7 +27,7 @@ jobs:
 
       - name: Deploy
         id: deploy
-        uses: superfly/fly-pr-review-apps@1.0.0
+        uses: superfly/fly-pr-review-apps@main
         with:
           name: ineedyourlist-pr-${{ github.event.number }}
           postgres: ineedyourlist-hasura-db

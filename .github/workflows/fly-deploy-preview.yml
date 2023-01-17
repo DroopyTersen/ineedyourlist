@@ -34,10 +34,9 @@ jobs:
           if ! flyctl status --app ineedyourlist-pr-${{ github.event.number }}; then
             flyctl launch --remote-only --no-deploy --copy-config --name ineedyourlist-pr-${{ github.event.number }} --dockerfile Dockerfile --region ord
             flyctl secrets set --app ineedyourlist-pr-${{ github.event.number }} HASURA_GRAPHQL_ADMIN_SECRET="${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}" HASURA_JWT_SECRET="${{ secrets.HASURA_JWT_SECRET }}" AUTH_CLIENT_ID="${{ secrets.AUTH_CLIENT_ID }}" AUTH_CLIENT_SECRET="${{ secrets.AUTH_CLIENT_SECRET }}"
-          else
-            flyctl deploy --remote-only --app ineedyourlist-pr-${{ github.event.number }} --config fly.toml --dockerfile Dockerfile;
           fi
 
+          flyctl deploy --remote-only --app ineedyourlist-pr-${{ github.event.number }} --config fly.toml --dockerfile Dockerfile;
           flyctl status --app ineedyourlist-pr-${{ github.event.number }} --json >status.json
           hostname=$(jq -r .Hostname status.json)
           appid=$(jq -r .ID status.json)

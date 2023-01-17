@@ -8,7 +8,7 @@ ENV HASURA_GRAPHQL_EXPERIMENTAL_FEATURES=naming_convention
 CMD graphql-engine \
     --database-url $DATABASE_URL \
     serve \
-    --server-port $PORT
+    --server-port 8080
 
 #   You'll also need to set the following variables
 #   They need to match the values you set in the deployed Remix app

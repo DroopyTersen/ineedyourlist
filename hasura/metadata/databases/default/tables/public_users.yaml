@@ -2,76 +2,76 @@ table:
   name: users
   schema: public
 array_relationships:
-  - name: claims
-    using:
-      foreign_key_constraint_on:
-        column: user_id
-        table:
-          name: claims
-          schema: public
-  - name: followers
-    using:
-      foreign_key_constraint_on:
-        column: following_id
-        table:
-          name: follows
-          schema: public
-  - name: follows
-    using:
-      foreign_key_constraint_on:
-        column: follower_id
-        table:
-          name: follows
-          schema: public
-  - name: giftIdeas
-    using:
-      foreign_key_constraint_on:
-        column: user_id
-        table:
-          name: gift_ideas
-          schema: public
-  - name: wishlists
-    using:
-      foreign_key_constraint_on:
-        column: created_by_id
-        table:
-          name: wishlists
-          schema: public
+- name: claims
+  using:
+    foreign_key_constraint_on:
+      column: user_id
+      table:
+        name: claims
+        schema: public
+- name: followers
+  using:
+    foreign_key_constraint_on:
+      column: following_id
+      table:
+        name: follows
+        schema: public
+- name: follows
+  using:
+    foreign_key_constraint_on:
+      column: follower_id
+      table:
+        name: follows
+        schema: public
+- name: giftIdeas
+  using:
+    foreign_key_constraint_on:
+      column: user_id
+      table:
+        name: gift_ideas
+        schema: public
+- name: wishlists
+  using:
+    foreign_key_constraint_on:
+      column: created_by_id
+      table:
+        name: wishlists
+        schema: public
 select_permissions:
-  - role: anonymous
-    permission:
-      columns:
-        - created_at
-        - id
-        - name
-        - photo
-        - updated_at
-        - username
-      filter: {}
-  - role: user
-    permission:
-      columns:
-        - created_at
-        - id
-        - name
-        - photo
-        - updated_at
-        - username
-      filter: {}
+- permission:
+    columns:
+    - created_at
+    - id
+    - name
+    - photo
+    - updated_at
+    - username
+    filter: {}
+  role: anonymous
+- permission:
+    columns:
+    - created_at
+    - id
+    - name
+    - photo
+    - updated_at
+    - username
+    filter: {}
+  role: user
 update_permissions:
-  - role: user
-    permission:
-      columns:
-        - username
-        - name
-        - photo
-      filter:
-        id:
-          _eq: X-Hasura-User-Id
-      check: null
+- permission:
+    check: null
+    columns:
+    - username
+    - name
+    - photo
+    filter:
+      id:
+        _eq: X-Hasura-User-Id
+  role: user
 delete_permissions:
-  - role: user
-    permission:
-      filter:
-        id:
-          _eq: X-Hasura-User-Id
+- permission:
+    filter:
+      id:
+        _eq: X-Hasura-User-Id
+  role: user

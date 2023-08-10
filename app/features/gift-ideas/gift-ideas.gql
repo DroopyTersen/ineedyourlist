@@ -1,4 +1,4 @@
-mutation ClaimGiftIdea($giftIdeaId: uuid!) {
+mutation ClaimGiftIdea($giftIdeaId: uuid) {
   insertClaimsOne(object: { giftIdeaId: $giftIdeaId }) {
     id
     isPurchased
@@ -58,7 +58,7 @@ mutation MarkGiftIdeaAsPurchased($giftIdeaId: uuid!, $userId: uuid!) {
     where: { giftIdeaId: { _eq: $giftIdeaId }, userId: { _eq: $userId } }
     _set: { isPurchased: true }
   ) {
-    affected_rows
+    affectedRows
   }
 }
 
@@ -67,7 +67,7 @@ mutation MarkGiftIdeaAsUnPurchased($giftIdeaId: uuid!, $userId: uuid!) {
     where: { giftIdeaId: { _eq: $giftIdeaId }, userId: { _eq: $userId } }
     _set: { isPurchased: false }
   ) {
-    affected_rows
+    affectedRows
   }
 }
 
@@ -75,7 +75,7 @@ mutation UnClaimGiftIdea($giftIdeaId: uuid!, $userId: uuid!) {
   deleteClaims(
     where: { giftIdeaId: { _eq: $giftIdeaId }, userId: { _eq: $userId } }
   ) {
-    affected_rows
+    affectedRows
   }
 }
 
@@ -86,7 +86,7 @@ mutation InsertGiftIdea($input: GiftIdeasInsertInput!) {
 }
 
 mutation UpdateGiftIdea($id: uuid!, $input: GiftIdeasSetInput!) {
-  giftIdea: updateGiftIdeasByPk(pk_columns: { id: $id }, _set: $input) {
+  giftIdea: updateGiftIdeasByPk(pkColumns: { id: $id }, _set: $input) {
     ...GiftIdeaFormFields
   }
 }

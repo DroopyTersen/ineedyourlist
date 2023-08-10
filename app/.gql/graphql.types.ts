@@ -48,6 +48,12 @@ export type ClaimsAggregate = {
   nodes: Array<Claims>;
 };
 
+export type ClaimsAggregateBoolExp = {
+  bool_and?: InputMaybe<ClaimsAggregateBoolExpBool_And>;
+  bool_or?: InputMaybe<ClaimsAggregateBoolExpBool_Or>;
+  count?: InputMaybe<ClaimsAggregateBoolExpCount>;
+};
+
 /** aggregate fields of "claims" */
 export type ClaimsAggregateFields = {
   __typename?: 'ClaimsAggregateFields';
@@ -66,8 +72,8 @@ export type ClaimsAggregateFieldsCountArgs = {
 /** order by aggregate values of table "claims" */
 export type ClaimsAggregateOrderBy = {
   count?: InputMaybe<OrderBy>;
-  max?: InputMaybe<Claims_Max_Order_By>;
-  min?: InputMaybe<Claims_Min_Order_By>;
+  max?: InputMaybe<ClaimsMaxOrderBy>;
+  min?: InputMaybe<ClaimsMinOrderBy>;
 };
 
 /** input type for inserting array relation for remote table "claims" */
@@ -114,6 +120,13 @@ export type ClaimsMaxFields = {
   userId?: Maybe<Scalars['uuid']>;
 };
 
+/** order by max() on columns of table "claims" */
+export type ClaimsMaxOrderBy = {
+  giftIdeaId?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  userId?: InputMaybe<OrderBy>;
+};
+
 /** aggregate min on columns */
 export type ClaimsMinFields = {
   __typename?: 'ClaimsMinFields';
@@ -122,11 +135,18 @@ export type ClaimsMinFields = {
   userId?: Maybe<Scalars['uuid']>;
 };
 
+/** order by min() on columns of table "claims" */
+export type ClaimsMinOrderBy = {
+  giftIdeaId?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  userId?: InputMaybe<OrderBy>;
+};
+
 /** response of any mutation on the table "claims" */
 export type ClaimsMutationResponse = {
   __typename?: 'ClaimsMutationResponse';
   /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
+  affectedRows: Scalars['Int'];
   /** data from the rows affected by the mutation */
   returning: Array<Claims>;
 };
@@ -134,7 +154,7 @@ export type ClaimsMutationResponse = {
 /** on_conflict condition type for table "claims" */
 export type ClaimsOnConflict = {
   constraint: ClaimsConstraint;
-  update_columns?: Array<ClaimsUpdateColumn>;
+  updateColumns?: Array<ClaimsUpdateColumn>;
   where?: InputMaybe<ClaimsBoolExp>;
 };
 
@@ -165,8 +185,36 @@ export enum ClaimsSelectColumn {
   UserId = 'userId'
 }
 
+/** select "claimsAggregateBoolExpBool_andArgumentsColumns" columns of table "claims" */
+export enum ClaimsSelectColumnClaimsAggregateBoolExpBool_AndArgumentsColumns {
+  /** column name */
+  IsPurchased = 'isPurchased'
+}
+
+/** select "claimsAggregateBoolExpBool_orArgumentsColumns" columns of table "claims" */
+export enum ClaimsSelectColumnClaimsAggregateBoolExpBool_OrArgumentsColumns {
+  /** column name */
+  IsPurchased = 'isPurchased'
+}
+
 /** input type for updating data in table "claims" */
 export type ClaimsSetInput = {
+  giftIdeaId?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  isPurchased?: InputMaybe<Scalars['Boolean']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+};
+
+/** Streaming cursor of the table "claims" */
+export type ClaimsStreamCursorInput = {
+  /** Stream column input with initial value */
+  initialValue: ClaimsStreamCursorValueInput;
+  /** cursor ordering */
+  ordering?: InputMaybe<CursorOrdering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type ClaimsStreamCursorValueInput = {
   giftIdeaId?: InputMaybe<Scalars['uuid']>;
   id?: InputMaybe<Scalars['uuid']>;
   isPurchased?: InputMaybe<Scalars['Boolean']>;
@@ -188,6 +236,7 @@ export enum ClaimsUpdateColumn {
 export type ClaimsUpdates = {
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<ClaimsSetInput>;
+  /** filter the rows which have to be updated */
   where: ClaimsBoolExp;
 };
 
@@ -218,6 +267,10 @@ export type FollowsAggregate = {
   nodes: Array<Follows>;
 };
 
+export type FollowsAggregateBoolExp = {
+  count?: InputMaybe<FollowsAggregateBoolExpCount>;
+};
+
 /** aggregate fields of "follows" */
 export type FollowsAggregateFields = {
   __typename?: 'FollowsAggregateFields';
@@ -236,8 +289,8 @@ export type FollowsAggregateFieldsCountArgs = {
 /** order by aggregate values of table "follows" */
 export type FollowsAggregateOrderBy = {
   count?: InputMaybe<OrderBy>;
-  max?: InputMaybe<Follows_Max_Order_By>;
-  min?: InputMaybe<Follows_Min_Order_By>;
+  max?: InputMaybe<FollowsMaxOrderBy>;
+  min?: InputMaybe<FollowsMinOrderBy>;
 };
 
 /** input type for inserting array relation for remote table "follows" */
@@ -282,6 +335,13 @@ export type FollowsMaxFields = {
   followingId?: Maybe<Scalars['uuid']>;
 };
 
+/** order by max() on columns of table "follows" */
+export type FollowsMaxOrderBy = {
+  createdAt?: InputMaybe<OrderBy>;
+  followerId?: InputMaybe<OrderBy>;
+  followingId?: InputMaybe<OrderBy>;
+};
+
 /** aggregate min on columns */
 export type FollowsMinFields = {
   __typename?: 'FollowsMinFields';
@@ -290,11 +350,18 @@ export type FollowsMinFields = {
   followingId?: Maybe<Scalars['uuid']>;
 };
 
+/** order by min() on columns of table "follows" */
+export type FollowsMinOrderBy = {
+  createdAt?: InputMaybe<OrderBy>;
+  followerId?: InputMaybe<OrderBy>;
+  followingId?: InputMaybe<OrderBy>;
+};
+
 /** response of any mutation on the table "follows" */
 export type FollowsMutationResponse = {
   __typename?: 'FollowsMutationResponse';
   /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
+  affectedRows: Scalars['Int'];
   /** data from the rows affected by the mutation */
   returning: Array<Follows>;
 };
@@ -302,7 +369,7 @@ export type FollowsMutationResponse = {
 /** on_conflict condition type for table "follows" */
 export type FollowsOnConflict = {
   constraint: FollowsConstraint;
-  update_columns?: Array<FollowsUpdateColumn>;
+  updateColumns?: Array<FollowsUpdateColumn>;
   where?: InputMaybe<FollowsBoolExp>;
 };
 
@@ -338,6 +405,21 @@ export type FollowsSetInput = {
   followingId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "follows" */
+export type FollowsStreamCursorInput = {
+  /** Stream column input with initial value */
+  initialValue: FollowsStreamCursorValueInput;
+  /** cursor ordering */
+  ordering?: InputMaybe<CursorOrdering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type FollowsStreamCursorValueInput = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  followerId?: InputMaybe<Scalars['uuid']>;
+  followingId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "follows" */
 export enum FollowsUpdateColumn {
   /** column name */
@@ -351,6 +433,7 @@ export enum FollowsUpdateColumn {
 export type FollowsUpdates = {
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<FollowsSetInput>;
+  /** filter the rows which have to be updated */
   where: FollowsBoolExp;
 };
 
@@ -406,6 +489,12 @@ export type GiftIdeasAggregate = {
   nodes: Array<GiftIdeas>;
 };
 
+export type GiftIdeasAggregateBoolExp = {
+  bool_and?: InputMaybe<GiftIdeasAggregateBoolExpBool_And>;
+  bool_or?: InputMaybe<GiftIdeasAggregateBoolExpBool_Or>;
+  count?: InputMaybe<GiftIdeasAggregateBoolExpCount>;
+};
+
 /** aggregate fields of "gift_ideas" */
 export type GiftIdeasAggregateFields = {
   __typename?: 'GiftIdeasAggregateFields';
@@ -424,8 +513,8 @@ export type GiftIdeasAggregateFieldsCountArgs = {
 /** order by aggregate values of table "gift_ideas" */
 export type GiftIdeasAggregateOrderBy = {
   count?: InputMaybe<OrderBy>;
-  max?: InputMaybe<Gift_Ideas_Max_Order_By>;
-  min?: InputMaybe<Gift_Ideas_Min_Order_By>;
+  max?: InputMaybe<GiftIdeasMaxOrderBy>;
+  min?: InputMaybe<GiftIdeasMinOrderBy>;
 };
 
 /** input type for inserting array relation for remote table "gift_ideas" */
@@ -441,7 +530,7 @@ export type GiftIdeasBoolExp = {
   _not?: InputMaybe<GiftIdeasBoolExp>;
   _or?: InputMaybe<Array<GiftIdeasBoolExp>>;
   claims?: InputMaybe<ClaimsBoolExp>;
-  claims_aggregate?: InputMaybe<Claims_Aggregate_Bool_Exp>;
+  claimsAggregate?: InputMaybe<ClaimsAggregateBoolExp>;
   createdAt?: InputMaybe<TimestamptzComparisonExp>;
   createdBy?: InputMaybe<UsersBoolExp>;
   createdById?: InputMaybe<UuidComparisonExp>;
@@ -495,6 +584,19 @@ export type GiftIdeasMaxFields = {
   wishlistId?: Maybe<Scalars['uuid']>;
 };
 
+/** order by max() on columns of table "gift_ideas" */
+export type GiftIdeasMaxOrderBy = {
+  createdAt?: InputMaybe<OrderBy>;
+  createdById?: InputMaybe<OrderBy>;
+  description?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  title?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+  url?: InputMaybe<OrderBy>;
+  userId?: InputMaybe<OrderBy>;
+  wishlistId?: InputMaybe<OrderBy>;
+};
+
 /** aggregate min on columns */
 export type GiftIdeasMinFields = {
   __typename?: 'GiftIdeasMinFields';
@@ -509,11 +611,24 @@ export type GiftIdeasMinFields = {
   wishlistId?: Maybe<Scalars['uuid']>;
 };
 
+/** order by min() on columns of table "gift_ideas" */
+export type GiftIdeasMinOrderBy = {
+  createdAt?: InputMaybe<OrderBy>;
+  createdById?: InputMaybe<OrderBy>;
+  description?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  title?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+  url?: InputMaybe<OrderBy>;
+  userId?: InputMaybe<OrderBy>;
+  wishlistId?: InputMaybe<OrderBy>;
+};
+
 /** response of any mutation on the table "gift_ideas" */
 export type GiftIdeasMutationResponse = {
   __typename?: 'GiftIdeasMutationResponse';
   /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
+  affectedRows: Scalars['Int'];
   /** data from the rows affected by the mutation */
   returning: Array<GiftIdeas>;
 };
@@ -528,7 +643,7 @@ export type GiftIdeasObjRelInsertInput = {
 /** on_conflict condition type for table "gift_ideas" */
 export type GiftIdeasOnConflict = {
   constraint: GiftIdeasConstraint;
-  update_columns?: Array<GiftIdeasUpdateColumn>;
+  updateColumns?: Array<GiftIdeasUpdateColumn>;
   where?: InputMaybe<GiftIdeasBoolExp>;
 };
 
@@ -579,8 +694,42 @@ export enum GiftIdeasSelectColumn {
   WishlistId = 'wishlistId'
 }
 
+/** select "giftIdeasAggregateBoolExpBool_andArgumentsColumns" columns of table "gift_ideas" */
+export enum GiftIdeasSelectColumnGiftIdeasAggregateBoolExpBool_AndArgumentsColumns {
+  /** column name */
+  Removed = 'removed'
+}
+
+/** select "giftIdeasAggregateBoolExpBool_orArgumentsColumns" columns of table "gift_ideas" */
+export enum GiftIdeasSelectColumnGiftIdeasAggregateBoolExpBool_OrArgumentsColumns {
+  /** column name */
+  Removed = 'removed'
+}
+
 /** input type for updating data in table "gift_ideas" */
 export type GiftIdeasSetInput = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  createdById?: InputMaybe<Scalars['uuid']>;
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  removed?: InputMaybe<Scalars['Boolean']>;
+  title?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  url?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+  wishlistId?: InputMaybe<Scalars['uuid']>;
+};
+
+/** Streaming cursor of the table "gift_ideas" */
+export type GiftIdeasStreamCursorInput = {
+  /** Stream column input with initial value */
+  initialValue: GiftIdeasStreamCursorValueInput;
+  /** cursor ordering */
+  ordering?: InputMaybe<CursorOrdering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type GiftIdeasStreamCursorValueInput = {
   createdAt?: InputMaybe<Scalars['timestamptz']>;
   createdById?: InputMaybe<Scalars['uuid']>;
   description?: InputMaybe<Scalars['String']>;
@@ -620,6 +769,7 @@ export enum GiftIdeasUpdateColumn {
 export type GiftIdeasUpdates = {
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<GiftIdeasSetInput>;
+  /** filter the rows which have to be updated */
   where: GiftIdeasBoolExp;
 };
 
@@ -857,21 +1007,21 @@ export type UsersBoolExp = {
   _not?: InputMaybe<UsersBoolExp>;
   _or?: InputMaybe<Array<UsersBoolExp>>;
   claims?: InputMaybe<ClaimsBoolExp>;
-  claims_aggregate?: InputMaybe<Claims_Aggregate_Bool_Exp>;
+  claimsAggregate?: InputMaybe<ClaimsAggregateBoolExp>;
   createdAt?: InputMaybe<TimestamptzComparisonExp>;
   followers?: InputMaybe<FollowsBoolExp>;
-  followers_aggregate?: InputMaybe<Follows_Aggregate_Bool_Exp>;
+  followersAggregate?: InputMaybe<FollowsAggregateBoolExp>;
   follows?: InputMaybe<FollowsBoolExp>;
-  follows_aggregate?: InputMaybe<Follows_Aggregate_Bool_Exp>;
+  followsAggregate?: InputMaybe<FollowsAggregateBoolExp>;
   giftIdeas?: InputMaybe<GiftIdeasBoolExp>;
-  giftIdeas_aggregate?: InputMaybe<Gift_Ideas_Aggregate_Bool_Exp>;
+  giftIdeasAggregate?: InputMaybe<GiftIdeasAggregateBoolExp>;
   id?: InputMaybe<UuidComparisonExp>;
   name?: InputMaybe<StringComparisonExp>;
   photo?: InputMaybe<StringComparisonExp>;
   updatedAt?: InputMaybe<TimestamptzComparisonExp>;
   username?: InputMaybe<StringComparisonExp>;
   wishlists?: InputMaybe<WishlistsBoolExp>;
-  wishlists_aggregate?: InputMaybe<Wishlists_Aggregate_Bool_Exp>;
+  wishlistsAggregate?: InputMaybe<WishlistsAggregateBoolExp>;
 };
 
 /** unique or primary key constraints on table "users" */
@@ -923,7 +1073,7 @@ export type UsersMinFields = {
 export type UsersMutationResponse = {
   __typename?: 'UsersMutationResponse';
   /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
+  affectedRows: Scalars['Int'];
   /** data from the rows affected by the mutation */
   returning: Array<Users>;
 };
@@ -938,7 +1088,7 @@ export type UsersObjRelInsertInput = {
 /** on_conflict condition type for table "users" */
 export type UsersOnConflict = {
   constraint: UsersConstraint;
-  update_columns?: Array<UsersUpdateColumn>;
+  updateColumns?: Array<UsersUpdateColumn>;
   where?: InputMaybe<UsersBoolExp>;
 };
 
@@ -988,6 +1138,24 @@ export type UsersSetInput = {
   username?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "users" */
+export type UsersStreamCursorInput = {
+  /** Stream column input with initial value */
+  initialValue: UsersStreamCursorValueInput;
+  /** cursor ordering */
+  ordering?: InputMaybe<CursorOrdering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type UsersStreamCursorValueInput = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  name?: InputMaybe<Scalars['String']>;
+  photo?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  username?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "users" */
 export enum UsersUpdateColumn {
   /** column name */
@@ -1007,6 +1175,7 @@ export enum UsersUpdateColumn {
 export type UsersUpdates = {
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<UsersSetInput>;
+  /** filter the rows which have to be updated */
   where: UsersBoolExp;
 };
 
@@ -1066,6 +1235,10 @@ export type WishlistsAggregate = {
   nodes: Array<Wishlists>;
 };
 
+export type WishlistsAggregateBoolExp = {
+  count?: InputMaybe<WishlistsAggregateBoolExpCount>;
+};
+
 /** aggregate fields of "wishlists" */
 export type WishlistsAggregateFields = {
   __typename?: 'WishlistsAggregateFields';
@@ -1084,8 +1257,8 @@ export type WishlistsAggregateFieldsCountArgs = {
 /** order by aggregate values of table "wishlists" */
 export type WishlistsAggregateOrderBy = {
   count?: InputMaybe<OrderBy>;
-  max?: InputMaybe<Wishlists_Max_Order_By>;
-  min?: InputMaybe<Wishlists_Min_Order_By>;
+  max?: InputMaybe<WishlistsMaxOrderBy>;
+  min?: InputMaybe<WishlistsMinOrderBy>;
 };
 
 /** input type for inserting array relation for remote table "wishlists" */
@@ -1104,7 +1277,7 @@ export type WishlistsBoolExp = {
   createdBy?: InputMaybe<UsersBoolExp>;
   createdById?: InputMaybe<UuidComparisonExp>;
   giftIdeas?: InputMaybe<GiftIdeasBoolExp>;
-  giftIdeas_aggregate?: InputMaybe<Gift_Ideas_Aggregate_Bool_Exp>;
+  giftIdeasAggregate?: InputMaybe<GiftIdeasAggregateBoolExp>;
   id?: InputMaybe<UuidComparisonExp>;
   title?: InputMaybe<StringComparisonExp>;
   updatedAt?: InputMaybe<TimestamptzComparisonExp>;
@@ -1137,6 +1310,15 @@ export type WishlistsMaxFields = {
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
+/** order by max() on columns of table "wishlists" */
+export type WishlistsMaxOrderBy = {
+  createdAt?: InputMaybe<OrderBy>;
+  createdById?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  title?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+};
+
 /** aggregate min on columns */
 export type WishlistsMinFields = {
   __typename?: 'WishlistsMinFields';
@@ -1147,11 +1329,20 @@ export type WishlistsMinFields = {
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
+/** order by min() on columns of table "wishlists" */
+export type WishlistsMinOrderBy = {
+  createdAt?: InputMaybe<OrderBy>;
+  createdById?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  title?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+};
+
 /** response of any mutation on the table "wishlists" */
 export type WishlistsMutationResponse = {
   __typename?: 'WishlistsMutationResponse';
   /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
+  affectedRows: Scalars['Int'];
   /** data from the rows affected by the mutation */
   returning: Array<Wishlists>;
 };
@@ -1166,7 +1357,7 @@ export type WishlistsObjRelInsertInput = {
 /** on_conflict condition type for table "wishlists" */
 export type WishlistsOnConflict = {
   constraint: WishlistsConstraint;
-  update_columns?: Array<WishlistsUpdateColumn>;
+  updateColumns?: Array<WishlistsUpdateColumn>;
   where?: InputMaybe<WishlistsBoolExp>;
 };
 
@@ -1209,6 +1400,23 @@ export type WishlistsSetInput = {
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
 };
 
+/** Streaming cursor of the table "wishlists" */
+export type WishlistsStreamCursorInput = {
+  /** Stream column input with initial value */
+  initialValue: WishlistsStreamCursorValueInput;
+  /** cursor ordering */
+  ordering?: InputMaybe<CursorOrdering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type WishlistsStreamCursorValueInput = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  createdById?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  title?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+};
+
 /** update columns of table "wishlists" */
 export enum WishlistsUpdateColumn {
   /** column name */
@@ -1226,203 +1434,57 @@ export enum WishlistsUpdateColumn {
 export type WishlistsUpdates = {
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<WishlistsSetInput>;
+  /** filter the rows which have to be updated */
   where: WishlistsBoolExp;
 };
 
-export type Claims_Aggregate_Bool_Exp = {
-  bool_and?: InputMaybe<Claims_Aggregate_Bool_Exp_Bool_And>;
-  bool_or?: InputMaybe<Claims_Aggregate_Bool_Exp_Bool_Or>;
-  count?: InputMaybe<Claims_Aggregate_Bool_Exp_Count>;
-};
-
-export type Claims_Aggregate_Bool_Exp_Bool_And = {
-  arguments: Claims_Select_Column_Claims_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+export type ClaimsAggregateBoolExpBool_And = {
+  arguments: ClaimsSelectColumnClaimsAggregateBoolExpBool_AndArgumentsColumns;
   distinct?: InputMaybe<Scalars['Boolean']>;
   filter?: InputMaybe<ClaimsBoolExp>;
   predicate: BooleanComparisonExp;
 };
 
-export type Claims_Aggregate_Bool_Exp_Bool_Or = {
-  arguments: Claims_Select_Column_Claims_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+export type ClaimsAggregateBoolExpBool_Or = {
+  arguments: ClaimsSelectColumnClaimsAggregateBoolExpBool_OrArgumentsColumns;
   distinct?: InputMaybe<Scalars['Boolean']>;
   filter?: InputMaybe<ClaimsBoolExp>;
   predicate: BooleanComparisonExp;
 };
 
-export type Claims_Aggregate_Bool_Exp_Count = {
+export type ClaimsAggregateBoolExpCount = {
   arguments?: InputMaybe<Array<ClaimsSelectColumn>>;
   distinct?: InputMaybe<Scalars['Boolean']>;
   filter?: InputMaybe<ClaimsBoolExp>;
   predicate: IntComparisonExp;
 };
 
-/** order by max() on columns of table "claims" */
-export type Claims_Max_Order_By = {
-  giftIdeaId?: InputMaybe<OrderBy>;
-  id?: InputMaybe<OrderBy>;
-  userId?: InputMaybe<OrderBy>;
-};
-
-/** order by min() on columns of table "claims" */
-export type Claims_Min_Order_By = {
-  giftIdeaId?: InputMaybe<OrderBy>;
-  id?: InputMaybe<OrderBy>;
-  userId?: InputMaybe<OrderBy>;
-};
-
-/** select "claims_aggregate_bool_exp_bool_and_arguments_columns" columns of table "claims" */
-export enum Claims_Select_Column_Claims_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
-  /** column name */
-  IsPurchased = 'isPurchased'
-}
-
-/** select "claims_aggregate_bool_exp_bool_or_arguments_columns" columns of table "claims" */
-export enum Claims_Select_Column_Claims_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
-  /** column name */
-  IsPurchased = 'isPurchased'
-}
-
-/** Streaming cursor of the table "claims" */
-export type Claims_StreamCursorInput = {
-  /** Stream column input with initial value */
-  initialValue: Claims_StreamCursorValueInput;
-  /** cursor ordering */
-  ordering?: InputMaybe<CursorOrdering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Claims_StreamCursorValueInput = {
-  giftIdeaId?: InputMaybe<Scalars['uuid']>;
-  id?: InputMaybe<Scalars['uuid']>;
-  isPurchased?: InputMaybe<Scalars['Boolean']>;
-  userId?: InputMaybe<Scalars['uuid']>;
-};
-
-export type Follows_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Follows_Aggregate_Bool_Exp_Count>;
-};
-
-export type Follows_Aggregate_Bool_Exp_Count = {
+export type FollowsAggregateBoolExpCount = {
   arguments?: InputMaybe<Array<FollowsSelectColumn>>;
   distinct?: InputMaybe<Scalars['Boolean']>;
   filter?: InputMaybe<FollowsBoolExp>;
   predicate: IntComparisonExp;
 };
 
-/** order by max() on columns of table "follows" */
-export type Follows_Max_Order_By = {
-  createdAt?: InputMaybe<OrderBy>;
-  followerId?: InputMaybe<OrderBy>;
-  followingId?: InputMaybe<OrderBy>;
-};
-
-/** order by min() on columns of table "follows" */
-export type Follows_Min_Order_By = {
-  createdAt?: InputMaybe<OrderBy>;
-  followerId?: InputMaybe<OrderBy>;
-  followingId?: InputMaybe<OrderBy>;
-};
-
-/** Streaming cursor of the table "follows" */
-export type Follows_StreamCursorInput = {
-  /** Stream column input with initial value */
-  initialValue: Follows_StreamCursorValueInput;
-  /** cursor ordering */
-  ordering?: InputMaybe<CursorOrdering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Follows_StreamCursorValueInput = {
-  createdAt?: InputMaybe<Scalars['timestamptz']>;
-  followerId?: InputMaybe<Scalars['uuid']>;
-  followingId?: InputMaybe<Scalars['uuid']>;
-};
-
-export type Gift_Ideas_Aggregate_Bool_Exp = {
-  bool_and?: InputMaybe<Gift_Ideas_Aggregate_Bool_Exp_Bool_And>;
-  bool_or?: InputMaybe<Gift_Ideas_Aggregate_Bool_Exp_Bool_Or>;
-  count?: InputMaybe<Gift_Ideas_Aggregate_Bool_Exp_Count>;
-};
-
-export type Gift_Ideas_Aggregate_Bool_Exp_Bool_And = {
-  arguments: Gift_Ideas_Select_Column_Gift_Ideas_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+export type GiftIdeasAggregateBoolExpBool_And = {
+  arguments: GiftIdeasSelectColumnGiftIdeasAggregateBoolExpBool_AndArgumentsColumns;
   distinct?: InputMaybe<Scalars['Boolean']>;
   filter?: InputMaybe<GiftIdeasBoolExp>;
   predicate: BooleanComparisonExp;
 };
 
-export type Gift_Ideas_Aggregate_Bool_Exp_Bool_Or = {
-  arguments: Gift_Ideas_Select_Column_Gift_Ideas_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+export type GiftIdeasAggregateBoolExpBool_Or = {
+  arguments: GiftIdeasSelectColumnGiftIdeasAggregateBoolExpBool_OrArgumentsColumns;
   distinct?: InputMaybe<Scalars['Boolean']>;
   filter?: InputMaybe<GiftIdeasBoolExp>;
   predicate: BooleanComparisonExp;
 };
 
-export type Gift_Ideas_Aggregate_Bool_Exp_Count = {
+export type GiftIdeasAggregateBoolExpCount = {
   arguments?: InputMaybe<Array<GiftIdeasSelectColumn>>;
   distinct?: InputMaybe<Scalars['Boolean']>;
   filter?: InputMaybe<GiftIdeasBoolExp>;
   predicate: IntComparisonExp;
-};
-
-/** order by max() on columns of table "gift_ideas" */
-export type Gift_Ideas_Max_Order_By = {
-  createdAt?: InputMaybe<OrderBy>;
-  createdById?: InputMaybe<OrderBy>;
-  description?: InputMaybe<OrderBy>;
-  id?: InputMaybe<OrderBy>;
-  title?: InputMaybe<OrderBy>;
-  updatedAt?: InputMaybe<OrderBy>;
-  url?: InputMaybe<OrderBy>;
-  userId?: InputMaybe<OrderBy>;
-  wishlistId?: InputMaybe<OrderBy>;
-};
-
-/** order by min() on columns of table "gift_ideas" */
-export type Gift_Ideas_Min_Order_By = {
-  createdAt?: InputMaybe<OrderBy>;
-  createdById?: InputMaybe<OrderBy>;
-  description?: InputMaybe<OrderBy>;
-  id?: InputMaybe<OrderBy>;
-  title?: InputMaybe<OrderBy>;
-  updatedAt?: InputMaybe<OrderBy>;
-  url?: InputMaybe<OrderBy>;
-  userId?: InputMaybe<OrderBy>;
-  wishlistId?: InputMaybe<OrderBy>;
-};
-
-/** select "gift_ideas_aggregate_bool_exp_bool_and_arguments_columns" columns of table "gift_ideas" */
-export enum Gift_Ideas_Select_Column_Gift_Ideas_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
-  /** column name */
-  Removed = 'removed'
-}
-
-/** select "gift_ideas_aggregate_bool_exp_bool_or_arguments_columns" columns of table "gift_ideas" */
-export enum Gift_Ideas_Select_Column_Gift_Ideas_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
-  /** column name */
-  Removed = 'removed'
-}
-
-/** Streaming cursor of the table "gift_ideas" */
-export type Gift_Ideas_StreamCursorInput = {
-  /** Stream column input with initial value */
-  initialValue: Gift_Ideas_StreamCursorValueInput;
-  /** cursor ordering */
-  ordering?: InputMaybe<CursorOrdering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Gift_Ideas_StreamCursorValueInput = {
-  createdAt?: InputMaybe<Scalars['timestamptz']>;
-  createdById?: InputMaybe<Scalars['uuid']>;
-  description?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['uuid']>;
-  removed?: InputMaybe<Scalars['Boolean']>;
-  title?: InputMaybe<Scalars['String']>;
-  updatedAt?: InputMaybe<Scalars['timestamptz']>;
-  url?: InputMaybe<Scalars['String']>;
-  userId?: InputMaybe<Scalars['uuid']>;
-  wishlistId?: InputMaybe<Scalars['uuid']>;
 };
 
 /** mutation root */
@@ -1642,7 +1704,7 @@ export type Mutation_RootUpdateClaimsArgs = {
 /** mutation root */
 export type Mutation_RootUpdateClaimsByPkArgs = {
   _set?: InputMaybe<ClaimsSetInput>;
-  pk_columns: ClaimsPkColumnsInput;
+  pkColumns: ClaimsPkColumnsInput;
 };
 
 
@@ -1662,7 +1724,7 @@ export type Mutation_RootUpdateFollowsArgs = {
 /** mutation root */
 export type Mutation_RootUpdateFollowsByPkArgs = {
   _set?: InputMaybe<FollowsSetInput>;
-  pk_columns: FollowsPkColumnsInput;
+  pkColumns: FollowsPkColumnsInput;
 };
 
 
@@ -1682,7 +1744,7 @@ export type Mutation_RootUpdateGiftIdeasArgs = {
 /** mutation root */
 export type Mutation_RootUpdateGiftIdeasByPkArgs = {
   _set?: InputMaybe<GiftIdeasSetInput>;
-  pk_columns: GiftIdeasPkColumnsInput;
+  pkColumns: GiftIdeasPkColumnsInput;
 };
 
 
@@ -1702,7 +1764,7 @@ export type Mutation_RootUpdateUsersArgs = {
 /** mutation root */
 export type Mutation_RootUpdateUsersByPkArgs = {
   _set?: InputMaybe<UsersSetInput>;
-  pk_columns: UsersPkColumnsInput;
+  pkColumns: UsersPkColumnsInput;
 };
 
 
@@ -1722,7 +1784,7 @@ export type Mutation_RootUpdateWishlistsArgs = {
 /** mutation root */
 export type Mutation_RootUpdateWishlistsByPkArgs = {
   _set?: InputMaybe<WishlistsSetInput>;
-  pk_columns: WishlistsPkColumnsInput;
+  pkColumns: WishlistsPkColumnsInput;
 };
 
 
@@ -1951,7 +2013,7 @@ export type Subscription_RootClaimsByPkArgs = {
 
 export type Subscription_RootClaimsStreamArgs = {
   batchSize: Scalars['Int'];
-  cursor: Array<InputMaybe<Claims_StreamCursorInput>>;
+  cursor: Array<InputMaybe<ClaimsStreamCursorInput>>;
   where?: InputMaybe<ClaimsBoolExp>;
 };
 
@@ -1982,7 +2044,7 @@ export type Subscription_RootFollowsByPkArgs = {
 
 export type Subscription_RootFollowsStreamArgs = {
   batchSize: Scalars['Int'];
-  cursor: Array<InputMaybe<Follows_StreamCursorInput>>;
+  cursor: Array<InputMaybe<FollowsStreamCursorInput>>;
   where?: InputMaybe<FollowsBoolExp>;
 };
 
@@ -2012,7 +2074,7 @@ export type Subscription_RootGiftIdeasByPkArgs = {
 
 export type Subscription_RootGiftIdeasStreamArgs = {
   batchSize: Scalars['Int'];
-  cursor: Array<InputMaybe<Gift_Ideas_StreamCursorInput>>;
+  cursor: Array<InputMaybe<GiftIdeasStreamCursorInput>>;
   where?: InputMaybe<GiftIdeasBoolExp>;
 };
 
@@ -2042,7 +2104,7 @@ export type Subscription_RootUsersByPkArgs = {
 
 export type Subscription_RootUsersStreamArgs = {
   batchSize: Scalars['Int'];
-  cursor: Array<InputMaybe<Users_StreamCursorInput>>;
+  cursor: Array<InputMaybe<UsersStreamCursorInput>>;
   where?: InputMaybe<UsersBoolExp>;
 };
 
@@ -2072,72 +2134,15 @@ export type Subscription_RootWishlistsByPkArgs = {
 
 export type Subscription_RootWishlistsStreamArgs = {
   batchSize: Scalars['Int'];
-  cursor: Array<InputMaybe<Wishlists_StreamCursorInput>>;
+  cursor: Array<InputMaybe<WishlistsStreamCursorInput>>;
   where?: InputMaybe<WishlistsBoolExp>;
 };
 
-/** Streaming cursor of the table "users" */
-export type Users_StreamCursorInput = {
-  /** Stream column input with initial value */
-  initialValue: Users_StreamCursorValueInput;
-  /** cursor ordering */
-  ordering?: InputMaybe<CursorOrdering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Users_StreamCursorValueInput = {
-  createdAt?: InputMaybe<Scalars['timestamptz']>;
-  id?: InputMaybe<Scalars['uuid']>;
-  name?: InputMaybe<Scalars['String']>;
-  photo?: InputMaybe<Scalars['String']>;
-  updatedAt?: InputMaybe<Scalars['timestamptz']>;
-  username?: InputMaybe<Scalars['String']>;
-};
-
-export type Wishlists_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Wishlists_Aggregate_Bool_Exp_Count>;
-};
-
-export type Wishlists_Aggregate_Bool_Exp_Count = {
+export type WishlistsAggregateBoolExpCount = {
   arguments?: InputMaybe<Array<WishlistsSelectColumn>>;
   distinct?: InputMaybe<Scalars['Boolean']>;
   filter?: InputMaybe<WishlistsBoolExp>;
   predicate: IntComparisonExp;
-};
-
-/** order by max() on columns of table "wishlists" */
-export type Wishlists_Max_Order_By = {
-  createdAt?: InputMaybe<OrderBy>;
-  createdById?: InputMaybe<OrderBy>;
-  id?: InputMaybe<OrderBy>;
-  title?: InputMaybe<OrderBy>;
-  updatedAt?: InputMaybe<OrderBy>;
-};
-
-/** order by min() on columns of table "wishlists" */
-export type Wishlists_Min_Order_By = {
-  createdAt?: InputMaybe<OrderBy>;
-  createdById?: InputMaybe<OrderBy>;
-  id?: InputMaybe<OrderBy>;
-  title?: InputMaybe<OrderBy>;
-  updatedAt?: InputMaybe<OrderBy>;
-};
-
-/** Streaming cursor of the table "wishlists" */
-export type Wishlists_StreamCursorInput = {
-  /** Stream column input with initial value */
-  initialValue: Wishlists_StreamCursorValueInput;
-  /** cursor ordering */
-  ordering?: InputMaybe<CursorOrdering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Wishlists_StreamCursorValueInput = {
-  createdAt?: InputMaybe<Scalars['timestamptz']>;
-  createdById?: InputMaybe<Scalars['uuid']>;
-  id?: InputMaybe<Scalars['uuid']>;
-  title?: InputMaybe<Scalars['String']>;
-  updatedAt?: InputMaybe<Scalars['timestamptz']>;
 };
 
 export type GetFamilyAndFriendsDataQueryVariables = Exact<{
@@ -2163,7 +2168,7 @@ export type UnFollowUserMutationVariables = Exact<{
 export type UnFollowUserMutation = { __typename?: 'mutation_root', deleteFollowsByPk?: { __typename?: 'Follows', createdAt: any } | null };
 
 export type ClaimGiftIdeaMutationVariables = Exact<{
-  giftIdeaId: Scalars['uuid'];
+  giftIdeaId?: InputMaybe<Scalars['uuid']>;
 }>;
 
 
@@ -2186,7 +2191,7 @@ export type MarkGiftIdeaAsPurchasedMutationVariables = Exact<{
 }>;
 
 
-export type MarkGiftIdeaAsPurchasedMutation = { __typename?: 'mutation_root', updateClaims?: { __typename?: 'ClaimsMutationResponse', affected_rows: number } | null };
+export type MarkGiftIdeaAsPurchasedMutation = { __typename?: 'mutation_root', updateClaims?: { __typename?: 'ClaimsMutationResponse', affectedRows: number } | null };
 
 export type MarkGiftIdeaAsUnPurchasedMutationVariables = Exact<{
   giftIdeaId: Scalars['uuid'];
@@ -2194,7 +2199,7 @@ export type MarkGiftIdeaAsUnPurchasedMutationVariables = Exact<{
 }>;
 
 
-export type MarkGiftIdeaAsUnPurchasedMutation = { __typename?: 'mutation_root', updateClaims?: { __typename?: 'ClaimsMutationResponse', affected_rows: number } | null };
+export type MarkGiftIdeaAsUnPurchasedMutation = { __typename?: 'mutation_root', updateClaims?: { __typename?: 'ClaimsMutationResponse', affectedRows: number } | null };
 
 export type UnClaimGiftIdeaMutationVariables = Exact<{
   giftIdeaId: Scalars['uuid'];
@@ -2202,7 +2207,7 @@ export type UnClaimGiftIdeaMutationVariables = Exact<{
 }>;
 
 
-export type UnClaimGiftIdeaMutation = { __typename?: 'mutation_root', deleteClaims?: { __typename?: 'ClaimsMutationResponse', affected_rows: number } | null };
+export type UnClaimGiftIdeaMutation = { __typename?: 'mutation_root', deleteClaims?: { __typename?: 'ClaimsMutationResponse', affectedRows: number } | null };
 
 export type InsertGiftIdeaMutationVariables = Exact<{
   input: GiftIdeasInsertInput;
@@ -2277,17 +2282,17 @@ export const UserFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"
 export const GetFamilyAndFriendsDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFamilyAndFriendsData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"allUsers"},"name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"EnumValue","value":"ASC"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"usersByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"follows"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"EnumValue","value":"ASC"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"claims"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"giftIdea"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetFamilyAndFriendsDataQuery, GetFamilyAndFriendsDataQueryVariables>;
 export const FollowUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"FollowUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"followingId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insertFollows"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"followingId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"followingId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"followerId"}},{"kind":"Field","name":{"kind":"Name","value":"followingId"}}]}}]}}]}}]} as unknown as DocumentNode<FollowUserMutation, FollowUserMutationVariables>;
 export const UnFollowUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnFollowUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"followerId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"followingId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteFollowsByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"followerId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"followerId"}}},{"kind":"Argument","name":{"kind":"Name","value":"followingId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"followingId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<UnFollowUserMutation, UnFollowUserMutationVariables>;
-export const ClaimGiftIdeaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ClaimGiftIdea"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insertClaimsOne"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"giftIdeaId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isPurchased"}}]}}]}}]} as unknown as DocumentNode<ClaimGiftIdeaMutation, ClaimGiftIdeaMutationVariables>;
-export const GetUserGiftIdeasDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserGiftIdeas"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"usersByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}},{"kind":"Field","name":{"kind":"Name","value":"giftIdeas"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"removed"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_neq"},"value":{"kind":"BooleanValue","value":true}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"createdAt"},"value":{"kind":"EnumValue","value":"ASC"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GiftIdeaFields"}}]}}]}}]}},...GiftIdeaFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetUserGiftIdeasQuery, GetUserGiftIdeasQueryVariables>;
-export const MarkGiftIdeaAsPurchasedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"MarkGiftIdeaAsPurchased"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateClaims"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"giftIdeaId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"userId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"isPurchased"},"value":{"kind":"BooleanValue","value":true}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<MarkGiftIdeaAsPurchasedMutation, MarkGiftIdeaAsPurchasedMutationVariables>;
-export const MarkGiftIdeaAsUnPurchasedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"MarkGiftIdeaAsUnPurchased"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateClaims"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"giftIdeaId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"userId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"isPurchased"},"value":{"kind":"BooleanValue","value":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<MarkGiftIdeaAsUnPurchasedMutation, MarkGiftIdeaAsUnPurchasedMutationVariables>;
-export const UnClaimGiftIdeaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnClaimGiftIdea"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteClaims"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"giftIdeaId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"userId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<UnClaimGiftIdeaMutation, UnClaimGiftIdeaMutationVariables>;
-export const InsertGiftIdeaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertGiftIdea"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GiftIdeasInsertInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"giftIdea"},"name":{"kind":"Name","value":"insertGiftIdeasOne"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GiftIdeaFormFields"}}]}}]}},...GiftIdeaFormFieldsFragmentDoc.definitions]} as unknown as DocumentNode<InsertGiftIdeaMutation, InsertGiftIdeaMutationVariables>;
-export const UpdateGiftIdeaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGiftIdea"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GiftIdeasSetInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"giftIdea"},"name":{"kind":"Name","value":"updateGiftIdeasByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GiftIdeaFormFields"}}]}}]}},...GiftIdeaFormFieldsFragmentDoc.definitions]} as unknown as DocumentNode<UpdateGiftIdeaMutation, UpdateGiftIdeaMutationVariables>;
-export const GetGiftIdeaFormValuesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetGiftIdeaFormValues"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"giftIdea"},"name":{"kind":"Name","value":"giftIdeasByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GiftIdeaFormFields"}}]}}]}},...GiftIdeaFormFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetGiftIdeaFormValuesQuery, GetGiftIdeaFormValuesQueryVariables>;
+export const ClaimGiftIdeaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ClaimGiftIdea"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insertClaimsOne"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"giftIdeaId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isPurchased"}}]}}]}}]} as unknown as DocumentNode<ClaimGiftIdeaMutation, ClaimGiftIdeaMutationVariables>;
+export const GetUserGiftIdeasDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserGiftIdeas"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"usersByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}},{"kind":"Field","name":{"kind":"Name","value":"giftIdeas"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"removed"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_neq"},"value":{"kind":"BooleanValue","value":true}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"createdAt"},"value":{"kind":"EnumValue","value":"ASC"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GiftIdeaFields"}}]}}]}}]}},...GiftIdeaFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetUserGiftIdeasQuery, GetUserGiftIdeasQueryVariables>;
+export const MarkGiftIdeaAsPurchasedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"MarkGiftIdeaAsPurchased"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateClaims"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"giftIdeaId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"userId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"isPurchased"},"value":{"kind":"BooleanValue","value":true}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affectedRows"}}]}}]}}]} as unknown as DocumentNode<MarkGiftIdeaAsPurchasedMutation, MarkGiftIdeaAsPurchasedMutationVariables>;
+export const MarkGiftIdeaAsUnPurchasedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"MarkGiftIdeaAsUnPurchased"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateClaims"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"giftIdeaId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"userId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"isPurchased"},"value":{"kind":"BooleanValue","value":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affectedRows"}}]}}]}}]} as unknown as DocumentNode<MarkGiftIdeaAsUnPurchasedMutation, MarkGiftIdeaAsUnPurchasedMutationVariables>;
+export const UnClaimGiftIdeaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnClaimGiftIdea"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteClaims"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"giftIdeaId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"giftIdeaId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"userId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affectedRows"}}]}}]}}]} as unknown as DocumentNode<UnClaimGiftIdeaMutation, UnClaimGiftIdeaMutationVariables>;
+export const InsertGiftIdeaDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertGiftIdea"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GiftIdeasInsertInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"giftIdea"},"name":{"kind":"Name","value":"insertGiftIdeasOne"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GiftIdeaFormFields"}}]}}]}},...GiftIdeaFormFieldsFragmentDoc.definitions]} as unknown as DocumentNode<InsertGiftIdeaMutation, InsertGiftIdeaMutationVariables>;
+export const UpdateGiftIdeaDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGiftIdea"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GiftIdeasSetInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"giftIdea"},"name":{"kind":"Name","value":"updateGiftIdeasByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pkColumns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GiftIdeaFormFields"}}]}}]}},...GiftIdeaFormFieldsFragmentDoc.definitions]} as unknown as DocumentNode<UpdateGiftIdeaMutation, UpdateGiftIdeaMutationVariables>;
+export const GetGiftIdeaFormValuesDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetGiftIdeaFormValues"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"giftIdea"},"name":{"kind":"Name","value":"giftIdeasByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GiftIdeaFormFields"}}]}}]}},...GiftIdeaFormFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetGiftIdeaFormValuesQuery, GetGiftIdeaFormValuesQueryVariables>;
 export const GetUserShoppingListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserShoppingList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"usersByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"claims"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"giftIdea"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"createdAt"},"value":{"kind":"EnumValue","value":"ASC"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isPurchased"}},{"kind":"Field","name":{"kind":"Name","value":"giftIdea"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"followedUsers"},"name":{"kind":"Name","value":"follows"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}}]}}]}}]}}]} as unknown as DocumentNode<GetUserShoppingListQuery, GetUserShoppingListQueryVariables>;
-export const GetUsersByUsernameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsersByUsername"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},...UserFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetUsersByUsernameQuery, GetUsersByUsernameQueryVariables>;
-export const GetUserByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"usersByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},...UserFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetUserByIdQuery, GetUserByIdQueryVariables>;
-export const GetAllUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},...UserFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetAllUsersQuery, GetAllUsersQueryVariables>;
-export const UpdateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updates"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UsersSetInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"updateUsersByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updates"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},...UserFieldsFragmentDoc.definitions]} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
-export const InsertUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"photo"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"insertUsersOne"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"photo"},"value":{"kind":"Variable","name":{"kind":"Name","value":"photo"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},...UserFieldsFragmentDoc.definitions]} as unknown as DocumentNode<InsertUserMutation, InsertUserMutationVariables>;
+export const GetUsersByUsernameDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsersByUsername"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},...UserFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetUsersByUsernameQuery, GetUsersByUsernameQueryVariables>;
+export const GetUserByIdDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"usersByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},...UserFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetUserByIdQuery, GetUserByIdQueryVariables>;
+export const GetAllUsersDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},...UserFieldsFragmentDoc.definitions]} as unknown as DocumentNode<GetAllUsersQuery, GetAllUsersQueryVariables>;
+export const UpdateUserDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updates"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UsersSetInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"updateUsersByPk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pkColumns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updates"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},...UserFieldsFragmentDoc.definitions]} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
+export const InsertUserDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"photo"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"insertUsersOne"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"photo"},"value":{"kind":"Variable","name":{"kind":"Name","value":"photo"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFields"}}]}}]}},...UserFieldsFragmentDoc.definitions]} as unknown as DocumentNode<InsertUserMutation, InsertUserMutationVariables>;

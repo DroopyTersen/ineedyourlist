@@ -2,33 +2,33 @@ table:
   name: follows
   schema: public
 object_relationships:
-  - name: follower
-    using:
-      foreign_key_constraint_on: follower_id
-  - name: user
-    using:
-      foreign_key_constraint_on: following_id
+- name: follower
+  using:
+    foreign_key_constraint_on: follower_id
+- name: user
+  using:
+    foreign_key_constraint_on: following_id
 insert_permissions:
-  - role: user
-    permission:
-      check: {}
-      set:
-        follower_id: x-hasura-User-Id
-      columns:
-        - following_id
+- permission:
+    check: {}
+    columns:
+    - following_id
+    set:
+      follower_id: x-hasura-User-Id
+  role: user
 select_permissions:
-  - role: user
-    permission:
-      columns:
-        - created_at
-        - follower_id
-        - following_id
-      filter:
-        follower_id:
-          _eq: X-Hasura-User-Id
+- permission:
+    columns:
+    - created_at
+    - follower_id
+    - following_id
+    filter:
+      follower_id:
+        _eq: X-Hasura-User-Id
+  role: user
 delete_permissions:
-  - role: user
-    permission:
-      filter:
-        follower_id:
-          _eq: X-Hasura-User-Id
+- permission:
+    filter:
+      follower_id:
+        _eq: X-Hasura-User-Id
+  role: user

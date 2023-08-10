@@ -2,47 +2,47 @@ table:
   name: claims
   schema: public
 object_relationships:
-  - name: giftIdea
-    using:
-      foreign_key_constraint_on: gift_idea_id
-  - name: user
-    using:
-      foreign_key_constraint_on: user_id
+- name: giftIdea
+  using:
+    foreign_key_constraint_on: gift_idea_id
+- name: user
+  using:
+    foreign_key_constraint_on: user_id
 insert_permissions:
-  - role: user
-    permission:
-      check: {}
-      set:
-        user_id: x-hasura-User-Id
-      columns:
-        - gift_idea_id
-        - is_purchased
+- permission:
+    check: {}
+    columns:
+    - gift_idea_id
+    - is_purchased
+    set:
+      user_id: x-hasura-User-Id
+  role: user
 select_permissions:
-  - role: user
-    permission:
-      columns:
-        - is_purchased
-        - gift_idea_id
-        - id
-        - user_id
-      filter:
-        giftIdea:
-          user:
-            followers:
-              follower_id:
-                _eq: X-Hasura-User-Id
+- permission:
+    columns:
+    - is_purchased
+    - gift_idea_id
+    - id
+    - user_id
+    filter:
+      giftIdea:
+        user:
+          followers:
+            follower_id:
+              _eq: X-Hasura-User-Id
+  role: user
 update_permissions:
-  - role: user
-    permission:
-      columns:
-        - is_purchased
-      filter:
-        user_id:
-          _eq: X-Hasura-User-Id
-      check: null
+- permission:
+    check: null
+    columns:
+    - is_purchased
+    filter:
+      user_id:
+        _eq: X-Hasura-User-Id
+  role: user
 delete_permissions:
-  - role: user
-    permission:
-      filter:
-        user_id:
-          _eq: X-Hasura-User-Id
+- permission:
+    filter:
+      user_id:
+        _eq: X-Hasura-User-Id
+  role: user

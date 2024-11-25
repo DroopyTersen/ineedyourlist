@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { createClient as createGqlSdk } from "~/_gql";
 import { AppUser } from "~/features/users/users.types";
 import { createGraphQLClient } from "~/toolkit/http/createGqlClient";
 import { getEnvVar } from "~/toolkit/remix/envVars.server";
@@ -21,6 +22,16 @@ export const createUserGqlClient = (token: string) => {
   return createGraphQLClient(ENDPOINT, {
     access_token: token,
   });
+};
+
+export const createUserSdk = (token: string) => {
+  const sdk = createGqlSdk({
+    url: ENDPOINT,
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  return sdk;
 };
 
 export const signHasuraToken = (user: AppUser) => {

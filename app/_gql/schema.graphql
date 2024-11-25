@@ -1,0 +1,2586 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+"""whether this query should be cached (Hasura Cloud only)"""
+directive @cached(
+  """measured in seconds"""
+  ttl: Int! = 60
+
+  """refresh the cache entry"""
+  refresh: Boolean! = false
+) on QUERY
+
+"""
+Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'.
+"""
+input BooleanComparisonExp {
+  _eq: Boolean
+  _gt: Boolean
+  _gte: Boolean
+  _in: [Boolean!]
+  _isNull: Boolean
+  _lt: Boolean
+  _lte: Boolean
+  _neq: Boolean
+  _nin: [Boolean!]
+}
+
+"""Who is claiming to buy certain gifts?"""
+type Claims {
+  """An object relationship"""
+  giftIdea: GiftIdeas!
+  giftIdeaId: uuid!
+  id: uuid!
+  isPurchased: Boolean!
+
+  """An object relationship"""
+  user: Users!
+  userId: uuid!
+}
+
+"""
+aggregated selection of "claims"
+"""
+type ClaimsAggregate {
+  aggregate: ClaimsAggregateFields
+  nodes: [Claims!]!
+}
+
+input ClaimsAggregateBoolExp {
+  bool_and: claimsAggregateBoolExpBool_and
+  bool_or: claimsAggregateBoolExpBool_or
+  count: claimsAggregateBoolExpCount
+}
+
+"""
+aggregate fields of "claims"
+"""
+type ClaimsAggregateFields {
+  count(columns: [ClaimsSelectColumn!], distinct: Boolean): Int!
+  max: ClaimsMaxFields
+  min: ClaimsMinFields
+}
+
+"""
+order by aggregate values of table "claims"
+"""
+input ClaimsAggregateOrderBy {
+  count: OrderBy
+  max: ClaimsMaxOrderBy
+  min: ClaimsMinOrderBy
+}
+
+"""
+input type for inserting array relation for remote table "claims"
+"""
+input ClaimsArrRelInsertInput {
+  data: [ClaimsInsertInput!]!
+
+  """upsert condition"""
+  onConflict: ClaimsOnConflict
+}
+
+"""
+Boolean expression to filter rows from the table "claims". All fields are combined with a logical 'AND'.
+"""
+input ClaimsBoolExp {
+  _and: [ClaimsBoolExp!]
+  _not: ClaimsBoolExp
+  _or: [ClaimsBoolExp!]
+  giftIdea: GiftIdeasBoolExp
+  giftIdeaId: UuidComparisonExp
+  id: UuidComparisonExp
+  isPurchased: BooleanComparisonExp
+  user: UsersBoolExp
+  userId: UuidComparisonExp
+}
+
+"""
+unique or primary key constraints on table "claims"
+"""
+enum ClaimsConstraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  claims_pkey
+}
+
+"""
+input type for inserting data into table "claims"
+"""
+input ClaimsInsertInput {
+  giftIdea: GiftIdeasObjRelInsertInput
+  giftIdeaId: uuid
+  id: uuid
+  isPurchased: Boolean
+  user: UsersObjRelInsertInput
+  userId: uuid
+}
+
+"""aggregate max on columns"""
+type ClaimsMaxFields {
+  giftIdeaId: uuid
+  id: uuid
+  userId: uuid
+}
+
+"""
+order by max() on columns of table "claims"
+"""
+input ClaimsMaxOrderBy {
+  giftIdeaId: OrderBy
+  id: OrderBy
+  userId: OrderBy
+}
+
+"""aggregate min on columns"""
+type ClaimsMinFields {
+  giftIdeaId: uuid
+  id: uuid
+  userId: uuid
+}
+
+"""
+order by min() on columns of table "claims"
+"""
+input ClaimsMinOrderBy {
+  giftIdeaId: OrderBy
+  id: OrderBy
+  userId: OrderBy
+}
+
+"""
+response of any mutation on the table "claims"
+"""
+type ClaimsMutationResponse {
+  """number of rows affected by the mutation"""
+  affectedRows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [Claims!]!
+}
+
+"""
+on_conflict condition type for table "claims"
+"""
+input ClaimsOnConflict {
+  constraint: ClaimsConstraint!
+  updateColumns: [ClaimsUpdateColumn!]! = []
+  where: ClaimsBoolExp
+}
+
+"""Ordering options when selecting data from "claims"."""
+input ClaimsOrderBy {
+  giftIdea: GiftIdeasOrderBy
+  giftIdeaId: OrderBy
+  id: OrderBy
+  isPurchased: OrderBy
+  user: UsersOrderBy
+  userId: OrderBy
+}
+
+"""primary key columns input for table: claims"""
+input ClaimsPkColumnsInput {
+  id: uuid!
+}
+
+"""
+select columns of table "claims"
+"""
+enum ClaimsSelectColumn {
+  """column name"""
+  giftIdeaId
+
+  """column name"""
+  id
+
+  """column name"""
+  isPurchased
+
+  """column name"""
+  userId
+}
+
+"""
+select "claimsAggregateBoolExpBool_andArgumentsColumns" columns of table "claims"
+"""
+enum ClaimsSelectColumnClaimsAggregateBoolExpBool_andArgumentsColumns {
+  """column name"""
+  isPurchased
+}
+
+"""
+select "claimsAggregateBoolExpBool_orArgumentsColumns" columns of table "claims"
+"""
+enum ClaimsSelectColumnClaimsAggregateBoolExpBool_orArgumentsColumns {
+  """column name"""
+  isPurchased
+}
+
+"""
+input type for updating data in table "claims"
+"""
+input ClaimsSetInput {
+  giftIdeaId: uuid
+  id: uuid
+  isPurchased: Boolean
+  userId: uuid
+}
+
+"""
+Streaming cursor of the table "claims"
+"""
+input ClaimsStreamCursorInput {
+  """Stream column input with initial value"""
+  initialValue: ClaimsStreamCursorValueInput!
+
+  """cursor ordering"""
+  ordering: CursorOrdering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input ClaimsStreamCursorValueInput {
+  giftIdeaId: uuid
+  id: uuid
+  isPurchased: Boolean
+  userId: uuid
+}
+
+"""
+update columns of table "claims"
+"""
+enum ClaimsUpdateColumn {
+  """column name"""
+  giftIdeaId
+
+  """column name"""
+  id
+
+  """column name"""
+  isPurchased
+
+  """column name"""
+  userId
+}
+
+input ClaimsUpdates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: ClaimsSetInput
+
+  """filter the rows which have to be updated"""
+  where: ClaimsBoolExp!
+}
+
+"""ordering argument of a cursor"""
+enum CursorOrdering {
+  """ascending ordering of the cursor"""
+  ASC
+
+  """descending ordering of the cursor"""
+  DESC
+}
+
+"""Whose lists do you want to see?"""
+type Follows {
+  createdAt: timestamptz!
+
+  """An object relationship"""
+  follower: Users!
+  followerId: uuid!
+  followingId: uuid!
+
+  """An object relationship"""
+  user: Users!
+}
+
+"""
+aggregated selection of "follows"
+"""
+type FollowsAggregate {
+  aggregate: FollowsAggregateFields
+  nodes: [Follows!]!
+}
+
+input FollowsAggregateBoolExp {
+  count: followsAggregateBoolExpCount
+}
+
+"""
+aggregate fields of "follows"
+"""
+type FollowsAggregateFields {
+  count(columns: [FollowsSelectColumn!], distinct: Boolean): Int!
+  max: FollowsMaxFields
+  min: FollowsMinFields
+}
+
+"""
+order by aggregate values of table "follows"
+"""
+input FollowsAggregateOrderBy {
+  count: OrderBy
+  max: FollowsMaxOrderBy
+  min: FollowsMinOrderBy
+}
+
+"""
+input type for inserting array relation for remote table "follows"
+"""
+input FollowsArrRelInsertInput {
+  data: [FollowsInsertInput!]!
+
+  """upsert condition"""
+  onConflict: FollowsOnConflict
+}
+
+"""
+Boolean expression to filter rows from the table "follows". All fields are combined with a logical 'AND'.
+"""
+input FollowsBoolExp {
+  _and: [FollowsBoolExp!]
+  _not: FollowsBoolExp
+  _or: [FollowsBoolExp!]
+  createdAt: TimestamptzComparisonExp
+  follower: UsersBoolExp
+  followerId: UuidComparisonExp
+  followingId: UuidComparisonExp
+  user: UsersBoolExp
+}
+
+"""
+unique or primary key constraints on table "follows"
+"""
+enum FollowsConstraint {
+  """
+  unique or primary key constraint on columns "following_id", "follower_id"
+  """
+  follows_pkey
+}
+
+"""
+input type for inserting data into table "follows"
+"""
+input FollowsInsertInput {
+  createdAt: timestamptz
+  follower: UsersObjRelInsertInput
+  followerId: uuid
+  followingId: uuid
+  user: UsersObjRelInsertInput
+}
+
+"""aggregate max on columns"""
+type FollowsMaxFields {
+  createdAt: timestamptz
+  followerId: uuid
+  followingId: uuid
+}
+
+"""
+order by max() on columns of table "follows"
+"""
+input FollowsMaxOrderBy {
+  createdAt: OrderBy
+  followerId: OrderBy
+  followingId: OrderBy
+}
+
+"""aggregate min on columns"""
+type FollowsMinFields {
+  createdAt: timestamptz
+  followerId: uuid
+  followingId: uuid
+}
+
+"""
+order by min() on columns of table "follows"
+"""
+input FollowsMinOrderBy {
+  createdAt: OrderBy
+  followerId: OrderBy
+  followingId: OrderBy
+}
+
+"""
+response of any mutation on the table "follows"
+"""
+type FollowsMutationResponse {
+  """number of rows affected by the mutation"""
+  affectedRows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [Follows!]!
+}
+
+"""
+on_conflict condition type for table "follows"
+"""
+input FollowsOnConflict {
+  constraint: FollowsConstraint!
+  updateColumns: [FollowsUpdateColumn!]! = []
+  where: FollowsBoolExp
+}
+
+"""Ordering options when selecting data from "follows"."""
+input FollowsOrderBy {
+  createdAt: OrderBy
+  follower: UsersOrderBy
+  followerId: OrderBy
+  followingId: OrderBy
+  user: UsersOrderBy
+}
+
+"""primary key columns input for table: follows"""
+input FollowsPkColumnsInput {
+  followerId: uuid!
+  followingId: uuid!
+}
+
+"""
+select columns of table "follows"
+"""
+enum FollowsSelectColumn {
+  """column name"""
+  createdAt
+
+  """column name"""
+  followerId
+
+  """column name"""
+  followingId
+}
+
+"""
+input type for updating data in table "follows"
+"""
+input FollowsSetInput {
+  createdAt: timestamptz
+  followerId: uuid
+  followingId: uuid
+}
+
+"""
+Streaming cursor of the table "follows"
+"""
+input FollowsStreamCursorInput {
+  """Stream column input with initial value"""
+  initialValue: FollowsStreamCursorValueInput!
+
+  """cursor ordering"""
+  ordering: CursorOrdering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input FollowsStreamCursorValueInput {
+  createdAt: timestamptz
+  followerId: uuid
+  followingId: uuid
+}
+
+"""
+update columns of table "follows"
+"""
+enum FollowsUpdateColumn {
+  """column name"""
+  createdAt
+
+  """column name"""
+  followerId
+
+  """column name"""
+  followingId
+}
+
+input FollowsUpdates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: FollowsSetInput
+
+  """filter the rows which have to be updated"""
+  where: FollowsBoolExp!
+}
+
+"""
+columns and relationships of "gift_ideas"
+"""
+type GiftIdeas {
+  """An array relationship"""
+  claims(
+    """distinct select on columns"""
+    distinctOn: [ClaimsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [ClaimsOrderBy!]
+
+    """filter the rows returned"""
+    where: ClaimsBoolExp
+  ): [Claims!]!
+
+  """An aggregate relationship"""
+  claimsAggregate(
+    """distinct select on columns"""
+    distinctOn: [ClaimsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [ClaimsOrderBy!]
+
+    """filter the rows returned"""
+    where: ClaimsBoolExp
+  ): ClaimsAggregate!
+  createdAt: timestamptz!
+
+  """An object relationship"""
+  createdBy: Users!
+  createdById: uuid!
+  description: String
+  id: uuid!
+  removed: Boolean!
+  title: String!
+  updatedAt: timestamptz!
+  url: String
+
+  """An object relationship"""
+  user: Users!
+  userId: uuid!
+
+  """An object relationship"""
+  wishlist: Wishlists
+  wishlistId: uuid
+}
+
+"""
+aggregated selection of "gift_ideas"
+"""
+type GiftIdeasAggregate {
+  aggregate: GiftIdeasAggregateFields
+  nodes: [GiftIdeas!]!
+}
+
+input GiftIdeasAggregateBoolExp {
+  bool_and: giftIdeasAggregateBoolExpBool_and
+  bool_or: giftIdeasAggregateBoolExpBool_or
+  count: giftIdeasAggregateBoolExpCount
+}
+
+"""
+aggregate fields of "gift_ideas"
+"""
+type GiftIdeasAggregateFields {
+  count(columns: [GiftIdeasSelectColumn!], distinct: Boolean): Int!
+  max: GiftIdeasMaxFields
+  min: GiftIdeasMinFields
+}
+
+"""
+order by aggregate values of table "gift_ideas"
+"""
+input GiftIdeasAggregateOrderBy {
+  count: OrderBy
+  max: GiftIdeasMaxOrderBy
+  min: GiftIdeasMinOrderBy
+}
+
+"""
+input type for inserting array relation for remote table "gift_ideas"
+"""
+input GiftIdeasArrRelInsertInput {
+  data: [GiftIdeasInsertInput!]!
+
+  """upsert condition"""
+  onConflict: GiftIdeasOnConflict
+}
+
+"""
+Boolean expression to filter rows from the table "gift_ideas". All fields are combined with a logical 'AND'.
+"""
+input GiftIdeasBoolExp {
+  _and: [GiftIdeasBoolExp!]
+  _not: GiftIdeasBoolExp
+  _or: [GiftIdeasBoolExp!]
+  claims: ClaimsBoolExp
+  claimsAggregate: ClaimsAggregateBoolExp
+  createdAt: TimestamptzComparisonExp
+  createdBy: UsersBoolExp
+  createdById: UuidComparisonExp
+  description: StringComparisonExp
+  id: UuidComparisonExp
+  removed: BooleanComparisonExp
+  title: StringComparisonExp
+  updatedAt: TimestamptzComparisonExp
+  url: StringComparisonExp
+  user: UsersBoolExp
+  userId: UuidComparisonExp
+  wishlist: WishlistsBoolExp
+  wishlistId: UuidComparisonExp
+}
+
+"""
+unique or primary key constraints on table "gift_ideas"
+"""
+enum GiftIdeasConstraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  gift_ideas_pkey
+}
+
+"""
+input type for inserting data into table "gift_ideas"
+"""
+input GiftIdeasInsertInput {
+  claims: ClaimsArrRelInsertInput
+  createdAt: timestamptz
+  createdBy: UsersObjRelInsertInput
+  createdById: uuid
+  description: String
+  id: uuid
+  removed: Boolean
+  title: String
+  updatedAt: timestamptz
+  url: String
+  user: UsersObjRelInsertInput
+  userId: uuid
+  wishlist: WishlistsObjRelInsertInput
+  wishlistId: uuid
+}
+
+"""aggregate max on columns"""
+type GiftIdeasMaxFields {
+  createdAt: timestamptz
+  createdById: uuid
+  description: String
+  id: uuid
+  title: String
+  updatedAt: timestamptz
+  url: String
+  userId: uuid
+  wishlistId: uuid
+}
+
+"""
+order by max() on columns of table "gift_ideas"
+"""
+input GiftIdeasMaxOrderBy {
+  createdAt: OrderBy
+  createdById: OrderBy
+  description: OrderBy
+  id: OrderBy
+  title: OrderBy
+  updatedAt: OrderBy
+  url: OrderBy
+  userId: OrderBy
+  wishlistId: OrderBy
+}
+
+"""aggregate min on columns"""
+type GiftIdeasMinFields {
+  createdAt: timestamptz
+  createdById: uuid
+  description: String
+  id: uuid
+  title: String
+  updatedAt: timestamptz
+  url: String
+  userId: uuid
+  wishlistId: uuid
+}
+
+"""
+order by min() on columns of table "gift_ideas"
+"""
+input GiftIdeasMinOrderBy {
+  createdAt: OrderBy
+  createdById: OrderBy
+  description: OrderBy
+  id: OrderBy
+  title: OrderBy
+  updatedAt: OrderBy
+  url: OrderBy
+  userId: OrderBy
+  wishlistId: OrderBy
+}
+
+"""
+response of any mutation on the table "gift_ideas"
+"""
+type GiftIdeasMutationResponse {
+  """number of rows affected by the mutation"""
+  affectedRows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [GiftIdeas!]!
+}
+
+"""
+input type for inserting object relation for remote table "gift_ideas"
+"""
+input GiftIdeasObjRelInsertInput {
+  data: GiftIdeasInsertInput!
+
+  """upsert condition"""
+  onConflict: GiftIdeasOnConflict
+}
+
+"""
+on_conflict condition type for table "gift_ideas"
+"""
+input GiftIdeasOnConflict {
+  constraint: GiftIdeasConstraint!
+  updateColumns: [GiftIdeasUpdateColumn!]! = []
+  where: GiftIdeasBoolExp
+}
+
+"""Ordering options when selecting data from "gift_ideas"."""
+input GiftIdeasOrderBy {
+  claimsAggregate: ClaimsAggregateOrderBy
+  createdAt: OrderBy
+  createdBy: UsersOrderBy
+  createdById: OrderBy
+  description: OrderBy
+  id: OrderBy
+  removed: OrderBy
+  title: OrderBy
+  updatedAt: OrderBy
+  url: OrderBy
+  user: UsersOrderBy
+  userId: OrderBy
+  wishlist: WishlistsOrderBy
+  wishlistId: OrderBy
+}
+
+"""primary key columns input for table: gift_ideas"""
+input GiftIdeasPkColumnsInput {
+  id: uuid!
+}
+
+"""
+select columns of table "gift_ideas"
+"""
+enum GiftIdeasSelectColumn {
+  """column name"""
+  createdAt
+
+  """column name"""
+  createdById
+
+  """column name"""
+  description
+
+  """column name"""
+  id
+
+  """column name"""
+  removed
+
+  """column name"""
+  title
+
+  """column name"""
+  updatedAt
+
+  """column name"""
+  url
+
+  """column name"""
+  userId
+
+  """column name"""
+  wishlistId
+}
+
+"""
+select "giftIdeasAggregateBoolExpBool_andArgumentsColumns" columns of table "gift_ideas"
+"""
+enum GiftIdeasSelectColumnGiftIdeasAggregateBoolExpBool_andArgumentsColumns {
+  """column name"""
+  removed
+}
+
+"""
+select "giftIdeasAggregateBoolExpBool_orArgumentsColumns" columns of table "gift_ideas"
+"""
+enum GiftIdeasSelectColumnGiftIdeasAggregateBoolExpBool_orArgumentsColumns {
+  """column name"""
+  removed
+}
+
+"""
+input type for updating data in table "gift_ideas"
+"""
+input GiftIdeasSetInput {
+  createdAt: timestamptz
+  createdById: uuid
+  description: String
+  id: uuid
+  removed: Boolean
+  title: String
+  updatedAt: timestamptz
+  url: String
+  userId: uuid
+  wishlistId: uuid
+}
+
+"""
+Streaming cursor of the table "gift_ideas"
+"""
+input GiftIdeasStreamCursorInput {
+  """Stream column input with initial value"""
+  initialValue: GiftIdeasStreamCursorValueInput!
+
+  """cursor ordering"""
+  ordering: CursorOrdering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input GiftIdeasStreamCursorValueInput {
+  createdAt: timestamptz
+  createdById: uuid
+  description: String
+  id: uuid
+  removed: Boolean
+  title: String
+  updatedAt: timestamptz
+  url: String
+  userId: uuid
+  wishlistId: uuid
+}
+
+"""
+update columns of table "gift_ideas"
+"""
+enum GiftIdeasUpdateColumn {
+  """column name"""
+  createdAt
+
+  """column name"""
+  createdById
+
+  """column name"""
+  description
+
+  """column name"""
+  id
+
+  """column name"""
+  removed
+
+  """column name"""
+  title
+
+  """column name"""
+  updatedAt
+
+  """column name"""
+  url
+
+  """column name"""
+  userId
+
+  """column name"""
+  wishlistId
+}
+
+input GiftIdeasUpdates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: GiftIdeasSetInput
+
+  """filter the rows which have to be updated"""
+  where: GiftIdeasBoolExp!
+}
+
+"""
+Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
+"""
+input IntComparisonExp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _isNull: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
+}
+
+"""column ordering options"""
+enum OrderBy {
+  """in ascending order, nulls last"""
+  ASC
+
+  """in ascending order, nulls first"""
+  ASC_NULLS_FIRST
+
+  """in ascending order, nulls last"""
+  ASC_NULLS_LAST
+
+  """in descending order, nulls first"""
+  DESC
+
+  """in descending order, nulls first"""
+  DESC_NULLS_FIRST
+
+  """in descending order, nulls last"""
+  DESC_NULLS_LAST
+}
+
+"""
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
+"""
+input StringComparisonExp {
+  _eq: String
+  _gt: String
+  _gte: String
+
+  """does the column match the given case-insensitive pattern"""
+  _ilike: String
+  _in: [String!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: String
+  _isNull: Boolean
+
+  """does the column match the given pattern"""
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+
+  """does the column NOT match the given case-insensitive pattern"""
+  _nilike: String
+  _nin: [String!]
+
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: String
+
+  """does the column NOT match the given pattern"""
+  _nlike: String
+
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: String
+
+  """does the column NOT match the given SQL regular expression"""
+  _nsimilar: String
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: String
+
+  """does the column match the given SQL regular expression"""
+  _similar: String
+}
+
+"""
+Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'.
+"""
+input TimestamptzComparisonExp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _isNull: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
+}
+
+"""
+columns and relationships of "users"
+"""
+type Users {
+  """An array relationship"""
+  claims(
+    """distinct select on columns"""
+    distinctOn: [ClaimsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [ClaimsOrderBy!]
+
+    """filter the rows returned"""
+    where: ClaimsBoolExp
+  ): [Claims!]!
+
+  """An aggregate relationship"""
+  claimsAggregate(
+    """distinct select on columns"""
+    distinctOn: [ClaimsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [ClaimsOrderBy!]
+
+    """filter the rows returned"""
+    where: ClaimsBoolExp
+  ): ClaimsAggregate!
+  createdAt: timestamptz!
+
+  """An array relationship"""
+  followers(
+    """distinct select on columns"""
+    distinctOn: [FollowsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [FollowsOrderBy!]
+
+    """filter the rows returned"""
+    where: FollowsBoolExp
+  ): [Follows!]!
+
+  """An aggregate relationship"""
+  followersAggregate(
+    """distinct select on columns"""
+    distinctOn: [FollowsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [FollowsOrderBy!]
+
+    """filter the rows returned"""
+    where: FollowsBoolExp
+  ): FollowsAggregate!
+
+  """An array relationship"""
+  follows(
+    """distinct select on columns"""
+    distinctOn: [FollowsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [FollowsOrderBy!]
+
+    """filter the rows returned"""
+    where: FollowsBoolExp
+  ): [Follows!]!
+
+  """An aggregate relationship"""
+  followsAggregate(
+    """distinct select on columns"""
+    distinctOn: [FollowsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [FollowsOrderBy!]
+
+    """filter the rows returned"""
+    where: FollowsBoolExp
+  ): FollowsAggregate!
+
+  """An array relationship"""
+  giftIdeas(
+    """distinct select on columns"""
+    distinctOn: [GiftIdeasSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [GiftIdeasOrderBy!]
+
+    """filter the rows returned"""
+    where: GiftIdeasBoolExp
+  ): [GiftIdeas!]!
+
+  """An aggregate relationship"""
+  giftIdeasAggregate(
+    """distinct select on columns"""
+    distinctOn: [GiftIdeasSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [GiftIdeasOrderBy!]
+
+    """filter the rows returned"""
+    where: GiftIdeasBoolExp
+  ): GiftIdeasAggregate!
+  id: uuid!
+  name: String
+  photo: String
+  updatedAt: timestamptz!
+  username: String!
+
+  """An array relationship"""
+  wishlists(
+    """distinct select on columns"""
+    distinctOn: [WishlistsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [WishlistsOrderBy!]
+
+    """filter the rows returned"""
+    where: WishlistsBoolExp
+  ): [Wishlists!]!
+
+  """An aggregate relationship"""
+  wishlistsAggregate(
+    """distinct select on columns"""
+    distinctOn: [WishlistsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [WishlistsOrderBy!]
+
+    """filter the rows returned"""
+    where: WishlistsBoolExp
+  ): WishlistsAggregate!
+}
+
+"""
+aggregated selection of "users"
+"""
+type UsersAggregate {
+  aggregate: UsersAggregateFields
+  nodes: [Users!]!
+}
+
+"""
+aggregate fields of "users"
+"""
+type UsersAggregateFields {
+  count(columns: [UsersSelectColumn!], distinct: Boolean): Int!
+  max: UsersMaxFields
+  min: UsersMinFields
+}
+
+"""
+Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'.
+"""
+input UsersBoolExp {
+  _and: [UsersBoolExp!]
+  _not: UsersBoolExp
+  _or: [UsersBoolExp!]
+  claims: ClaimsBoolExp
+  claimsAggregate: ClaimsAggregateBoolExp
+  createdAt: TimestamptzComparisonExp
+  followers: FollowsBoolExp
+  followersAggregate: FollowsAggregateBoolExp
+  follows: FollowsBoolExp
+  followsAggregate: FollowsAggregateBoolExp
+  giftIdeas: GiftIdeasBoolExp
+  giftIdeasAggregate: GiftIdeasAggregateBoolExp
+  id: UuidComparisonExp
+  name: StringComparisonExp
+  photo: StringComparisonExp
+  updatedAt: TimestamptzComparisonExp
+  username: StringComparisonExp
+  wishlists: WishlistsBoolExp
+  wishlistsAggregate: WishlistsAggregateBoolExp
+}
+
+"""
+unique or primary key constraints on table "users"
+"""
+enum UsersConstraint {
+  """
+  unique or primary key constraint on columns "username"
+  """
+  users_email_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  users_pkey
+}
+
+"""
+input type for inserting data into table "users"
+"""
+input UsersInsertInput {
+  claims: ClaimsArrRelInsertInput
+  createdAt: timestamptz
+  followers: FollowsArrRelInsertInput
+  follows: FollowsArrRelInsertInput
+  giftIdeas: GiftIdeasArrRelInsertInput
+  id: uuid
+  name: String
+  photo: String
+  updatedAt: timestamptz
+  username: String
+  wishlists: WishlistsArrRelInsertInput
+}
+
+"""aggregate max on columns"""
+type UsersMaxFields {
+  createdAt: timestamptz
+  id: uuid
+  name: String
+  photo: String
+  updatedAt: timestamptz
+  username: String
+}
+
+"""aggregate min on columns"""
+type UsersMinFields {
+  createdAt: timestamptz
+  id: uuid
+  name: String
+  photo: String
+  updatedAt: timestamptz
+  username: String
+}
+
+"""
+response of any mutation on the table "users"
+"""
+type UsersMutationResponse {
+  """number of rows affected by the mutation"""
+  affectedRows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [Users!]!
+}
+
+"""
+input type for inserting object relation for remote table "users"
+"""
+input UsersObjRelInsertInput {
+  data: UsersInsertInput!
+
+  """upsert condition"""
+  onConflict: UsersOnConflict
+}
+
+"""
+on_conflict condition type for table "users"
+"""
+input UsersOnConflict {
+  constraint: UsersConstraint!
+  updateColumns: [UsersUpdateColumn!]! = []
+  where: UsersBoolExp
+}
+
+"""Ordering options when selecting data from "users"."""
+input UsersOrderBy {
+  claimsAggregate: ClaimsAggregateOrderBy
+  createdAt: OrderBy
+  followersAggregate: FollowsAggregateOrderBy
+  followsAggregate: FollowsAggregateOrderBy
+  giftIdeasAggregate: GiftIdeasAggregateOrderBy
+  id: OrderBy
+  name: OrderBy
+  photo: OrderBy
+  updatedAt: OrderBy
+  username: OrderBy
+  wishlistsAggregate: WishlistsAggregateOrderBy
+}
+
+"""primary key columns input for table: users"""
+input UsersPkColumnsInput {
+  id: uuid!
+}
+
+"""
+select columns of table "users"
+"""
+enum UsersSelectColumn {
+  """column name"""
+  createdAt
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  photo
+
+  """column name"""
+  updatedAt
+
+  """column name"""
+  username
+}
+
+"""
+input type for updating data in table "users"
+"""
+input UsersSetInput {
+  createdAt: timestamptz
+  id: uuid
+  name: String
+  photo: String
+  updatedAt: timestamptz
+  username: String
+}
+
+"""
+Streaming cursor of the table "users"
+"""
+input UsersStreamCursorInput {
+  """Stream column input with initial value"""
+  initialValue: UsersStreamCursorValueInput!
+
+  """cursor ordering"""
+  ordering: CursorOrdering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input UsersStreamCursorValueInput {
+  createdAt: timestamptz
+  id: uuid
+  name: String
+  photo: String
+  updatedAt: timestamptz
+  username: String
+}
+
+"""
+update columns of table "users"
+"""
+enum UsersUpdateColumn {
+  """column name"""
+  createdAt
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  photo
+
+  """column name"""
+  updatedAt
+
+  """column name"""
+  username
+}
+
+input UsersUpdates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: UsersSetInput
+
+  """filter the rows which have to be updated"""
+  where: UsersBoolExp!
+}
+
+"""
+Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'.
+"""
+input UuidComparisonExp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _isNull: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}
+
+"""User wish lists"""
+type Wishlists {
+  createdAt: timestamptz!
+
+  """An object relationship"""
+  createdBy: Users!
+  createdById: uuid!
+
+  """An array relationship"""
+  giftIdeas(
+    """distinct select on columns"""
+    distinctOn: [GiftIdeasSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [GiftIdeasOrderBy!]
+
+    """filter the rows returned"""
+    where: GiftIdeasBoolExp
+  ): [GiftIdeas!]!
+
+  """An aggregate relationship"""
+  giftIdeasAggregate(
+    """distinct select on columns"""
+    distinctOn: [GiftIdeasSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [GiftIdeasOrderBy!]
+
+    """filter the rows returned"""
+    where: GiftIdeasBoolExp
+  ): GiftIdeasAggregate!
+  id: uuid!
+  title: String!
+  updatedAt: timestamptz!
+}
+
+"""
+aggregated selection of "wishlists"
+"""
+type WishlistsAggregate {
+  aggregate: WishlistsAggregateFields
+  nodes: [Wishlists!]!
+}
+
+input WishlistsAggregateBoolExp {
+  count: wishlistsAggregateBoolExpCount
+}
+
+"""
+aggregate fields of "wishlists"
+"""
+type WishlistsAggregateFields {
+  count(columns: [WishlistsSelectColumn!], distinct: Boolean): Int!
+  max: WishlistsMaxFields
+  min: WishlistsMinFields
+}
+
+"""
+order by aggregate values of table "wishlists"
+"""
+input WishlistsAggregateOrderBy {
+  count: OrderBy
+  max: WishlistsMaxOrderBy
+  min: WishlistsMinOrderBy
+}
+
+"""
+input type for inserting array relation for remote table "wishlists"
+"""
+input WishlistsArrRelInsertInput {
+  data: [WishlistsInsertInput!]!
+
+  """upsert condition"""
+  onConflict: WishlistsOnConflict
+}
+
+"""
+Boolean expression to filter rows from the table "wishlists". All fields are combined with a logical 'AND'.
+"""
+input WishlistsBoolExp {
+  _and: [WishlistsBoolExp!]
+  _not: WishlistsBoolExp
+  _or: [WishlistsBoolExp!]
+  createdAt: TimestamptzComparisonExp
+  createdBy: UsersBoolExp
+  createdById: UuidComparisonExp
+  giftIdeas: GiftIdeasBoolExp
+  giftIdeasAggregate: GiftIdeasAggregateBoolExp
+  id: UuidComparisonExp
+  title: StringComparisonExp
+  updatedAt: TimestamptzComparisonExp
+}
+
+"""
+unique or primary key constraints on table "wishlists"
+"""
+enum WishlistsConstraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  wishlists_pkey
+}
+
+"""
+input type for inserting data into table "wishlists"
+"""
+input WishlistsInsertInput {
+  createdAt: timestamptz
+  createdBy: UsersObjRelInsertInput
+  createdById: uuid
+  giftIdeas: GiftIdeasArrRelInsertInput
+  id: uuid
+  title: String
+  updatedAt: timestamptz
+}
+
+"""aggregate max on columns"""
+type WishlistsMaxFields {
+  createdAt: timestamptz
+  createdById: uuid
+  id: uuid
+  title: String
+  updatedAt: timestamptz
+}
+
+"""
+order by max() on columns of table "wishlists"
+"""
+input WishlistsMaxOrderBy {
+  createdAt: OrderBy
+  createdById: OrderBy
+  id: OrderBy
+  title: OrderBy
+  updatedAt: OrderBy
+}
+
+"""aggregate min on columns"""
+type WishlistsMinFields {
+  createdAt: timestamptz
+  createdById: uuid
+  id: uuid
+  title: String
+  updatedAt: timestamptz
+}
+
+"""
+order by min() on columns of table "wishlists"
+"""
+input WishlistsMinOrderBy {
+  createdAt: OrderBy
+  createdById: OrderBy
+  id: OrderBy
+  title: OrderBy
+  updatedAt: OrderBy
+}
+
+"""
+response of any mutation on the table "wishlists"
+"""
+type WishlistsMutationResponse {
+  """number of rows affected by the mutation"""
+  affectedRows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [Wishlists!]!
+}
+
+"""
+input type for inserting object relation for remote table "wishlists"
+"""
+input WishlistsObjRelInsertInput {
+  data: WishlistsInsertInput!
+
+  """upsert condition"""
+  onConflict: WishlistsOnConflict
+}
+
+"""
+on_conflict condition type for table "wishlists"
+"""
+input WishlistsOnConflict {
+  constraint: WishlistsConstraint!
+  updateColumns: [WishlistsUpdateColumn!]! = []
+  where: WishlistsBoolExp
+}
+
+"""Ordering options when selecting data from "wishlists"."""
+input WishlistsOrderBy {
+  createdAt: OrderBy
+  createdBy: UsersOrderBy
+  createdById: OrderBy
+  giftIdeasAggregate: GiftIdeasAggregateOrderBy
+  id: OrderBy
+  title: OrderBy
+  updatedAt: OrderBy
+}
+
+"""primary key columns input for table: wishlists"""
+input WishlistsPkColumnsInput {
+  id: uuid!
+}
+
+"""
+select columns of table "wishlists"
+"""
+enum WishlistsSelectColumn {
+  """column name"""
+  createdAt
+
+  """column name"""
+  createdById
+
+  """column name"""
+  id
+
+  """column name"""
+  title
+
+  """column name"""
+  updatedAt
+}
+
+"""
+input type for updating data in table "wishlists"
+"""
+input WishlistsSetInput {
+  createdAt: timestamptz
+  createdById: uuid
+  id: uuid
+  title: String
+  updatedAt: timestamptz
+}
+
+"""
+Streaming cursor of the table "wishlists"
+"""
+input WishlistsStreamCursorInput {
+  """Stream column input with initial value"""
+  initialValue: WishlistsStreamCursorValueInput!
+
+  """cursor ordering"""
+  ordering: CursorOrdering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input WishlistsStreamCursorValueInput {
+  createdAt: timestamptz
+  createdById: uuid
+  id: uuid
+  title: String
+  updatedAt: timestamptz
+}
+
+"""
+update columns of table "wishlists"
+"""
+enum WishlistsUpdateColumn {
+  """column name"""
+  createdAt
+
+  """column name"""
+  createdById
+
+  """column name"""
+  id
+
+  """column name"""
+  title
+
+  """column name"""
+  updatedAt
+}
+
+input WishlistsUpdates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: WishlistsSetInput
+
+  """filter the rows which have to be updated"""
+  where: WishlistsBoolExp!
+}
+
+input claimsAggregateBoolExpBool_and {
+  arguments: ClaimsSelectColumnClaimsAggregateBoolExpBool_andArgumentsColumns!
+  distinct: Boolean
+  filter: ClaimsBoolExp
+  predicate: BooleanComparisonExp!
+}
+
+input claimsAggregateBoolExpBool_or {
+  arguments: ClaimsSelectColumnClaimsAggregateBoolExpBool_orArgumentsColumns!
+  distinct: Boolean
+  filter: ClaimsBoolExp
+  predicate: BooleanComparisonExp!
+}
+
+input claimsAggregateBoolExpCount {
+  arguments: [ClaimsSelectColumn!]
+  distinct: Boolean
+  filter: ClaimsBoolExp
+  predicate: IntComparisonExp!
+}
+
+input followsAggregateBoolExpCount {
+  arguments: [FollowsSelectColumn!]
+  distinct: Boolean
+  filter: FollowsBoolExp
+  predicate: IntComparisonExp!
+}
+
+input giftIdeasAggregateBoolExpBool_and {
+  arguments: GiftIdeasSelectColumnGiftIdeasAggregateBoolExpBool_andArgumentsColumns!
+  distinct: Boolean
+  filter: GiftIdeasBoolExp
+  predicate: BooleanComparisonExp!
+}
+
+input giftIdeasAggregateBoolExpBool_or {
+  arguments: GiftIdeasSelectColumnGiftIdeasAggregateBoolExpBool_orArgumentsColumns!
+  distinct: Boolean
+  filter: GiftIdeasBoolExp
+  predicate: BooleanComparisonExp!
+}
+
+input giftIdeasAggregateBoolExpCount {
+  arguments: [GiftIdeasSelectColumn!]
+  distinct: Boolean
+  filter: GiftIdeasBoolExp
+  predicate: IntComparisonExp!
+}
+
+"""mutation root"""
+type mutation_root {
+  """
+  delete data from the table: "claims"
+  """
+  deleteClaims(
+    """filter the rows which have to be deleted"""
+    where: ClaimsBoolExp!
+  ): ClaimsMutationResponse
+
+  """
+  delete single row from the table: "claims"
+  """
+  deleteClaimsByPk(id: uuid!): Claims
+
+  """
+  delete data from the table: "follows"
+  """
+  deleteFollows(
+    """filter the rows which have to be deleted"""
+    where: FollowsBoolExp!
+  ): FollowsMutationResponse
+
+  """
+  delete single row from the table: "follows"
+  """
+  deleteFollowsByPk(followerId: uuid!, followingId: uuid!): Follows
+
+  """
+  delete data from the table: "gift_ideas"
+  """
+  deleteGiftIdeas(
+    """filter the rows which have to be deleted"""
+    where: GiftIdeasBoolExp!
+  ): GiftIdeasMutationResponse
+
+  """
+  delete single row from the table: "gift_ideas"
+  """
+  deleteGiftIdeasByPk(id: uuid!): GiftIdeas
+
+  """
+  delete data from the table: "users"
+  """
+  deleteUsers(
+    """filter the rows which have to be deleted"""
+    where: UsersBoolExp!
+  ): UsersMutationResponse
+
+  """
+  delete single row from the table: "users"
+  """
+  deleteUsersByPk(id: uuid!): Users
+
+  """
+  delete data from the table: "wishlists"
+  """
+  deleteWishlists(
+    """filter the rows which have to be deleted"""
+    where: WishlistsBoolExp!
+  ): WishlistsMutationResponse
+
+  """
+  delete single row from the table: "wishlists"
+  """
+  deleteWishlistsByPk(id: uuid!): Wishlists
+
+  """
+  insert data into the table: "claims"
+  """
+  insertClaims(
+    """the rows to be inserted"""
+    objects: [ClaimsInsertInput!]!
+
+    """upsert condition"""
+    onConflict: ClaimsOnConflict
+  ): ClaimsMutationResponse
+
+  """
+  insert a single row into the table: "claims"
+  """
+  insertClaimsOne(
+    """the row to be inserted"""
+    object: ClaimsInsertInput!
+
+    """upsert condition"""
+    onConflict: ClaimsOnConflict
+  ): Claims
+
+  """
+  insert data into the table: "follows"
+  """
+  insertFollows(
+    """the rows to be inserted"""
+    objects: [FollowsInsertInput!]!
+
+    """upsert condition"""
+    onConflict: FollowsOnConflict
+  ): FollowsMutationResponse
+
+  """
+  insert a single row into the table: "follows"
+  """
+  insertFollowsOne(
+    """the row to be inserted"""
+    object: FollowsInsertInput!
+
+    """upsert condition"""
+    onConflict: FollowsOnConflict
+  ): Follows
+
+  """
+  insert data into the table: "gift_ideas"
+  """
+  insertGiftIdeas(
+    """the rows to be inserted"""
+    objects: [GiftIdeasInsertInput!]!
+
+    """upsert condition"""
+    onConflict: GiftIdeasOnConflict
+  ): GiftIdeasMutationResponse
+
+  """
+  insert a single row into the table: "gift_ideas"
+  """
+  insertGiftIdeasOne(
+    """the row to be inserted"""
+    object: GiftIdeasInsertInput!
+
+    """upsert condition"""
+    onConflict: GiftIdeasOnConflict
+  ): GiftIdeas
+
+  """
+  insert data into the table: "users"
+  """
+  insertUsers(
+    """the rows to be inserted"""
+    objects: [UsersInsertInput!]!
+
+    """upsert condition"""
+    onConflict: UsersOnConflict
+  ): UsersMutationResponse
+
+  """
+  insert a single row into the table: "users"
+  """
+  insertUsersOne(
+    """the row to be inserted"""
+    object: UsersInsertInput!
+
+    """upsert condition"""
+    onConflict: UsersOnConflict
+  ): Users
+
+  """
+  insert data into the table: "wishlists"
+  """
+  insertWishlists(
+    """the rows to be inserted"""
+    objects: [WishlistsInsertInput!]!
+
+    """upsert condition"""
+    onConflict: WishlistsOnConflict
+  ): WishlistsMutationResponse
+
+  """
+  insert a single row into the table: "wishlists"
+  """
+  insertWishlistsOne(
+    """the row to be inserted"""
+    object: WishlistsInsertInput!
+
+    """upsert condition"""
+    onConflict: WishlistsOnConflict
+  ): Wishlists
+
+  """
+  update data of the table: "claims"
+  """
+  updateClaims(
+    """sets the columns of the filtered rows to the given values"""
+    _set: ClaimsSetInput
+
+    """filter the rows which have to be updated"""
+    where: ClaimsBoolExp!
+  ): ClaimsMutationResponse
+
+  """
+  update single row of the table: "claims"
+  """
+  updateClaimsByPk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: ClaimsSetInput
+    pkColumns: ClaimsPkColumnsInput!
+  ): Claims
+
+  """
+  update multiples rows of table: "claims"
+  """
+  updateClaimsMany(
+    """updates to execute, in order"""
+    updates: [ClaimsUpdates!]!
+  ): [ClaimsMutationResponse]
+
+  """
+  update data of the table: "follows"
+  """
+  updateFollows(
+    """sets the columns of the filtered rows to the given values"""
+    _set: FollowsSetInput
+
+    """filter the rows which have to be updated"""
+    where: FollowsBoolExp!
+  ): FollowsMutationResponse
+
+  """
+  update single row of the table: "follows"
+  """
+  updateFollowsByPk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: FollowsSetInput
+    pkColumns: FollowsPkColumnsInput!
+  ): Follows
+
+  """
+  update multiples rows of table: "follows"
+  """
+  updateFollowsMany(
+    """updates to execute, in order"""
+    updates: [FollowsUpdates!]!
+  ): [FollowsMutationResponse]
+
+  """
+  update data of the table: "gift_ideas"
+  """
+  updateGiftIdeas(
+    """sets the columns of the filtered rows to the given values"""
+    _set: GiftIdeasSetInput
+
+    """filter the rows which have to be updated"""
+    where: GiftIdeasBoolExp!
+  ): GiftIdeasMutationResponse
+
+  """
+  update single row of the table: "gift_ideas"
+  """
+  updateGiftIdeasByPk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: GiftIdeasSetInput
+    pkColumns: GiftIdeasPkColumnsInput!
+  ): GiftIdeas
+
+  """
+  update multiples rows of table: "gift_ideas"
+  """
+  updateGiftIdeasMany(
+    """updates to execute, in order"""
+    updates: [GiftIdeasUpdates!]!
+  ): [GiftIdeasMutationResponse]
+
+  """
+  update data of the table: "users"
+  """
+  updateUsers(
+    """sets the columns of the filtered rows to the given values"""
+    _set: UsersSetInput
+
+    """filter the rows which have to be updated"""
+    where: UsersBoolExp!
+  ): UsersMutationResponse
+
+  """
+  update single row of the table: "users"
+  """
+  updateUsersByPk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: UsersSetInput
+    pkColumns: UsersPkColumnsInput!
+  ): Users
+
+  """
+  update multiples rows of table: "users"
+  """
+  updateUsersMany(
+    """updates to execute, in order"""
+    updates: [UsersUpdates!]!
+  ): [UsersMutationResponse]
+
+  """
+  update data of the table: "wishlists"
+  """
+  updateWishlists(
+    """sets the columns of the filtered rows to the given values"""
+    _set: WishlistsSetInput
+
+    """filter the rows which have to be updated"""
+    where: WishlistsBoolExp!
+  ): WishlistsMutationResponse
+
+  """
+  update single row of the table: "wishlists"
+  """
+  updateWishlistsByPk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: WishlistsSetInput
+    pkColumns: WishlistsPkColumnsInput!
+  ): Wishlists
+
+  """
+  update multiples rows of table: "wishlists"
+  """
+  updateWishlistsMany(
+    """updates to execute, in order"""
+    updates: [WishlistsUpdates!]!
+  ): [WishlistsMutationResponse]
+}
+
+type query_root {
+  """An array relationship"""
+  claims(
+    """distinct select on columns"""
+    distinctOn: [ClaimsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [ClaimsOrderBy!]
+
+    """filter the rows returned"""
+    where: ClaimsBoolExp
+  ): [Claims!]!
+
+  """An aggregate relationship"""
+  claimsAggregate(
+    """distinct select on columns"""
+    distinctOn: [ClaimsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [ClaimsOrderBy!]
+
+    """filter the rows returned"""
+    where: ClaimsBoolExp
+  ): ClaimsAggregate!
+
+  """fetch data from the table: "claims" using primary key columns"""
+  claimsByPk(id: uuid!): Claims
+
+  """An array relationship"""
+  follows(
+    """distinct select on columns"""
+    distinctOn: [FollowsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [FollowsOrderBy!]
+
+    """filter the rows returned"""
+    where: FollowsBoolExp
+  ): [Follows!]!
+
+  """An aggregate relationship"""
+  followsAggregate(
+    """distinct select on columns"""
+    distinctOn: [FollowsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [FollowsOrderBy!]
+
+    """filter the rows returned"""
+    where: FollowsBoolExp
+  ): FollowsAggregate!
+
+  """fetch data from the table: "follows" using primary key columns"""
+  followsByPk(followerId: uuid!, followingId: uuid!): Follows
+
+  """An array relationship"""
+  giftIdeas(
+    """distinct select on columns"""
+    distinctOn: [GiftIdeasSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [GiftIdeasOrderBy!]
+
+    """filter the rows returned"""
+    where: GiftIdeasBoolExp
+  ): [GiftIdeas!]!
+
+  """An aggregate relationship"""
+  giftIdeasAggregate(
+    """distinct select on columns"""
+    distinctOn: [GiftIdeasSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [GiftIdeasOrderBy!]
+
+    """filter the rows returned"""
+    where: GiftIdeasBoolExp
+  ): GiftIdeasAggregate!
+
+  """fetch data from the table: "gift_ideas" using primary key columns"""
+  giftIdeasByPk(id: uuid!): GiftIdeas
+
+  """
+  fetch data from the table: "users"
+  """
+  users(
+    """distinct select on columns"""
+    distinctOn: [UsersSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [UsersOrderBy!]
+
+    """filter the rows returned"""
+    where: UsersBoolExp
+  ): [Users!]!
+
+  """
+  fetch aggregated fields from the table: "users"
+  """
+  usersAggregate(
+    """distinct select on columns"""
+    distinctOn: [UsersSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [UsersOrderBy!]
+
+    """filter the rows returned"""
+    where: UsersBoolExp
+  ): UsersAggregate!
+
+  """fetch data from the table: "users" using primary key columns"""
+  usersByPk(id: uuid!): Users
+
+  """An array relationship"""
+  wishlists(
+    """distinct select on columns"""
+    distinctOn: [WishlistsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [WishlistsOrderBy!]
+
+    """filter the rows returned"""
+    where: WishlistsBoolExp
+  ): [Wishlists!]!
+
+  """An aggregate relationship"""
+  wishlistsAggregate(
+    """distinct select on columns"""
+    distinctOn: [WishlistsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [WishlistsOrderBy!]
+
+    """filter the rows returned"""
+    where: WishlistsBoolExp
+  ): WishlistsAggregate!
+
+  """fetch data from the table: "wishlists" using primary key columns"""
+  wishlistsByPk(id: uuid!): Wishlists
+}
+
+type subscription_root {
+  """An array relationship"""
+  claims(
+    """distinct select on columns"""
+    distinctOn: [ClaimsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [ClaimsOrderBy!]
+
+    """filter the rows returned"""
+    where: ClaimsBoolExp
+  ): [Claims!]!
+
+  """An aggregate relationship"""
+  claimsAggregate(
+    """distinct select on columns"""
+    distinctOn: [ClaimsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [ClaimsOrderBy!]
+
+    """filter the rows returned"""
+    where: ClaimsBoolExp
+  ): ClaimsAggregate!
+
+  """fetch data from the table: "claims" using primary key columns"""
+  claimsByPk(id: uuid!): Claims
+
+  """
+  fetch data from the table in a streaming manner: "claims"
+  """
+  claimsStream(
+    """maximum number of rows returned in a single batch"""
+    batchSize: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [ClaimsStreamCursorInput]!
+
+    """filter the rows returned"""
+    where: ClaimsBoolExp
+  ): [Claims!]!
+
+  """An array relationship"""
+  follows(
+    """distinct select on columns"""
+    distinctOn: [FollowsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [FollowsOrderBy!]
+
+    """filter the rows returned"""
+    where: FollowsBoolExp
+  ): [Follows!]!
+
+  """An aggregate relationship"""
+  followsAggregate(
+    """distinct select on columns"""
+    distinctOn: [FollowsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [FollowsOrderBy!]
+
+    """filter the rows returned"""
+    where: FollowsBoolExp
+  ): FollowsAggregate!
+
+  """fetch data from the table: "follows" using primary key columns"""
+  followsByPk(followerId: uuid!, followingId: uuid!): Follows
+
+  """
+  fetch data from the table in a streaming manner: "follows"
+  """
+  followsStream(
+    """maximum number of rows returned in a single batch"""
+    batchSize: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [FollowsStreamCursorInput]!
+
+    """filter the rows returned"""
+    where: FollowsBoolExp
+  ): [Follows!]!
+
+  """An array relationship"""
+  giftIdeas(
+    """distinct select on columns"""
+    distinctOn: [GiftIdeasSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [GiftIdeasOrderBy!]
+
+    """filter the rows returned"""
+    where: GiftIdeasBoolExp
+  ): [GiftIdeas!]!
+
+  """An aggregate relationship"""
+  giftIdeasAggregate(
+    """distinct select on columns"""
+    distinctOn: [GiftIdeasSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [GiftIdeasOrderBy!]
+
+    """filter the rows returned"""
+    where: GiftIdeasBoolExp
+  ): GiftIdeasAggregate!
+
+  """fetch data from the table: "gift_ideas" using primary key columns"""
+  giftIdeasByPk(id: uuid!): GiftIdeas
+
+  """
+  fetch data from the table in a streaming manner: "gift_ideas"
+  """
+  giftIdeasStream(
+    """maximum number of rows returned in a single batch"""
+    batchSize: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [GiftIdeasStreamCursorInput]!
+
+    """filter the rows returned"""
+    where: GiftIdeasBoolExp
+  ): [GiftIdeas!]!
+
+  """
+  fetch data from the table: "users"
+  """
+  users(
+    """distinct select on columns"""
+    distinctOn: [UsersSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [UsersOrderBy!]
+
+    """filter the rows returned"""
+    where: UsersBoolExp
+  ): [Users!]!
+
+  """
+  fetch aggregated fields from the table: "users"
+  """
+  usersAggregate(
+    """distinct select on columns"""
+    distinctOn: [UsersSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [UsersOrderBy!]
+
+    """filter the rows returned"""
+    where: UsersBoolExp
+  ): UsersAggregate!
+
+  """fetch data from the table: "users" using primary key columns"""
+  usersByPk(id: uuid!): Users
+
+  """
+  fetch data from the table in a streaming manner: "users"
+  """
+  usersStream(
+    """maximum number of rows returned in a single batch"""
+    batchSize: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [UsersStreamCursorInput]!
+
+    """filter the rows returned"""
+    where: UsersBoolExp
+  ): [Users!]!
+
+  """An array relationship"""
+  wishlists(
+    """distinct select on columns"""
+    distinctOn: [WishlistsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [WishlistsOrderBy!]
+
+    """filter the rows returned"""
+    where: WishlistsBoolExp
+  ): [Wishlists!]!
+
+  """An aggregate relationship"""
+  wishlistsAggregate(
+    """distinct select on columns"""
+    distinctOn: [WishlistsSelectColumn!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    orderBy: [WishlistsOrderBy!]
+
+    """filter the rows returned"""
+    where: WishlistsBoolExp
+  ): WishlistsAggregate!
+
+  """fetch data from the table: "wishlists" using primary key columns"""
+  wishlistsByPk(id: uuid!): Wishlists
+
+  """
+  fetch data from the table in a streaming manner: "wishlists"
+  """
+  wishlistsStream(
+    """maximum number of rows returned in a single batch"""
+    batchSize: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [WishlistsStreamCursorInput]!
+
+    """filter the rows returned"""
+    where: WishlistsBoolExp
+  ): [Wishlists!]!
+}
+
+scalar timestamptz
+
+scalar uuid
+
+input wishlistsAggregateBoolExpCount {
+  arguments: [WishlistsSelectColumn!]
+  distinct: Boolean
+  filter: WishlistsBoolExp
+  predicate: IntComparisonExp!
+}

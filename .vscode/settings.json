@@ -7,7 +7,7 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.linkedEditing": true,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true
+    "source.organizeImports": "explicit"
   },
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,

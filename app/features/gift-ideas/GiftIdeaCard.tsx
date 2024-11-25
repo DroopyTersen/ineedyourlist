@@ -1,4 +1,6 @@
 import { Form, Link } from "@remix-run/react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { useState } from "react";
 import { BiLinkExternal } from "react-icons/bi";
 import { BsChevronDown } from "react-icons/bs";
@@ -9,6 +11,8 @@ import { AvatarFull } from "~/toolkit/components/avatar/Avatar";
 
 import { useCurrentUser } from "../auth/useCurrentUser";
 type ClaimStatus = "Up for grabs" | "Claimed" | "Purchased";
+
+dayjs.extend(relativeTime);
 
 export const GiftIdeaCard = ({
   giftIdea,
@@ -62,6 +66,10 @@ export const GiftIdeaCard = ({
             <div className="text-sm">
               Suggested by:{" "}
               <span className="font-bold">{giftIdea?.createdBy?.name}</span>
+              <span className="ml-2 text-gray-500">
+                {" "}
+                • Last activity {dayjs(giftIdea.updatedAt).fromNow()}
+              </span>
             </div>
           </div>
         </div>

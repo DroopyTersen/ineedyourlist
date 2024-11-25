@@ -1,8 +1,11 @@
 import { ActionArgs, json, LoaderArgs, redirect } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { AiOutlineGift } from "react-icons/ai";
 import { FaUserSecret } from "react-icons/fa";
 import { MdPersonOff } from "react-icons/md";
+import { GiftIdeaFieldsFragment } from "~/.gql/graphql.types";
 import {
   requireAuthenticatedAction,
   requireAuthenticatedLoader,
@@ -18,7 +21,7 @@ import { MainContentPadded } from "~/features/layout/AppLayout";
 import { AppErrorBoundary } from "~/toolkit/components/errors/AppErrorBoundary";
 import { ConfirmationButton } from "~/toolkit/components/modal/ConfirmationButton";
 import { tryParseActionError } from "~/toolkit/remix/tryParseActionError.server";
-
+dayjs.extend(relativeTime);
 export const loader = async ({ request, params }: LoaderArgs) => {
   let { gqlClient } = await requireAuthenticatedLoader(request);
   let user = await getUserWithGiftIdeas(gqlClient, params.userId);
@@ -29,6 +32,25 @@ export default function UserIdRoute() {
   let data = useLoaderData<typeof loader>();
   let user = data?.user;
   let giftIdeas = user?.giftIdeas || [];
+
+  // Sort gift ideas into active and archived
+  const sixMonthsAgo = dayjs().subtract(6, "months");
+  const { activeGiftIdeas, archivedGiftIdeas } = giftIdeas.reduce(
+    (acc, idea) => {
+      const isOld = dayjs(idea.updatedAt).isBefore(sixMonthsAgo);
+      const isClaimed = idea.claims?.length > 0;
+      if (isOld && isClaimed) {
+        acc.archivedGiftIdeas.push(idea as any);
+      } else {
+        acc.activeGiftIdeas.push(idea as any);
+      }
+      return acc;
+    },
+    { activeGiftIdeas: [], archivedGiftIdeas: [] } as {
+      activeGiftIdeas: GiftIdeaFieldsFragment[];
+      archivedGiftIdeas: GiftIdeaFieldsFragment[];
+    }
+  );
   return (
     <MainContentPadded className="max-w-6xl">
       <div className="flex items-start justify-between">
@@ -70,9 +92,25 @@ export default function UserIdRoute() {
             </div>
           </div>
         </div>
-        {giftIdeas?.map((giftIdea) => (
-          <GiftIdeaCard key={giftIdea.id} giftIdea={giftIdea as any} />
-        ))}
+        {activeGiftIdeas.length > 0 && (
+          <>
+            <h2 className="mt-6 mb-2 text-xl">Active Gift Ideas</h2>
+            {activeGiftIdeas.map((giftIdea) => (
+              <GiftIdeaCard key={giftIdea.id} giftIdea={giftIdea as any} />
+            ))}
+          </>
+        )}
+
+        {archivedGiftIdeas.length > 0 && (
+          <>
+            <h2 className="mt-8 mb-2 text-xl text-gray-600">
+              Older Gift Ideas
+            </h2>
+            {archivedGiftIdeas.map((giftIdea) => (
+              <GiftIdeaCard key={giftIdea.id} giftIdea={giftIdea as any} />
+            ))}
+          </>
+        )}
       </div>
     </MainContentPadded>
   );
